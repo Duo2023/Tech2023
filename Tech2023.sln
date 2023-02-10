@@ -10,6 +10,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tech2023.DAL.Tests", "tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tech2023.Core.Tests", "tests\Tech2023.Core.Tests\Tech2023.Core.Tests.csproj", "{0C24ACA7-FD33-40B6-9EE9-8B23C5E8D01F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tech2023.DAL.Migrations", "src\Tech2023.DAL.Migrations\Tech2023.DAL.Migrations.csproj", "{C27CC4C2-7A01-470F-B347-8843FF8AA280}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{0C24ACA7-FD33-40B6-9EE9-8B23C5E8D01F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C24ACA7-FD33-40B6-9EE9-8B23C5E8D01F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C24ACA7-FD33-40B6-9EE9-8B23C5E8D01F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C27CC4C2-7A01-470F-B347-8843FF8AA280}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C27CC4C2-7A01-470F-B347-8843FF8AA280}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C27CC4C2-7A01-470F-B347-8843FF8AA280}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C27CC4C2-7A01-470F-B347-8843FF8AA280}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
