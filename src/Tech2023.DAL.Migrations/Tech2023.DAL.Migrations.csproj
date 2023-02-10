@@ -1,3 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   
+  <ItemGroup>
+    <ProjectReference Include="..\Tech2023.DAL\Tech2023.DAL.csproj" />
+  </ItemGroup>
+  
 </Project>
