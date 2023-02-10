@@ -1,0 +1,82 @@
+<Project>
+
+  <PropertyGroup>
+    <!-- 
+      C# 11, static abstracts, more low level features, generic math 
+    -->
+    <LangVersion>11.0</LangVersion>
+
+    <AnalysisLevel>7</AnalysisLevel>
+
+    <!-- 
+      Use net7.0 for fastest version of framework and the latest features for c#11
+    -->
+    <TargetFramework>net7.0</TargetFramework>
+
+    <!--
+      Global namespaces inclusions for System, System.Threading.Tasks etc
+      -->
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <!--
+      Allows nullable reference types and nullability analysis
+      Can be overriden using preprocessor directives such as
+      #nullable disable
+      {code that doesn't want nullable warnings }
+      #nullable restore // restore to the project settings
+      -->
+    <Nullable>enable</Nullable>
+
+    <!-- 
+      Treat compiler warnings as errors to make warnings more dire and forced to be handled
+      If this this 
+    -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!-- 
+      Allow unsafe code blocks 'unsafe { }' for speed optimizations
+    -->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+    <!-- 
+      Exclude files that end with Debug.cs (see later property for understanding)
+    -->
+    <DefaultItemExcludes>$(DefaultItemExcludes);**/*.Debug.cs</DefaultItemExcludes>
+
+    <!-- 
+      Enforces the code style this project uses
+    -->
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+
+    <!-- 
+      Enable Compiler to run in strict mode to prevent incorrect usages of some features 
+      -->
+    <Features>strict</Features>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- 
+      This allows use to unsafe code like sizeof(T) for any type if needed or other features 
+      -->
+    <NoWarn>$(NoWarn);CS8500</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+     <!-- 
+      Project metadata
+     -->
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/Duo2023/Tech2023</RepositoryUrl>
+    <ProjectUrl>https://github.com/Duo2023/Tech2023</ProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      If the build is set to 'Debug' include all target files where the extension is Debug.cs
+      This is useful where files that are strictly for debug mode and shouldn't be referenced
+      in production or release mode builds
+      -->
+    <Compile Include="**/*Debug.cs" Condition=" '$(Configuration)' == 'Debug' " />
+  </ItemGroup>
+  
+</Project>
