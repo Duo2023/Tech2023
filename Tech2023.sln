@@ -6,7 +6,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tech2023.Core", "src\Tech20
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tech2023.DAL", "src\Tech2023.DAL\Tech2023.DAL.csproj", "{A99025AD-10ED-4371-A80F-77579B81EE1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tech2023.Core.Tests", "src\Tech2023.Core.Tests\Tech2023.Core.Tests.csproj", "{B87995CF-A308-46C2-8BB8-47DDD44C5E4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tech2023.Core.Tests", "src\Tech2023.Core.Tests\Tech2023.Core.Tests.csproj", "{B87995CF-A308-46C2-8BB8-47DDD44C5E4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tech2023.DAL.Tests", "Tech2023.DAL.Tests\Tech2023.DAL.Tests.csproj", "{C73D1A6E-9E89-4AA9-BD99-04EA5F0EFE9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{B87995CF-A308-46C2-8BB8-47DDD44C5E4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B87995CF-A308-46C2-8BB8-47DDD44C5E4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B87995CF-A308-46C2-8BB8-47DDD44C5E4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C73D1A6E-9E89-4AA9-BD99-04EA5F0EFE9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C73D1A6E-9E89-4AA9-BD99-04EA5F0EFE9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C73D1A6E-9E89-4AA9-BD99-04EA5F0EFE9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C73D1A6E-9E89-4AA9-BD99-04EA5F0EFE9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
