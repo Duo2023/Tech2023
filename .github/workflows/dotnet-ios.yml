@@ -24,4 +24,4 @@ jobs:
     - name: Restore Dependencies
       run: dotnet restore "src/Tech2023.Native/Tech2023.Native.iOS"
     - name: Build # ios has to be the most annoying platform
-      run: dotnet build "src/Tech2023.Native/Tech2023.Native.iOS" --no-restore
+      run: dotnet build "src/Tech2023.Native/Tech2023.Native.iOS" --no-restore -p:PublishTrimmed=false
