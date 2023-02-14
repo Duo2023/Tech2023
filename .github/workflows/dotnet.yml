@@ -11,8 +11,7 @@ on:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v3
@@ -23,12 +22,9 @@ jobs:
     - name: Setup Android
       run: dotnet workload install android
     - name: Setup iOS
-      run: dotnet workload install wasm-tools
+      run: dotnet workload install ios
     - name: Restore Workloads
       run: dotnet workload restore 
-    # iOS builds don't work in Github runner?
-    #- name: Setup iOS
-    # run: dotnet workload install ios
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
