@@ -21,8 +21,6 @@ jobs:
         dotnet-version: 7.0.x
     - name: Setup Android
       run: dotnet workload install android
-    - name: Restore Workloads
-      run: dotnet workload restore 
     - name: Restore dependencies
       run: dotnet restore Tech2023.slnf
     - name: Build
