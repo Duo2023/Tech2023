@@ -22,8 +22,9 @@ jobs:
         dotnet-version: 7.0.x
     - name: Setup Android
       run: dotnet workload install android
-    - name: Setup iOS
-      run: dotnet workload install ios
+    # iOS builds don't work in Github runner?
+    #- name: Setup iOS
+    # run: dotnet workload install ios
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
