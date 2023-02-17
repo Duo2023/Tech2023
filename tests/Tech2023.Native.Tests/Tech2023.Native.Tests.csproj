@@ -1,2 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Tech2023.Native\Tech2023.Native\Tech2023.Native.csproj" />
+  </ItemGroup>
 </Project>
