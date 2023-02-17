@@ -1,9 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="MSTest.TestAdapter" Version="2.2.7"/>
-    <PackageReference Include="MSTest.TestFramework" Version="2.2.7"/>
-    <PackageReference Include="Selenium.WebDriver" Version="3.14.0"/>
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.7" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.7" />
+    <PackageReference Include="Selenium.WebDriver" Version="3.14.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Tech2023.Web\Client\Tech2023.Web.Client.csproj" />
+    <ProjectReference Include="..\..\src\Tech2023.Web\Server\Tech2023.Web.Server.csproj" />
   </ItemGroup>
 
 </Project>
