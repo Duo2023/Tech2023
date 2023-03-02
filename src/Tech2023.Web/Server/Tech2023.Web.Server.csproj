@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Tech2023.DAL\Tech2023.DAL.csproj" />
     <ProjectReference Include="..\Client\Tech2023.Web.Client.csproj" />
   </ItemGroup>
 
