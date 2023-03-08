@@ -52,6 +52,8 @@
       Enable Compiler to run in strict mode to prevent incorrect usages of some features 
       -->
     <Features>strict</Features>
+
+    <MicrosoftPackageVersion>7.0.3</MicrosoftPackageVersion>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -98,5 +100,7 @@
   <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+  
+  
   
 </Project>

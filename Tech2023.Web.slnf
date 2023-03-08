@@ -2,8 +2,8 @@
   "solution": {
     "path": "Tech2023.sln",
     "projects": [
-      "src\\Tech2023.Web\\Client\\Tech2023.Web.Client.csproj",
-      "src\\Tech2023.Web\\Server\\Tech2023.Web.Server.csproj",
+      "Tech2023.Web.API\\Tech2023.Web.API.csproj",
+      "Tech2023.Web\\Tech2023.Web.csproj",
       "tests\\Tech2023.Web.Tests\\Tech2023.Web.Tests.csproj"
     ]
   }
