@@ -5,7 +5,7 @@ namespace Tech2023.DAL;
 /// <summary>
 /// Represents a user in the application, this used with <see cref="ApplicationDbContext"/> and during account creations.
 /// </summary>
-public class ApplicationUser : IdentityUser
+public class ApplicationUser : IdentityUser<Guid>
 {
 
 }

@@ -26,9 +26,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tech2023.Web.Tests", "tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tech2023.Native.Tests", "tests\Tech2023.Native.Tests\Tech2023.Native.Tests.csproj", "{586A5CCA-2835-4DA0-8259-084609C6876F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tech2023.Web.API", "src\Tech2023.Web.API\Tech2023.Web.API.csproj", "{13F7B790-D196-40AE-A842-1AB640D89611}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tech2023.Web.API", "src\Tech2023.Web.API\Tech2023.Web.API.csproj", "{13F7B790-D196-40AE-A842-1AB640D89611}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tech2023.Web", "src\Tech2023.Web\Tech2023.Web.csproj", "{190CF9CC-33FF-4D3B-BD9E-AD53632F1544}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tech2023.Web", "src\Tech2023.Web\Tech2023.Web.csproj", "{190CF9CC-33FF-4D3B-BD9E-AD53632F1544}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tech2023.Web.Shared", "Tech2023.Web.Shared\Tech2023.Web.Shared.csproj", "{FEBEF1FA-388E-4FA8-B6DD-FB8FB988F520}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -94,6 +96,10 @@ Global
 		{190CF9CC-33FF-4D3B-BD9E-AD53632F1544}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{190CF9CC-33FF-4D3B-BD9E-AD53632F1544}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{190CF9CC-33FF-4D3B-BD9E-AD53632F1544}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEBEF1FA-388E-4FA8-B6DD-FB8FB988F520}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEBEF1FA-388E-4FA8-B6DD-FB8FB988F520}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEBEF1FA-388E-4FA8-B6DD-FB8FB988F520}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEBEF1FA-388E-4FA8-B6DD-FB8FB988F520}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
