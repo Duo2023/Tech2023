@@ -7,11 +7,15 @@ namespace Tech2023.Web.Shared.Authentication;
 /// </summary>
 public class AuthResult
 {
+    /// <summary>Cache this so we don't have to return a new instance each time and waste GC collects</summary>
+    internal static readonly AuthResult _ok = new(false, Enumerable.Empty<string>());
+
     /// <summary>
     /// Initializes a new instance of the <see cref="AuthResult"/>
     /// </summary>
     /// <param name="success">Whether the operation succeeded</param>
     /// <param name="errors">The enumerable of errors that occured if any</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal AuthResult(bool success, IEnumerable<string> errors)
     {
         Success = success;
@@ -34,16 +38,15 @@ public class AuthResult
     /// </summary>
     /// <returns>A successful login</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static AuthResult Ok()
-    {
-        return new(true, Enumerable.Empty<string>());
-    }
+    public static AuthResult Ok() => _ok;
 
     /// <summary>
     /// Whether the login succeeded or not
     /// </summary>
     [JsonPropertyName("success")]
-    public bool Success { get; set; }
+    public bool Success { get; internal set; }
+
+#nullable disable
 
     /// <summary>
     /// Contains a collection of errors that the login has had
@@ -52,5 +55,5 @@ public class AuthResult
     /// This property may not always be located in the api response
     /// </remarks>
     [JsonPropertyName("errors")]
-    public IEnumerable<string>? Errors { get; set; }
+    public IEnumerable<string> Errors { get; internal set; }
 }

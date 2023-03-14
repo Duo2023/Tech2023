@@ -6,4 +6,8 @@
     <PackageReference Include="Selenium.WebDriver" Version="3.14.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Tech2023.Web.Shared\Tech2023.Web.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

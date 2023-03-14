@@ -1,9 +1,12 @@
 ﻿using System.Diagnostics;
+using System.Text.Json;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Tech2023.DAL;
 using Tech2023.Web.Shared;
 using Tech2023.Web.Shared.Authentication;
+using Tech2023.Web.Shared.SourceGenerators;
 
 namespace Tech2023.Web.API.Controllers;
 
@@ -57,18 +60,18 @@ public sealed class UserController : ControllerBase
     {
         if (register == null)
         {
-            return Conflict(AuthResult.Fail(new string[]
+            return Conflict(GetJsonAuthResult(AuthResult.Fail(new string[]
             {
                 "Register payload was found empty"
-            }));
+            })));
         }
 
         if (register.Password != register.ConfirmPassword)
         {
-            return Conflict(AuthResult.Fail(new string[]
+            return Conflict(GetJsonAuthResult(AuthResult.Fail(new string[]
             {
                 "Password should be the same as confirm password."
-            }));
+            })));
         }
 
         IdentityResult result;
@@ -87,6 +90,45 @@ public sealed class UserController : ControllerBase
             return Conflict(AuthResult.Fail(result.Errors.Select(error => error.Description)));
         }
 
-        return CreatedAtAction(ApiRoutes.Users.Register, AuthResult.Ok());
+        return CreatedAtAction(ApiRoutes.Users.Register, GetJsonAuthResult(AuthResult.Ok()));
     }
+
+    /// <summary>
+    /// Endpoint for a user to login to
+    /// </summary>
+    [HttpPost]
+    [Route(ApiRoutes.Users.Login)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> LoginAsync([FromBody] Login login)
+    {
+        if (string.IsNullOrWhiteSpace(login.Email))
+        {
+            return BadRequest(GetJsonAuthResult(AuthResult.Fail(new string[]
+            {
+                "Email was empty"
+            })));
+        }
+
+        var user = await _userManager.FindByEmailAsync(login.Email);
+
+        if (user is null || !(await _userManager.CheckPasswordAsync(user, login.Password)))
+        {
+            return Unauthorized(AuthResult.Fail(new string[]
+            {
+                "The email and password combination is invalid"
+            }));
+        }
+
+        var claims = await _claimsService.GetUserClaimsAsync(user);
+
+        var token = _jwtTokenService.GetJwtToken(claims);
+
+        return Ok();
+    }
+
+    /// <summary>
+    /// Gets a JSON text auth result
+    /// </summary>
+    internal static string GetJsonAuthResult(AuthResult result) => JsonSerializer.Serialize(result, AuthResultContext.Default.AuthResult);
 }

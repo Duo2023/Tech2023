@@ -9,5 +9,6 @@ public static class ApiRoutes
     {
         public const string Base = "/user";
         public const string Register = "register";
+        public const string Login = "login";
     }
 }
