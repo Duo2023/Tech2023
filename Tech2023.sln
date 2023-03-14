@@ -30,7 +30,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tech2023.Web.API", "src\Tec
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tech2023.Web", "src\Tech2023.Web\Tech2023.Web.csproj", "{190CF9CC-33FF-4D3B-BD9E-AD53632F1544}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tech2023.Web.Shared", "Tech2023.Web.Shared\Tech2023.Web.Shared.csproj", "{FEBEF1FA-388E-4FA8-B6DD-FB8FB988F520}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tech2023.Web.Shared", "src\Tech2023.Web.Shared\Tech2023.Web.Shared.csproj", "{FEBEF1FA-388E-4FA8-B6DD-FB8FB988F520}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

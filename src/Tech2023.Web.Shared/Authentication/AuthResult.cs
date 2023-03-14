@@ -1,19 +1,18 @@
-﻿using System.Runtime.CompilerServices;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Tech2023.Web.Shared.Authentication;
 
 /// <summary>
 /// Represents an API result response of the action of sending a <see cref="Login"/>
 /// </summary>
-public class LoginResult
+public class AuthResult
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="LoginResult"/>
+    /// Initializes a new instance of the <see cref="AuthResult"/>
     /// </summary>
     /// <param name="success">Whether the operation succeeded</param>
     /// <param name="errors">The enumerable of errors that occured if any</param>
-    internal LoginResult(bool success, IEnumerable<string> errors)
+    internal AuthResult(bool success, IEnumerable<string> errors)
     {
         Success = success;
         Errors = errors;
@@ -23,9 +22,9 @@ public class LoginResult
     /// Returns a fail response with a enumerable of errors
     /// </summary>
     /// <param name="errors">The errors that occured during login</param>
-    /// <returns>A <see cref="LoginResult"/> where the <see cref="Success"/> is specified as false</returns>
+    /// <returns>A <see cref="AuthResult"/> where the <see cref="Success"/> is specified as false</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static LoginResult Fail(IEnumerable<string> errors)
+    public static AuthResult Fail(IEnumerable<string> errors)
     {
         return new(false, errors);
     }
@@ -35,7 +34,7 @@ public class LoginResult
     /// </summary>
     /// <returns>A successful login</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static LoginResult Ok()
+    public static AuthResult Ok()
     {
         return new(true, Enumerable.Empty<string>());
     }

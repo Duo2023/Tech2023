@@ -3,7 +3,7 @@ using Tech2023.Web.Shared.Authentication;
 
 namespace Tech2023.Web.Shared.SourceGenerators;
 
-[JsonSerializable(typeof(LoginResult))]
+[JsonSerializable(typeof(AuthResult))]
 internal partial class LoginResultContext : JsonSerializerContext
 {
 

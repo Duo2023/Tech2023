@@ -7,7 +7,7 @@ namespace Tech2023.Web.Shared.Authentication;
 #nullable disable
 
 /// <summary>
-/// A login to send the web api and receive a <see cref="LoginResult"/> in response
+/// A login to send the web api and receive a <see cref="AuthResult"/> in response
 /// </summary>
 public class Login
 {
