@@ -8,7 +8,7 @@ namespace Tech2023.Web.Shared.Authentication;
 public class AuthResult
 {
     /// <summary>Cache this so we don't have to return a new instance each time and waste GC collects</summary>
-    internal static readonly AuthResult _ok = new(false, Enumerable.Empty<string>());
+    internal static readonly AuthResult _ok = new(true, Enumerable.Empty<string>());
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AuthResult"/>
