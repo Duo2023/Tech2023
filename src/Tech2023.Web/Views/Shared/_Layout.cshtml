@@ -4,15 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Tech2023.Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Tech2023.Web.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body class="text-white bg-background">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Tech2023.Web</a>
+        <nav class="relative shadow-md bg-secondary text-white">
+            <div class="container flex items-center justify-start top-0 left-0 w-screen h-16 m-0">
+                <a class="absolute text-center flex items-center mx-4 px-4 py-3 font-bold bg-blue-700 rounded-2xl" asp-area="" asp-controller="Home" asp-action="Index">Tech2023</a>
+                <!-- WIP -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -30,19 +30,21 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="relative">
+        <aside class="side-bar fixed left-0 max-h-screen h-screen w-64 z-40 bg-secondary">
+            <p>hello</p>
+        </aside>
+        <main role="main" class="relative p-10">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container text-gray-900">
-            &copy; 2023 - Tech2023.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="">
+        <div class="fixed flex justify-center items-center bottom-0 left-0 w-screen leading-10 text-slate-100 bg-secondary border-t-2 border-zinc-500 border-opacity-50 border-">
+            &copy; 2023 - Tech2023.Web - <a class="hover:underline" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
