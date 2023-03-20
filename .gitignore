@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Tailwind - auto-genrated css file
+src/Tech2023.Web/wwwroot/css/output.css
