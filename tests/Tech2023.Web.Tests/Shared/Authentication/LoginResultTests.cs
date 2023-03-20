@@ -16,4 +16,14 @@ public class LoginResultTests
         Assert.True(result.Success);
         Assert.False(result.Errors.Any());
     }
+
+    [Theory]
+    [ClassData(typeof(ErrorStringGenerator))]
+    public void Fail_IsProperObject(string[] errors)
+    {
+        var result = LoginResult.Fail(errors);
+
+        Assert.NotNull(result);
+        Assert.Null(result.Token);
+    }
 }
