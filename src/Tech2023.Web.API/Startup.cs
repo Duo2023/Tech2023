@@ -33,7 +33,7 @@ public sealed class Startup
     {
         services.AddControllers();
 
-        services.AddApplicationOptions(Configuration);
+        services.AddApplicationOptions(Configuration );
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>

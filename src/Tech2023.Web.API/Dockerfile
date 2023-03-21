@@ -10,7 +10,7 @@ WORKDIR /src
 COPY ["src/Tech2023.Web.API/Tech2023.Web.API.csproj", "src/Tech2023.Web.API/"]
 RUN dotnet restore "src/Tech2023.Web.API/Tech2023.Web.API.csproj"
 COPY . .
-WORKDIR "/src/src/Tech2023.Web.API"
+WORKDIR "/src/Tech2023.Web.API"
 RUN dotnet build "Tech2023.Web.API.csproj" -c Release -o /app/build
 
 FROM build AS publish

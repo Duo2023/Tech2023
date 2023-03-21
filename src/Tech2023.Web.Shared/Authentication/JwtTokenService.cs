@@ -8,6 +8,9 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Tech2023.Web.Shared.Authentication;
 
+/// <summary>
+/// Issues out JWT security tokens
+/// </summary>
 public sealed class JwtTokenService : IJwtTokenService
 {
     internal readonly IOptions<JwtOptions> _options;

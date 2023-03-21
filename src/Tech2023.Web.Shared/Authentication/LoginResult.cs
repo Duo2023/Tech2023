@@ -3,6 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace Tech2023.Web.Shared.Authentication;
 
+/// <summary>
+/// Returned to the API customer when the user signs in with their credentials
+/// </summary>
 public class LoginResult
 {
     /// <summary>
@@ -17,6 +20,33 @@ public class LoginResult
         Errors = errors;
     }
 
+    /// <summary>
+    /// The JWT token used for authentication
+    /// </summary>
+    [MemberNotNullWhen(true, nameof(Success))]
+    [JsonPropertyName("token")]
+    public string? Token { get; internal set; }
+
+    /// <summary>
+    /// Boolean value to indicate whether the login is a success
+    /// </summary>
+    /// <remarks>
+    /// If the property returns <see langword="true"/>, <see cref="Token"/> is guaranteed to be not <see langword="null"/>
+    /// </remarks>
+    [JsonPropertyName("success")]
+    public bool Success { get; internal set; }
+
+    /// <summary>
+    /// The collection of errors related with the sign-in, if <see cref="Success"/> property returns <see langword="true"/> this collection will be empty
+    /// </summary>
+    [JsonPropertyName("errors")]
+    public IEnumerable<string> Errors { get; set; }
+
+    /// <summary>
+    /// Returns a login result of 'Ok' as an object, this contains a token used as the JWT authentication token
+    /// </summary>
+    /// <param name="token">The token provided in the result</param>
+    /// <returns>Valid 'Ok' response</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static LoginResult Ok(string token)
     {
@@ -35,13 +65,4 @@ public class LoginResult
 
         return new LoginResult(null, errors);
     }
-
-    [MemberNotNullWhen(true, nameof(Success))]
-    public string? Token { get; internal set; }
-
-    [JsonPropertyName("success")]
-    public bool Success { get; internal set; }
-
-    [JsonPropertyName("errors")]
-    public IEnumerable<string> Errors { get; set; }
 }
