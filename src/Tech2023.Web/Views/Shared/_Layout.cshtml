@@ -4,8 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Tech2023.Web</title>
-    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Tech2023.Web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body class="text-white bg-background">
     <header>
@@ -44,8 +43,6 @@
             &copy; 2023 - Tech2023.Web - <a class="hover:underline" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
