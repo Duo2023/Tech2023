@@ -29,11 +29,11 @@
             </div>
         </nav>
     </header>
-    <div class="relative">
+    <div class="">
         <aside class="side-bar fixed left-0 max-h-screen h-screen w-64 z-40 bg-secondary">
             <p>hello</p>
         </aside>
-        <main role="main" class="relative p-10">
+        <main role="main" class="absolute left-64 p-10 ">
             @RenderBody()
         </main>
     </div>
@@ -46,3 +46,7 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+@code {
+    private const string SIDEBAR_WIDTH = "256px";
+}
