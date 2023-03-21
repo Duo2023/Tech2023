@@ -1,20 +1,32 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Net;
+using System.Text.Json.Serialization;
 
 namespace Tech2023.Web.Shared.Statistics;
 
 public readonly struct PingResponse : IEquatable<PingResponse>
 {
     internal readonly TimeSpan _runtime;
+    internal readonly string _ipAddress;
 
-
-    public PingResponse(TimeSpan runtime)
+    public PingResponse(TimeSpan runtime, string ipAddress)
     {
         _runtime = runtime;
+        _ipAddress = ipAddress;
     }
 
+    [JsonPropertyName("runtime")]
+    [JsonConverter(typeof(TimeSpanConverter))]
     public TimeSpan Runtime
     {
         get => _runtime;
+    }
+
+    [JsonPropertyName("ip")]
+    public string Ip
+    {
+        get => _ipAddress;
     }
 
     public bool Equals(PingResponse other)
@@ -23,9 +35,9 @@ public readonly struct PingResponse : IEquatable<PingResponse>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PingResponse GetCurrentData()
+    public static PingResponse GetCurrentData(IPAddress address)
     {
-        return new(TimeSpan.FromTicks(Environment.TickCount64));
+        return new(TimeSpan.FromTicks(Environment.TickCount64), address.ToString());
     }
 
     public override bool Equals([AllowNull] object obj)
@@ -43,8 +55,11 @@ public readonly struct PingResponse : IEquatable<PingResponse>
         return !(left == right);
     }
 
+    /// <summary>
+    /// Returns the hashcode of the ping response
+    /// </summary>
     public override int GetHashCode()
     {
-        throw new NotImplementedException();
+        return HashCode.Combine(_runtime, _ipAddress);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Tech2023.Web.Shared.Authentication;
 
 namespace Tech2023.Web.API;
 

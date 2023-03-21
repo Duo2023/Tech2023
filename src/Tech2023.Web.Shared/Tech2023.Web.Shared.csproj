@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Tech2023.Core\Tech2023.Core.csproj" />
     <ProjectReference Include="..\Tech2023.DAL\Tech2023.DAL.csproj" />
   </ItemGroup>
 

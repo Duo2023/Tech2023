@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
 using Tech2023.Web.Shared;
+using Tech2023.Web.Shared.Statistics;
 
 namespace Tech2023.Web.API.Controllers;
 
@@ -7,11 +9,9 @@ namespace Tech2023.Web.API.Controllers;
 [ApiController]
 public class StatisticsController : ControllerBase
 {
-    [Route(ApiRoutes.Statistics.Ping)]
     [HttpGet]
-    public async Task<IActionResult> PingAsync()
+    public IActionResult Ping()
     {
-        await Task.CompletedTask;
-        throw new NotImplementedException();
+        return Ok(JsonSerializer.Serialize(new PingResponse(TimeSpan.FromTicks(Environment.TickCount64), HttpContext.Connection.RemoteIpAddress?.ToString() ?? "0.0.0.0")));
     }
 }
