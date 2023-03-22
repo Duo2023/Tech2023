@@ -8,6 +8,14 @@ namespace Tech2023.Core.Json.Converters;
 /// </summary>
 public sealed class TimeSpanConverter : JsonConverter<TimeSpan>
 {
+    // nop
+    // ret
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TimeSpanConverter"/> class
+    /// </summary>
+    public TimeSpanConverter() { /* empty constructor is required here */ }
+
     /// <summary>
     /// Reads a <see cref="TimeSpan"/> from a JSON property field as an long integer
     /// </summary>

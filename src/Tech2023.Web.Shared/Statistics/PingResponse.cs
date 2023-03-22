@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Text.Json.Serialization;
+using Tech2023.Core.Json.Converters;
 
 namespace Tech2023.Web.Shared.Statistics;
 

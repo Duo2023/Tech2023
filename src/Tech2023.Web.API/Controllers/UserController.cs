@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +15,7 @@ namespace Tech2023.Web.API.Controllers;
 /// The users API controller, responsible for registering/signing in and various other auth activites
 /// </summary>
 [Route("api/[controller]")]
+[Produces("application/json")]
 [ApiController]
 public sealed class UserController : ControllerBase
 {
@@ -24,6 +26,7 @@ public sealed class UserController : ControllerBase
     internal readonly IJwtTokenService _jwtTokenService;
 #nullable restore
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static string GetCtorErrorMessage(string objectName)
     {
         return $"Object '{objectName}' is null in {nameof(UserController)} ctor, this is likely because the DI services haven't been added";
@@ -130,5 +133,6 @@ public sealed class UserController : ControllerBase
     /// <summary>
     /// Gets a JSON text auth result
     /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static string GetJsonAuthResult(AuthResult result) => JsonSerializer.Serialize(result, AuthResultContext.Default.AuthResult);
 }
