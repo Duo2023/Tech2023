@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var sidebarWidth = "256px";
+
+    
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -30,10 +36,10 @@
         </nav>
     </header>
     <div class="">
-        <aside class="side-bar fixed left-0 max-h-screen h-screen w-64 z-40 bg-secondary">
-            <p>hello</p>
+        <aside class="side-bar fixed left-0 max-h-screen h-screen z-40 bg-secondary" style="width: @sidebarWidth;">
+            <button onclick="">hello</button>
         </aside>
-        <main role="main" class="absolute left-64 p-10 ">
+        <main role="main" class="absolute p-10" style="left: @sidebarWidth;">
             @RenderBody()
         </main>
     </div>
@@ -43,10 +49,8 @@
             &copy; 2023 - Tech2023.Web - <a class="hover:underline" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
+    <script src="~/js/app.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-
-@code {
-    private const string SIDEBAR_WIDTH = "256px";
-}
