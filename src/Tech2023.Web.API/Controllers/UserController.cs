@@ -105,6 +105,14 @@ public sealed class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> LoginAsync([FromBody] Login login)
     {
+        if (login is null)
+        {
+            return BadRequest(GetJsonAuthResult(AuthResult.Fail(new string[]
+            {
+                "Login body was found empty"
+            })));
+        }
+
         if (string.IsNullOrWhiteSpace(login.Email))
         {
             return BadRequest(GetJsonAuthResult(AuthResult.Fail(new string[]

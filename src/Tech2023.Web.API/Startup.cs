@@ -1,6 +1,9 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
+using Tech2023.DAL;
+using Tech2023.Web.API.Extensions;
 
 namespace Tech2023.Web.API;
 
@@ -32,7 +35,17 @@ public sealed class Startup
     {
         services.AddControllers();
 
-        services.AddApplicationOptions(Configuration );
+        services.AddApplicationOptions(Configuration);
+
+        services.AddDbContextFactory<ApplicationDbContext>(options =>
+        {
+#if DEBUG
+
+#else
+            options.UseSqlServer(Configuration.GetConnectionString("Default"), 
+                migrations => migrations.MigrationsAssembly("Tech2023.DAL.Migrations"));
+#endif
+        });
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -43,9 +56,9 @@ public sealed class Startup
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = Configuration.GetSection("Jwt")["Issuer"],
-                    ValidAudience = Configuration.GetSection("Jwt")["Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("Jwt")["Secret"]!))
+                    ValidIssuer = Configuration.GetJwtOption("Issuer"),
+                    ValidAudience = Configuration.GetJwtOption("Audience"),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetJwtOption("Secret")!))
                 };
             });
     }
