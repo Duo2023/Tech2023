@@ -1,8 +1,10 @@
+using CliWrap;
+
 namespace Tech2023.Web;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,8 @@ public class Program
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {
+            // Run tailwind watch command to have hot reload functionality for css changes
+            var result = await Cli.Wrap("npm").WithArguments("run css:dev").ExecuteAsync();
             app.UseExceptionHandler("/Home/Error");
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
