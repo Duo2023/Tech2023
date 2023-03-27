@@ -15,18 +15,18 @@
 </head>
 <body class="text-white bg-background">
     <header>
-        <nav class="relative shadow-md bg-secondary text-white">
-            <div class="container flex flex-wrap items-center justify-between top-0 left-0 w-screen h-16 m-0">
+        <nav class="px-2 sm:px-4 py-2.5 shadow-md bg-secondary text-white">
+            <div class="container flex flex-wrap items-center justify-between w-screen h-16 mx-auto">
                 <a class="text-center self-center flex items-center mx-4 px-4 py-3 font-bold bg-blue-700 rounded-2xl" asp-area="" asp-controller="Home" asp-action="Index">Tech2023</a>
                 <!-- WIP -->
                 
-                <div class="nav-links w-auto">
+                <div class="flex items-center md:order-2">
                     <ul class="flex flex-row space-x-8 mt-0 font-bold text-white">
-                        <li class="nav-item ">
-                            <a class="nav-link block" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <li class="nav-item">
+                            <button class="h-8 w-8 material-symbols-rounded">more_horiz</button>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link block" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <button class="h-8 w-8 material-symbols-rounded">account_circle</button>
                         </li>
                     </ul>
                 </div>
@@ -35,10 +35,10 @@
     </header>
     <div class="sidebar">
         <aside class="side-bar fixed left-0 max-h-screen h-screen z-40 bg-secondary" style="width: @sidebarWidth;">
-            <div class="container flex">
-                <button class="relative container navbar-toggler justify-center p-4 right-0" type="button" aria-controls="navbarSupportedContent"
+            <div class="flex flex-row container">
+                <button class="relative navbar-toggler items-end p-4 right-0" type="button" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="material-symbols-rounded">left_panel_close</span>
+                    <span class="material-symbols-rounded">keyboard_arrow_left</span>
             </button>
             </div>
         </aside>
