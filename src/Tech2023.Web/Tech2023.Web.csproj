@@ -28,8 +28,4 @@
     <Exec Command="npm run css:build" />
   </Target>
 
-  <Target Name="Tailwind" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' ">
-    <Exec Command="npm install" />
-    <Exec Command="npm run css:build" />
-  </Target>
 </Project>
