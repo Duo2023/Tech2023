@@ -1,7 +1,5 @@
 ﻿@{
     var sidebarWidth = "256px";
-
-    
 }
 
 <!DOCTYPE html>
@@ -49,8 +47,8 @@
     </div>
 
     <footer class="">
-        <div class="fixed flex justify-center items-center bottom-0 left-0 w-screen leading-10 text-slate-100 bg-secondary border-t-2 border-zinc-500 border-opacity-50 border-">
-            &copy; 2023 - Tech2023.Web - <a class="hover:underline" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="fixed flex justify-end items-end bottom-0 right-1 w-auto text-slate-100 text-sm font-semibold">
+            &copy; @(DateTime.UtcNow.Year == 2023 ? 2023 : $"2023 - {DateTime.UtcNow.Year}") - Duo2023 - &ThinSpace;<a class="hover:underline" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
 
