@@ -5,7 +5,7 @@ namespace Tech2023.Web.Shared.SourceGenerators;
 
 [JsonSerializable(typeof(JwtOptions))]
 [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
-internal partial class JwtOptionsContext
+internal partial class JwtOptionsContext : JsonSerializerContext
 {
 
 }

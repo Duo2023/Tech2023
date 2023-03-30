@@ -4,6 +4,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Tech2023.DAL;
 using Tech2023.Web.API.Extensions;
+using System.Reflection;
+using Microsoft.AspNetCore.Identity;
+using Tech2023.Web.Shared.Authentication;
+using Tech2023.Web.Shared.Authenticaton;
+using Tech2023.Web.Shared;
 
 namespace Tech2023.Web.API;
 
@@ -40,7 +45,7 @@ public sealed class Startup
         services.AddDbContextFactory<ApplicationDbContext>(options =>
         {
 #if DEBUG
-
+            options.UseInMemoryDatabase($"{Assembly.GetExecutingAssembly().FullName}");
 #else
             options.UseSqlServer(Configuration.GetConnectionString("Default"), 
                 migrations => migrations.MigrationsAssembly("Tech2023.DAL.Migrations"));
@@ -61,6 +66,16 @@ public sealed class Startup
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetJwtOption("Secret")!))
                 };
             });
+
+        services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+        {
+            options.User.RequireUniqueEmail = false;
+        })
+        .AddEntityFrameworkStores<ApplicationDbContext>()
+        .AddDefaultTokenProviders();
+
+        services.AddTransient<IClaimsService, ClaimsService>();
+        services.AddTransient<IJwtTokenService, JwtTokenService>();
     }
 
     /// <summary>

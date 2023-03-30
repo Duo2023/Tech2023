@@ -1,6 +1,8 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics;
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Tech2023.Web.Shared;
+using Tech2023.Web.Shared.SourceGenerators;
 using Tech2023.Web.Shared.Statistics;
 
 namespace Tech2023.Web.API.Controllers;
@@ -17,6 +19,8 @@ public class StatisticsController : ControllerBase
     [Route(ApiRoutes.Statistics.Ping)]
     public IActionResult Ping()
     {
-        return Ok(JsonSerializer.Serialize(new PingResponse(TimeSpan.FromTicks(Environment.TickCount64), HttpContext.Connection.RemoteIpAddress?.ToString() ?? "0.0.0.0")));
+        var response = new PingResponse(DateTime.Now - Process.GetCurrentProcess().StartTime, HttpContext.Connection.RemoteIpAddress?.ToString() ?? "0.0.0.0");
+
+        return Ok(JsonSerializer.Serialize(response, PingResponseContext.Default.PingResponse));
     }
 }

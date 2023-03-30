@@ -23,6 +23,11 @@ public sealed class JwtTokenService : IJwtTokenService
     {
         Debug.Assert(options != null);
 
+        if (options.Value.Secret is null)
+        {
+            throw new ConfigurationException("JWT options have not been configured to run this application, see JwtOptions.cs");
+        }
+
         _options = options;
         _creds = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.Value.Secret)), SecurityAlgorithms.HmacSha256);
     }
