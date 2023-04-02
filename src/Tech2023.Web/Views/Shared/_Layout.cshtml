@@ -1,8 +1,4 @@
-﻿@{
-    var sidebarWidth = "256px";
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -32,16 +28,7 @@
         </nav>
     </header>
     <div>
-        <aside class="sidebar fixed left-0 max-h-screen h-screen z-40 bg-secondary justify-end" style="width: @sidebarWidth;">
-            <div class="flex flex-row container">
-            <div class="w-auto"><p>search</p></div>
-                <button class="material-symbols-rounded relative navbar-toggler p-4" type="button" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    keyboard_arrow_left
-            </button>
-            </div>
-        </aside>
-        <main role="main" class="main-body absolute p-10" style="left: @sidebarWidth;">
+        <main role="main" class="main-body absolute">
             @RenderBody()
         </main>
     </div>
