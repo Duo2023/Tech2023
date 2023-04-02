@@ -365,3 +365,5 @@ FodyWeavers.xsd
 # Tailwind - auto-genrated css file
 src/Tech2023.Web/wwwroot/css/output.css
 src/Tech2023.Web/wwwroot/css/site.css
+src/Tech2023.Web/wwwroot/js/*.js
+src/Tech2023.Web/wwwroot/js/*.js.map
