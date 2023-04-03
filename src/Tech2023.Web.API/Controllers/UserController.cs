@@ -122,7 +122,7 @@ public sealed class UserController : ControllerBase
 
         var user = await _userManager.FindByEmailAsync(login.Email);
 
-        if (user is null || !(await _userManager.CheckPasswordAsync(user, login.Password)))
+        if (user is null || !await _userManager.CheckPasswordAsync(user, login.Password))
         {
             return Unauthorized(AuthResult.Fail(new string[]
             {

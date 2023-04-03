@@ -5,7 +5,7 @@
 /// </summary>
 public static class ApiRoutes
 {
-    public const string Base = "/base";
+    public const string Base = "/api";
 
     public static class Users
     {

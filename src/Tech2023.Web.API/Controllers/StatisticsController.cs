@@ -2,7 +2,6 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Tech2023.Web.Shared;
-using Tech2023.Web.Shared.SourceGenerators;
 using Tech2023.Web.Shared.Statistics;
 
 namespace Tech2023.Web.API.Controllers;
