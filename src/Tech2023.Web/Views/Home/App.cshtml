@@ -1,15 +1,14 @@
 @{
     ViewData["Title"] = "Paper Viewer";
-    var sidebarWidth = "256px";
 }
 
 <div>
-    <aside class="sidebar fixed left-0 max-h-screen h-screen z-40 bg-secondary justify-end" style="width: @sidebarWidth;">
-        <div id="top-bar" class="flex flex-row flex-wrap mt-2">
+    <aside class="sidebar fixed left-0 max-h-screen h-screen w-min z-40 bg-secondary justify-end">
+        <div id="top-bar" class="flex flex-row mt-2 px-2">
             <div class="bg-background rounded-full py-3 my-auto">
                 <input type="text" name="search" placeholder="🔎 Search" id="search-bar" class="bg-background ml-4 mr-2 active: outline-none w-auto">
             </div>
-            <button class="material-symbols-rounded relative navbar-toggler p-3 mx-auto hover:bg-background hover:rounded-full transition-all duration-200 ease-out" type="button" aria-controls="navbarSupportedContent"
+            <button class="h-12 w-12 material-symbols-rounded relative navbar-toggler p-3 ml-1 hover:bg-background hover:rounded-full transition-all duration-200 ease-out" type="button" aria-controls="navbarSupportedContent"
                aria-expanded="false" aria-label="Toggle navigation">
                 left_panel_close
             </button>            
