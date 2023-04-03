@@ -5,12 +5,14 @@
 
 <div>
     <aside class="sidebar fixed left-0 max-h-screen h-screen z-40 bg-secondary justify-end" style="width: @sidebarWidth;">
-        <div class="flex flex-row container">
-            <input type="text" name="search" placeholder="Search" id="search-bar" class="bg-background rounded py-2  my-auto active: outline-none w-auto">
-            <button class="material-symbols-rounded relative navbar-toggler p-4" type="button" aria-controls="navbarSupportedContent"
+        <div id="top-bar" class="flex flex-row flex-wrap mt-2">
+            <div class="bg-background rounded-full py-3 my-auto">
+                <input type="text" name="search" placeholder="🔎 Search" id="search-bar" class="bg-background ml-4 mr-2 active: outline-none w-auto">
+            </div>
+            <button class="material-symbols-rounded relative navbar-toggler p-3 mx-auto hover:bg-background hover:rounded-full transition-all duration-200 ease-out" type="button" aria-controls="navbarSupportedContent"
                aria-expanded="false" aria-label="Toggle navigation">
-               keyboard_arrow_left
-            </button>
+                left_panel_close
+            </button>            
         </div>
     </aside>
 </div>
