@@ -5,26 +5,26 @@ namespace Tech2023.Web;
 
 internal static class TailwindReload
 {
-    internal static void Run()
-    {
-        Process.Start(new ProcessStartInfo
-        {
-            FileName = GetShellName(),
-            Arguments = "npm run css:dev",
-            CreateNoWindow = true
-        });
-    }
-
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static string GetShellName()
+    internal static void Run()
     {
         if (OperatingSystem.IsWindows())
         {
-            return "powershell";
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "powershell",
+                Arguments = "npm run css:dev",
+                CreateNoWindow = true
+            });
         }
         else if (OperatingSystem.IsLinux())
         {
-            return "bash";
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "npm",
+                Arguments = "run css:dev",
+                CreateNoWindow = true
+            });
         }
 
         throw new InvalidOperationException("Development with tailwind reload is not supported on your platform");
