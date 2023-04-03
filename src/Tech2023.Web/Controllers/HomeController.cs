@@ -13,18 +13,19 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    [Route("/")]
+    [Route(Routes.Home)]
     public IActionResult Index()
     {
         return View();
     }
 
-    [Route("/app")]
-    public IActionResult App() {
+    [Route(Routes.App)]
+    public IActionResult App()
+    {
         return View();
     }
 
-    [Route("/privacy")]
+    [Route(Routes.Privacy)]
     public IActionResult Privacy()
     {
         return View();
