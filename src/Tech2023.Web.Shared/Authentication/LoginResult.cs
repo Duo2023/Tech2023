@@ -8,7 +8,7 @@ namespace Tech2023.Web.Shared.Authentication;
 /// </summary>
 public class LoginResult
 {
-    internal LoginResult(TokenObject token, string? message)
+    internal LoginResult(TokenObject? token, string? message)
     {
         Token = token;
         Message = message;
@@ -50,8 +50,8 @@ public class LoginResult
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static LoginResult Fail(string message)
     {
-        ArgumentNullException.ThrowIfNullOrEmpty(message);
+        ArgumentException.ThrowIfNullOrEmpty(message);
 
-
+        return new LoginResult(default, message);
     }
 }
