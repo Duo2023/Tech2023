@@ -4,48 +4,41 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Tech2023.Web</title>
-    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Tech2023.Web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body class="text-white bg-background">
     <header>
-        <nav class="relative shadow-md bg-secondary text-white">
-            <div class="container flex items-center justify-start top-0 left-0 w-screen h-16 m-0">
-                <a class="absolute text-center flex items-center mx-4 px-4 py-3 font-bold bg-blue-700 rounded-2xl" asp-area="" asp-controller="Home" asp-action="Index">Tech2023</a>
+        <nav class="nav-bar z-50 px-2 sm:px-4 py-2.5 shadow-md bg-secondary text-white overflow-x-hidden">
+            <div class="flex flex-wrap items-center justify-between h-16">
+                <a class="text-center self-center flex items-center px-4 py-3 font-bold bg-primary rounded-2xl" asp-area="" asp-controller="Home" asp-action="Index">Tech2023</a>
                 <!-- WIP -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                
+                <div class="nav-items-container flex items-center mr-4 md:order-2">
+                    <ul class="flex flex-row space-x-8 mt-0 font-bold text-white">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <button class="h-8 w-8 material-symbols-rounded">more_horiz</button>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <button class="h-8 w-8 material-symbols-rounded">account_circle</button>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="relative">
-        <aside class="side-bar fixed left-0 max-h-screen h-screen w-64 z-40 bg-secondary">
-            <p>hello</p>
-        </aside>
-        <main role="main" class="relative p-10">
-            @RenderBody()
-        </main>
-    </div>
+
+    <main role="main" id="main-body">
+        @RenderBody()
+    </main>
 
     <footer class="">
-        <div class="fixed flex justify-center items-center bottom-0 left-0 w-screen leading-10 text-slate-100 bg-secondary border-t-2 border-zinc-500 border-opacity-50 border-">
-            &copy; 2023 - Tech2023.Web - <a class="hover:underline" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="fixed flex justify-end items-end bottom-0 right-1 w-auto text-slate-100 text-sm font-semibold">
+            &copy; @(DateTime.UtcNow.Year == 2023 ? 2023 : $"2023 - {DateTime.UtcNow.Year}") - Duo2023 - &ThinSpace;<a class="hover:underline" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="~/js/app.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

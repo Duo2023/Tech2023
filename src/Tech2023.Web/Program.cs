@@ -4,6 +4,9 @@ public class Program
 {
     public static void Main(string[] args)
     {
+#if DEBUG
+        TailwindReload.Run();
+#endif
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
