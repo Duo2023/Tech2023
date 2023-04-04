@@ -8,6 +8,9 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Tech2023.Web.Shared.Authentication;
 
+/// <summary>
+/// Issues out JWT security tokens
+/// </summary>
 public sealed class JwtTokenService : IJwtTokenService
 {
     internal readonly IOptions<JwtOptions> _options;
@@ -19,6 +22,11 @@ public sealed class JwtTokenService : IJwtTokenService
     public JwtTokenService(IOptions<JwtOptions> options)
     {
         Debug.Assert(options != null);
+
+        if (options.Value.Secret is null)
+        {
+            throw new ConfigurationException("JWT options have not been configured to run this application, see JwtOptions.cs");
+        }
 
         _options = options;
         _creds = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.Value.Secret)), SecurityAlgorithms.HmacSha256);

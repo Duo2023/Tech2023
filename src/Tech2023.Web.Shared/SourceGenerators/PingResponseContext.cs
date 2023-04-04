@@ -1,11 +1,11 @@
 ﻿using System.Text.Json.Serialization;
-using Tech2023.Web.Shared.Authentication;
+using Tech2023.Web.Shared.Statistics;
 
 namespace Tech2023.Web.Shared;
 
-[JsonSerializable(typeof(LoginResult))]
+[JsonSerializable(typeof(PingResponse))]
 [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
-internal sealed partial class LoginResultContext : JsonSerializerContext
+public partial class PingResponseContext : JsonSerializerContext
 {
 
 }

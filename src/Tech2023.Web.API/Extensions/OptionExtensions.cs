@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using Tech2023.Web.Shared;
 using Tech2023.Web.Shared.Authentication;
 
-namespace Tech2023.Web.API;
+namespace Tech2023.Web.API.Extensions;
 
 /// <summary>
 /// Configures application options
@@ -51,9 +51,7 @@ internal static class OptionExtensions
         var context = new ValidationContext(instance);
 
         if (Validator.TryValidateObject(instance, context, results))
-        {
             return;
-        }
 
         throw new ConfigurationException($"{sectionName} was found invalid with the following error(s):\n{string.Join('\n', results.Select(error => error.ErrorMessage))}");
     }

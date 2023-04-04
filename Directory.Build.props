@@ -53,7 +53,7 @@
       -->
     <Features>strict</Features>
 
-    <MicrosoftPackageVersion>7.0.3</MicrosoftPackageVersion>
+    <MicrosoftPackageVersion>7.0.4</MicrosoftPackageVersion>
   </PropertyGroup>
 
   <PropertyGroup>

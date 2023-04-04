@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Tech2023.DAL;
@@ -14,6 +15,7 @@ namespace Tech2023.Web.API.Controllers;
 /// The users API controller, responsible for registering/signing in and various other auth activites
 /// </summary>
 [Route("api/[controller]")]
+[Produces("application/json")]
 [ApiController]
 public sealed class UserController : ControllerBase
 {
@@ -24,6 +26,7 @@ public sealed class UserController : ControllerBase
     internal readonly IJwtTokenService _jwtTokenService;
 #nullable restore
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static string GetCtorErrorMessage(string objectName)
     {
         return $"Object '{objectName}' is null in {nameof(UserController)} ctor, this is likely because the DI services haven't been added";
@@ -102,6 +105,14 @@ public sealed class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> LoginAsync([FromBody] Login login)
     {
+        if (login is null)
+        {
+            return BadRequest(GetJsonAuthResult(AuthResult.Fail(new string[]
+            {
+                "Login body was found empty"
+            })));
+        }
+
         if (string.IsNullOrWhiteSpace(login.Email))
         {
             return BadRequest(GetJsonAuthResult(AuthResult.Fail(new string[]
@@ -112,7 +123,7 @@ public sealed class UserController : ControllerBase
 
         var user = await _userManager.FindByEmailAsync(login.Email);
 
-        if (user is null || !(await _userManager.CheckPasswordAsync(user, login.Password)))
+        if (user is null || !await _userManager.CheckPasswordAsync(user, login.Password))
         {
             return Unauthorized(AuthResult.Fail(new string[]
             {
@@ -124,11 +135,16 @@ public sealed class UserController : ControllerBase
 
         var token = _jwtTokenService.GetJwtToken(claims);
 
-        return Ok();
+        return Ok(LoginResult.Ok(new TokenObject()
+        {
+            Token = new JwtSecurityTokenHandler().WriteToken(token),
+            Expiration = token.ValidTo
+        }));
     }
 
     /// <summary>
     /// Gets a JSON text auth result
     /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static string GetJsonAuthResult(AuthResult result) => JsonSerializer.Serialize(result, AuthResultContext.Default.AuthResult);
 }

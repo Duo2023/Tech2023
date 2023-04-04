@@ -14,6 +14,7 @@ public sealed class ApplicationDbContext : IdentityDbContext<ApplicationUser, Ap
     /// <param name="options">Initializes a new instance of the <see cref="ApplicationDbContext"/></param>
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
+        Database.EnsureCreated(); // ensure that the database is actually created
     }
 
     /// <summary>
