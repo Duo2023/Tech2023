@@ -5,7 +5,6 @@ namespace Tech2023.Web;
 
 internal static class TailwindReload
 {
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static void Run()
     {
         if (OperatingSystem.IsWindows())
@@ -16,6 +15,7 @@ internal static class TailwindReload
                 Arguments = "npm run css:dev",
                 CreateNoWindow = true
             });
+            return;
         }
         else if (OperatingSystem.IsLinux())
         {
@@ -25,6 +25,7 @@ internal static class TailwindReload
                 Arguments = "run css:dev",
                 CreateNoWindow = true
             });
+            return;
         }
 
         throw new InvalidOperationException("Development with tailwind reload is not supported on your platform");
