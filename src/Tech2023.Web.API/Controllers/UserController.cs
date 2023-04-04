@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Microsoft.AspNetCore.Identity;
@@ -134,7 +135,11 @@ public sealed class UserController : ControllerBase
 
         var token = _jwtTokenService.GetJwtToken(claims);
 
-        return Ok();
+        return Ok(LoginResult.Ok(new TokenObject()
+        {
+            Token = new JwtSecurityTokenHandler().WriteToken(token),
+            Expiration = token.ValidTo
+        }));
     }
 
     /// <summary>
