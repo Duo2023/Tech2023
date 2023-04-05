@@ -19,11 +19,6 @@ public class HomeController : Controller
         return View();
     }
 
-    [Route(Routes.App)]
-    public IActionResult App()
-    {
-        return View();
-    }
 
     [Route(Routes.Privacy)]
     public IActionResult Privacy()
