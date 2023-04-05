@@ -15,9 +15,8 @@ internal static class TailwindReload
                 Arguments = "npm run css:dev",
                 CreateNoWindow = true
             });
-            return;
         }
-        else if (OperatingSystem.IsLinux())
+        else if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS())
         {
             Process.Start(new ProcessStartInfo
             {
@@ -25,9 +24,10 @@ internal static class TailwindReload
                 Arguments = "run css:dev",
                 CreateNoWindow = true
             });
-            return;
+        } // TODO: Add MacOS support...
+        else
+        {
+            throw new InvalidOperationException("Development with tailwind reload is not supported on your platform");
         }
-
-        throw new InvalidOperationException("Development with tailwind reload is not supported on your platform");
     }
 }
