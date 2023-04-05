@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using System.Diagnostics;
 
 namespace Tech2023.Web;
@@ -15,9 +14,8 @@ internal static class TailwindReload
                 Arguments = "npm run css:dev",
                 CreateNoWindow = true
             });
-            return;
         }
-        else if (OperatingSystem.IsLinux())
+        else if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS())
         {
             Process.Start(new ProcessStartInfo
             {
@@ -25,9 +23,10 @@ internal static class TailwindReload
                 Arguments = "run css:dev",
                 CreateNoWindow = true
             });
-            return;
         }
-
-        throw new InvalidOperationException("Development with tailwind reload is not supported on your platform");
+        else
+        {
+            throw new InvalidOperationException("Development with tailwind reload is not supported on your platform");
+        }
     }
 }

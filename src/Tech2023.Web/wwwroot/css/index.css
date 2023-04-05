@@ -2,3 +2,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .bg-gradient-button {
+    @apply bg-gradient-to-br from-primary to-indigo-800;
+  }
+}
