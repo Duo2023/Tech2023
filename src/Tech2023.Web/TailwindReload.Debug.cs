@@ -24,7 +24,7 @@ internal static class TailwindReload
                 Arguments = "run css:dev",
                 CreateNoWindow = true
             });
-        } // TODO: Add MacOS support...
+        }
         else
         {
             throw new InvalidOperationException("Development with tailwind reload is not supported on your platform");
