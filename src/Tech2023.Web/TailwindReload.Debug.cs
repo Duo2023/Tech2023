@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using System.Diagnostics;
 
 namespace Tech2023.Web;
