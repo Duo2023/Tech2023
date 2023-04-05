@@ -1,3 +1,6 @@
+﻿using Microsoft.Extensions.DependencyInjection;
+using Tech2023.Web.Shared;
+
 namespace Tech2023.Web;
 
 public class Program
@@ -11,6 +14,13 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
+
+        builder.Services.AddHttpClient(Clients.API, client =>
+        {
+            string uriString = builder.Configuration["ApiUrl"] ?? throw new ConfigurationException("The API url should be configured");
+
+            client.BaseAddress = new(uriString);
+        });
 
         var app = builder.Build();
 
