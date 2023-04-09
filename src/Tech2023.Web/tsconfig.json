@@ -5,8 +5,8 @@
     "noEmitOnError": true,
     "removeComments": false,
     "sourceMap": true,
-    "target": "es6",
     "module": "es6",
+    "target": "es6",
     "outDir": "./wwwroot/js"
   },
   "include": ["./scripts/**/*.ts"]
