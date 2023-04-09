@@ -8,4 +8,8 @@
     <PackageReference Include="BenchmarkDotNet" Version="0.13.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Tech2023.Web.Shared\Tech2023.Web.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
