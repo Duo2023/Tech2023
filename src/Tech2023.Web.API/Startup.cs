@@ -42,6 +42,17 @@ public sealed class Startup
 
         services.AddApplicationOptions(Configuration);
 
+        // this is a temporary fix until a better solution is found to allow requests from the same host localhost
+        services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(builder =>
+            {
+                builder.WithOrigins("https://localhost:7132")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+        });
+
         services.AddDbContextFactory<ApplicationDbContext>(options =>
         {
 #if DEBUG
@@ -89,6 +100,9 @@ public sealed class Startup
         {
             app.UseDeveloperExceptionPage();
         }
+
+        // see comment above
+        app.UseCors();
 
         app.UseHttpsRedirection();
 
