@@ -7,7 +7,7 @@
     "sourceMap": true,
     "module": "es6",
     "target": "es6",
-    "outDir": "./wwwroot/js"
+    "outDir": "./scripts/build"
   },
   "include": ["./scripts/**/*.ts"]
 }
