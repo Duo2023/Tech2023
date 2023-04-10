@@ -10,6 +10,17 @@ export namespace statistics {
         ip: string;
     }
 
+    export async function updateButton(): Promise<void> {
+        const status = document.querySelector("#status-text") as HTMLParagraphElement;
+        if (await isApiUp()) {
+            status.textContent = "200";
+            status.style.backgroundColor = "#45fe57";
+        } else {
+            status.textContent = "400";
+            status.style.backgroundColor = "#ff3d3d";
+        }
+    }
+
      /**
      * Checks if the API is up and running by sending a ping request to the server.
      * 
