@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Tech2023.Web</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <script src="~/js/app-bundle.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body class="text-white bg-background">
@@ -45,6 +44,10 @@
         </div>
     </footer>
 
+    <!-- -->
+    <script type="text/javascript" asp-src-include="~/js/runtime*.js"></script>
+    <script type="text/javascript" asp-src-include="~/js/vendors*.js"></script>
+    <script type="text/javascript" asp-src-include="~/js/main*.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
