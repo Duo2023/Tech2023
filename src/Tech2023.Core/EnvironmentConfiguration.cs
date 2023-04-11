@@ -8,7 +8,7 @@ public static class EnvironmentConfiguration
     /// <summary>
     /// Whether the executing process was built in Debug
     /// </summary>
-    public const bool IsDebug =
+    public static readonly bool IsDebug =
 #if DEBUG
             true;
 #else
@@ -18,7 +18,7 @@ public static class EnvironmentConfiguration
     /// <summary>
     /// Whether the executing process was built in Release
     /// </summary>
-    public const bool IsRelease =
+    public static readonly bool IsRelease =
 #if RELEASE
             true;
 #else

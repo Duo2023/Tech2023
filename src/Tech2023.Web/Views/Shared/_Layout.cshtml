@@ -1,7 +1,4 @@
-﻿@{
-    bool isDebug = EnvironmentConfiguration.IsDebug;
-}
-@using Tech2023.Core;
+﻿@using Tech2023.Core;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +23,7 @@
                 </div>
             </div>
         </nav>
-        @if (isDebug)
+        @if (EnvironmentConfiguration.IsDebug)
         {
             <div class="fixed flex flex-row justify-around items-center bg-background font-bold border-t-0 border-2 border-hint right-16 rounded-br-3xl rounded-bl-3xl px-4 py-1">
                 <button id="status-button" class="text-white hover:underline pr-4" onclick="TS.statistics.updateButton()">Api Status: </button>
