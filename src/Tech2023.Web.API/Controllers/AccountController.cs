@@ -17,7 +17,7 @@ namespace Tech2023.Web.API.Controllers;
 [Route("api/[controller]")]
 [Produces("application/json")]
 [ApiController]
-public sealed class UserController : ControllerBase
+public sealed class AccountController : ControllerBase
 {
 #nullable disable
     internal readonly UserManager<ApplicationUser> _userManager;
@@ -29,13 +29,13 @@ public sealed class UserController : ControllerBase
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static string GetCtorErrorMessage(string objectName)
     {
-        return $"Object '{objectName}' is null in {nameof(UserController)} ctor, this is likely because the DI services haven't been added";
+        return $"Object '{objectName}' is null in {nameof(AccountController)} ctor, this is likely because the DI services haven't been added";
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="UserController"/> class
+    /// Initializes a new instance of the <see cref="AccountController"/> class
     /// </summary>
-    public UserController(
+    public AccountController(
         UserManager<ApplicationUser> userManager, 
         RoleManager<ApplicationRole> roleManager,
         IClaimsService claimsService,
