@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Tech2023.Web.Shared.Authentication;
 using Tech2023.Web.Shared.Authenticaton;
 using Tech2023.Web.Shared;
+using Tech2023.Core;
 
 namespace Tech2023.Web.API;
 
@@ -87,6 +88,8 @@ public sealed class Startup
 
         services.AddTransient<IClaimsService, ClaimsService>();
         services.AddTransient<IJwtTokenService, JwtTokenService>();
+
+        services.AddTransient<IDataInitializer, Initializer>();
     }
 
     /// <summary>
@@ -94,7 +97,7 @@ public sealed class Startup
     /// </summary>
     /// <param name="app">The application itself</param>
     /// <param name="env">The environment of the web application</param>
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDataInitializer initializer)
     {
         if (env.IsDevelopment())
         {
@@ -114,5 +117,7 @@ public sealed class Startup
         {
             endpoints.MapControllers();
         });
+
+        Async.RunSync(initializer.InitializeAsync);
     }
 }
