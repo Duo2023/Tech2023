@@ -39,6 +39,7 @@ public sealed class Startup
     /// <param name="services">The collection of service descriptors that the web api uses</param>
     public void ConfigureServices(IServiceCollection services)
     {
+        // for each model that becomes a json response, include the complementary source generator with it
         services.AddControllers();
 
         services.AddApplicationOptions(Configuration);
@@ -88,6 +89,8 @@ public sealed class Startup
 
         services.AddTransient<IClaimsService, ClaimsService>();
         services.AddTransient<IJwtTokenService, JwtTokenService>();
+
+        services.AddMemoryCache();
 
         services.AddTransient<IDataInitializer, Initializer>();
     }

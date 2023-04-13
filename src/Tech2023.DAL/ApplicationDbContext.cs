@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
+using Tech2023.DAL.Models;
+
 namespace Tech2023.DAL;
 
 /// <summary>
@@ -25,4 +27,9 @@ public sealed class ApplicationDbContext : IdentityDbContext<ApplicationUser, Ap
     {
         base.OnModelCreating(builder);
     }
+
+    /// <summary>
+    /// Table for the privacy policies of our application
+    /// </summary>
+    public DbSet<PrivacyPolicy> PrivacyPolicies { get; set; }
 }

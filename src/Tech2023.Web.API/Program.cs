@@ -12,7 +12,7 @@ public sealed class Program
     /// <param name="args">The arguments supplied to the application</param>
     public static void Main(string[] args)
     {
-        Console.Title = $"{Assembly.GetExecutingAssembly().GetName().Name!} | {((nint.Size == 8) ? "x64" : "x32")}";
+        Console.Title = $"{Assembly.GetExecutingAssembly().GetName().Name!} | {((nint.Size == 8) ? "x64" : "x86")}";
 
         CreateHostBuilder(args).Build().Run();
     }

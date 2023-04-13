@@ -16,10 +16,11 @@ public class StatisticsController : ControllerBase
     /// <returns>A JSON response of <see cref="PingResponse"/></returns>
     [HttpGet]
     [Route(ApiRoutes.Statistics.Ping)]
+    [Produces("application/json")]
     public IActionResult Ping()
     {
         var response = new PingResponse(DateTime.Now - Process.GetCurrentProcess().StartTime, HttpContext.Connection.RemoteIpAddress?.ToString() ?? "0.0.0.0");
 
-        return Ok(JsonSerializer.Serialize(response, PingResponseContext.Default.PingResponse));
+        return Ok(response);
     }
 }
