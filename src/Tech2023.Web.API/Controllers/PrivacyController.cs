@@ -14,12 +14,14 @@ public class PrivacyController : ControllerBase
 {
     internal readonly IMemoryCache _cache;
     internal readonly IDbContextFactory<ApplicationDbContext> _factory;
+    internal readonly ILogger<PrivacyController> _logger;
     internal const string CacheSlot = "privacy_policy";
 
-    public PrivacyController(IMemoryCache cache, IDbContextFactory<ApplicationDbContext> factory)
+    public PrivacyController(IMemoryCache cache, IDbContextFactory<ApplicationDbContext> factory, ILogger<PrivacyController> logger)
     {
         _cache = cache;
         _factory = factory;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -31,6 +33,7 @@ public class PrivacyController : ControllerBase
 
             if (policy is null)
             {
+                _logger.LogError("Cache in privacy policy returned a null value");
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
