@@ -13,7 +13,10 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-        builder.Services.AddControllersWithViews();
+        builder.Services.AddControllersWithViews().AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.AddContext<WebSerializationContext>();
+        });
 
         builder.Services.AddHttpClient(Clients.API, client =>
         {

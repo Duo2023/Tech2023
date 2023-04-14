@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Tech2023.DAL;
 using Tech2023.Web.Shared;
 using Tech2023.Web.Shared.Authentication;
-using Tech2023.Web.Shared.SourceGenerators;
 
 namespace Tech2023.Web.API.Controllers;
 
@@ -146,5 +145,5 @@ public sealed class AccountController : ControllerBase
     /// Gets a JSON text auth result
     /// </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static string GetJsonAuthResult(AuthResult result) => JsonSerializer.Serialize(result, AuthResultContext.Default.AuthResult);
+    internal static string GetJsonAuthResult(AuthResult result) => JsonSerializer.Serialize(result, WebSerializationContext.Default.AuthResult);
 }

@@ -1,10 +1,8 @@
 ﻿using System.Diagnostics;
-using System.Text;
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Tech2023.DAL.Models;
-using Tech2023.DAL.SourceGenerators;
 using Tech2023.Web.Models;
+using Tech2023.Web.Shared;
 
 namespace Tech2023.Web.Controllers;
 
@@ -37,7 +35,7 @@ public class HomeController : Controller
 
             response.EnsureSuccessStatusCode();
 
-            PrivacyPolicy? policy = await response.Content.ReadFromJsonAsync(PrivacyPolicyContext.Default.PrivacyPolicy);
+            PrivacyPolicy? policy = await response.Content.ReadFromJsonAsync(WebSerializationContext.Default.PrivacyPolicy);
 
             if (policy is null)
             {
