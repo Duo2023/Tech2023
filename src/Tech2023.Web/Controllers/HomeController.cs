@@ -11,7 +11,7 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly IHttpClientFactory _factory;
-    private PrivacyPolicy? _privacyPolicy { get; set; }
+    private static readonly Lazy<PrivacyPolicy> _errorPrivacyPolicy = new(() => new PrivacyPolicy { Content = "Couldn't get Privacy Policy" });
 
     public HomeController(ILogger<HomeController> logger, IHttpClientFactory factory)
     {
@@ -25,34 +25,31 @@ public class HomeController : Controller
         return View();
     }
 
-
-    private async void GetPrivacyPolicy()
+    [Route(Routes.Privacy)]
+    public async Task<IActionResult> Privacy()
     {
         var client = _factory.CreateClient(Clients.API);
-        var response = await client.GetAsync("/api/privacy");
 
-
-        if (!response.IsSuccessStatusCode)
+        try
         {
-            _logger.LogError("Unsuccessful Privacy Policy API response!\n" +
-                "Api Response: {res}", response);
-            return;
+            var response = await client.GetAsync("/api/privacy");
+            response.EnsureSuccessStatusCode();
+            PrivacyPolicy? policy = await response.Content.ReadFromJsonAsync<PrivacyPolicy>();
+            if (policy is null)
+            {
+                _logger.LogError("Error parsing Privacy Policy API response!");
+                return View(_errorPrivacyPolicy.Value);
+            }
+            return View(policy);
         }
-
-        PrivacyPolicy? policy = await response.Content.ReadFromJsonAsync<PrivacyPolicy>();
-        if (policy is null)
+        catch (HttpRequestException ex)
         {
-            _logger.LogError("Error parsing Privacy Policy API response!");
-            return;
-        }
-        _privacyPolicy = policy;
-    }
+            _logger.LogError("Unsuccessful Privacy Policy API response!\n\t" +
+                "Status Code: {code}\n\t" +
+                "Http Error: {err}", ex.StatusCode, ex.Message);
 
-    [Route(Routes.Privacy)]
-    public IActionResult Privacy()
-    {
-        GetPrivacyPolicy();
-        return View(_privacyPolicy);
+            return View(_errorPrivacyPolicy.Value);
+        }
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
