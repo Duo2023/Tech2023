@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Tech2023.DAL.Models;
+using Tech2023.DAL.SourceGenerators;
 using Tech2023.Web.Models;
 
 namespace Tech2023.Web.Controllers;
@@ -33,13 +34,17 @@ public class HomeController : Controller
         try
         {
             var response = await client.GetAsync("/api/privacy");
+
             response.EnsureSuccessStatusCode();
-            PrivacyPolicy? policy = await response.Content.ReadFromJsonAsync<PrivacyPolicy>();
+
+            PrivacyPolicy? policy = await response.Content.ReadFromJsonAsync(PrivacyPolicyContext.Default.PrivacyPolicy);
+
             if (policy is null)
             {
                 _logger.LogError("Error parsing Privacy Policy API response!");
                 return View(_errorPrivacyPolicy.Value);
             }
+
             return View(policy);
         }
         catch (HttpRequestException ex)
