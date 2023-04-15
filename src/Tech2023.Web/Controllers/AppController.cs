@@ -1,5 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
-using Tech2023.Web;
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace Tech2023.Web;
 
 public class AppController : Controller
 {

@@ -25,31 +25,42 @@ public class HomeController : Controller
     }
 
     [Route(Routes.Privacy)]
-    public async Task<IActionResult> Privacy()
+    public async Task<IActionResult> PrivacyAsync()
     {
         var client = _factory.CreateClient(Clients.API);
 
+        client.Timeout = TimeSpan.FromMilliseconds(500);
+
         try
         {
-            var response = await client.GetAsync("/api/privacy");
+            var response = await client.GetAsync(ApiRoutes.Privacy.Base);
 
-            response.EnsureSuccessStatusCode();
+            if (!response.IsSuccessStatusCode)
+            {
+                return Error($"Status Code: {response.StatusCode} sent back by {ApiRoutes.Privacy.Base}");
+            }
 
             PrivacyPolicy? policy = await response.Content.ReadFromJsonAsync(WebSerializationContext.Default.PrivacyPolicy);
 
             if (policy is null)
             {
-                _logger.LogError("Error parsing Privacy Policy API response!");
-                return View(_errorPrivacyPolicy.Value);
+                return Error($"API contract broken: Privacy API");
             }
 
             return View(policy);
         }
-        catch (HttpRequestException ex)
+        catch (HttpRequestException exception)
         {
-            _logger.LogError("Unsuccessful Privacy Policy API response!\n\t" +
-                "Status Code: {code}\n\t" +
-                "Http Error: {err}", ex.StatusCode, ex.Message);
+            return Error(exception.Message);
+        }
+        catch (TaskCanceledException)
+        {
+            return Error("Task was cancelled for retrieving privacy policy because it took too long");
+        }
+
+        IActionResult Error(string message)
+        {
+            _logger.LogError("{error}", message);
 
             return View(_errorPrivacyPolicy.Value);
         }

@@ -7,6 +7,11 @@ public static class ApiRoutes
 {
     public const string Base = "/api";
 
+    public static class Privacy
+    {
+        public const string Base = $"{ApiRoutes.Base}/privacy";
+    }
+
     public static class Users
     {
         public const string Base = $"{ApiRoutes.Base}/user";

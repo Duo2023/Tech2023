@@ -5,6 +5,9 @@ namespace Tech2023.DAL;
 
 public static partial class Queries
 {
+    /// <summary>
+    /// Static requires relating to privacy models
+    /// </summary>
     public static class Privacy
     {
         internal static readonly Func<ApplicationDbContext, Task<PrivacyPolicy>> _getCurrentPrivacyPolicy
@@ -14,8 +17,19 @@ public static partial class Queries
             = EF.CompileAsyncQuery((ApplicationDbContext context, int version) => context.PrivacyPolicies.FirstOrDefault(p => p.Version == version));
 
 
+        /// <summary>
+        /// Gets the latest privacy policy
+        /// </summary>
+        /// <param name="context">The context to retrieve the policy from</param>
+        /// <returns>Non-null latest privacy policy</returns>
         public static Task<PrivacyPolicy> GetCurrentPrivacyPolicy(ApplicationDbContext context) => _getCurrentPrivacyPolicy(context);
 
+        /// <summary>
+        /// Gets the privacy policy by version if available
+        /// </summary>
+        /// <param name="context">The context to retrieve the policy from</param>
+        /// <param name="version">The version of the privacy policy</param>
+        /// <returns>A possibly null Privacy Policy if the version doesn't exist</returns>
         public static Task<PrivacyPolicy?> GetPrivacyByVersion(ApplicationDbContext context, int version) => _getByVersion(context, version);
     }
 }

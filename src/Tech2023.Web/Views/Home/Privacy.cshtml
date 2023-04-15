@@ -5,7 +5,16 @@
     ViewData["Title"] = "Privacy Policy";
 }
 
-<div class="m-auto p-4 overflow-y-auto">
+<div class="m-auto p-4 overflow-y-auto text-center">
     <h1 class="text-center">@ViewData["Title"]</h1>
     <p>@Model.Content</p>
 </div>
+
+@* This is to guard against when the privacy policy has not been fetched because the version is 0 when it is returned from an error as 0 is the default value of Int32 *@
+@if (Model.Version != 0)
+{
+    <footer class="text-muted text-center" id="privacy-footer">
+        <p>Last Updated: @Model.Updated</p>
+        <p>Version: @Model.Version</p>
+    </footer>
+}
