@@ -26,7 +26,7 @@ public sealed class Startup
     /// </summary>
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddControllersWithViews().AddJsonOptions(options =>
+        services.AddMvc().AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.AddContext<WebSerializationContext>();
         });
@@ -37,6 +37,7 @@ public sealed class Startup
 
             client.BaseAddress = new Uri(uriString);
         });
+
     }
 
     /// <summary>
