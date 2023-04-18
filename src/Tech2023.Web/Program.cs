@@ -1,51 +1,30 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Tech2023.Web.Shared;
+﻿namespace Tech2023.Web;
 
-namespace Tech2023.Web;
-
-public class Program
+/// <summary>
+/// The program class
+/// </summary>
+public sealed class Program
 {
+    /// <summary>
+    /// The entry point of the application
+    /// </summary>
+    /// <param name="args"></param>
     public static void Main(string[] args)
     {
 #if DEBUG
         TailwindReload.Run();
 #endif
-        var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
-        builder.Services.AddControllersWithViews().AddJsonOptions(options =>
-        {
-            options.JsonSerializerOptions.AddContext<WebSerializationContext>();
-        });
-
-        builder.Services.AddHttpClient(Clients.API, client =>
-        {
-            string uriString = builder.Configuration["ApiUrl"] ?? throw new ConfigurationException("The API url should be configured");
-
-            client.BaseAddress = new(uriString);
-        });
-
-        var app = builder.Build();
-
-        // Configure the HTTP request pipeline.
-        if (!app.Environment.IsDevelopment())
-        {
-            app.UseExceptionHandler("/Home/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-            app.UseHsts();
-        }
-
-        app.UseHttpsRedirection();
-        app.UseStaticFiles();
-
-        app.UseRouting();
-
-        app.UseAuthorization();
-
-        app.MapControllerRoute(
-            name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}");
-
-        app.Run();
+        CreateHostBuilder(args).Build().Run();
     }
+
+    /// <summary>
+    /// Creates the host builder for the web application to run
+    /// </summary>
+    public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+        .ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder.UseStartup<Startup>();
+        });
 }
