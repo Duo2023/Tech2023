@@ -17,4 +17,14 @@ Other prequisites are recommended but can be swapped out or ignored.
 - Both TypeScript and Tailwind depend on NodeJS so you would also need to install it (https://nodejs.org/en/download)
 
 ## Technologies Used
-<img src="./assets/img/dotnet-logo.png" width="100" height="100" alt="dotnet" width="18%">
+<p float="left">
+  <img src="./assets/img/dotnet-logo.png" width="100" />
+  <img src="./assets/img/ef-core-logo.png" width="100" />
+  <img src="./assets/img/sql-server-logo.png" width="100"/>
+</p>
+
+<p float="left">
+   <img src="./assets/img/node-js-logo.png" width="100"/>
+   <img src="./assets/img/typescript-logo.png" width="100"/>
+   <img src="./assets/img/tailwind-logo.png" width="100"/>
+</p>
