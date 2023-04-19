@@ -17,6 +17,7 @@ public static class ApiRoutes
         public const string Base = $"{ApiRoutes.Base}/user";
         public const string Register = "register";
         public const string Login = "login";
+        public const string ForgotPassword = "forgot_password";
     }
 
     public static class Statistics

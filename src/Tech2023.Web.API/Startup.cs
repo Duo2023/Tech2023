@@ -10,6 +10,7 @@ using Tech2023.Web.Shared.Authentication;
 using Tech2023.Web.Shared.Authenticaton;
 using Tech2023.Web.Shared;
 using Tech2023.Core;
+using Tech2023.Web.Shared.Email;
 
 namespace Tech2023.Web.API;
 
@@ -89,6 +90,7 @@ public sealed class Startup
 
         services.AddTransient<IClaimsService, ClaimsService>();
         services.AddTransient<IJwtTokenService, JwtTokenService>();
+        services.AddTransient<IEmailClient, EmailClient>();
 
         services.AddMemoryCache();
 

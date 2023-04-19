@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Tech2023.Web;
 
@@ -19,6 +19,12 @@ public class UserController : Controller
 
     [Route(Routes.User.Register)]
     public IActionResult Register()
+    {
+        return View();
+    }
+
+    [Route(Routes.User.ForgotPassword)]
+    public IActionResult ForgotPassword()
     {
         return View();
     }

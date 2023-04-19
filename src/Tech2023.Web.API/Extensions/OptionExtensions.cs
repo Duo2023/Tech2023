@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Microsoft.Extensions.Options;
 using Tech2023.Web.Shared;
 using Tech2023.Web.Shared.Authentication;
+using Tech2023.Web.Shared.Email;
 
 namespace Tech2023.Web.API.Extensions;
 
@@ -18,6 +19,7 @@ internal static class OptionExtensions
 
         services.AddOptions();
         services.ValidateAndConfigure<JwtOptions>(nameof(JwtOptions), configuration);
+        services.ValidateAndConfigure<EmailOptions>(nameof(EmailOptions), configuration);
 
         return services;
     }

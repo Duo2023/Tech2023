@@ -23,6 +23,7 @@ public sealed class AccountController : ControllerBase
     internal readonly RoleManager<ApplicationRole> _roleManager;
     internal readonly IClaimsService _claimsService;
     internal readonly IJwtTokenService _jwtTokenService;
+    internal readonly IEmailClient _emailClient;
 #nullable restore
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -38,16 +39,20 @@ public sealed class AccountController : ControllerBase
         UserManager<ApplicationUser> userManager, 
         RoleManager<ApplicationRole> roleManager,
         IClaimsService claimsService,
-        IJwtTokenService jwtTokenService)
+        IJwtTokenService jwtTokenService,
+        IEmailClient emailClient)
     {
         Debug.Assert(userManager != null, GetCtorErrorMessage(nameof(userManager)));
         Debug.Assert(roleManager != null, GetCtorErrorMessage(nameof(roleManager)));
         Debug.Assert(claimsService != null, GetCtorErrorMessage(nameof(claimsService)));
+        Debug.Assert(emailClient != null, GetCtorErrorMessage(nameof(emailClient)));
+
 
         _userManager = userManager;
         _roleManager = roleManager;
         _claimsService = claimsService;
         _jwtTokenService = jwtTokenService;
+        _emailClient = emailClient; 
     }
 
 
@@ -139,6 +144,21 @@ public sealed class AccountController : ControllerBase
             Token = new JwtSecurityTokenHandler().WriteToken(token),
             Expiration = token.ValidTo
         }));
+    }
+
+    [HttpPost]
+    [Route(ApiRoutes.Users.ForgotPassword)]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> ForgotPasswordAsync([FromQuery] string email)
+    {
+        if (email is null)
+        {
+            return BadRequest();
+        }
+
+        await _emailClient.SendEmailAsync(email, "Password Reset Request", "TODO");
+
+        return NoContent();
     }
 
     /// <summary>
