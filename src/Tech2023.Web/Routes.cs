@@ -9,4 +9,10 @@ public static class Routes
     {
         public const string Home = "/app";
     }
+
+    public static class User
+    {
+        public const string Login = "/login";
+        public const string Register = "/register";
+    }
 }
