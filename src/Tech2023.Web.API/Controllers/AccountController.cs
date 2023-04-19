@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Tech2023.DAL;
 using Tech2023.Web.Shared;
 using Tech2023.Web.Shared.Authentication;
+using Tech2023.Web.Shared.Email;
 
 namespace Tech2023.Web.API.Controllers;
 

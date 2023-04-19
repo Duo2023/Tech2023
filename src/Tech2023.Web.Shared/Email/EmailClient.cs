@@ -2,7 +2,6 @@
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-
 using MimeKit;
 
 namespace Tech2023.Web.Shared.Email;
@@ -53,5 +52,6 @@ public class EmailClient : IEmailClient
 
         var response = await client.SendAsync(email).ConfigureAwait(false);
 
+        _logger.LogInformation("{emailSendResponse}", response);
     }
 }
