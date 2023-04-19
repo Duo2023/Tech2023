@@ -28,4 +28,10 @@ public class UserController : Controller
     {
         return View();
     }
+
+    [Route(Routes.User.ResetPassword)]
+    public IActionResult ResetPassword()
+    {
+        return View();
+    }
 }

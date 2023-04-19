@@ -14,6 +14,7 @@ public static class Routes
     {
         public const string Login = "/login";
         public const string Register = "/register";
-        public const string ForgotPassword = "/forgot_password";
+        public const string ForgotPassword = "/forgot-password";
+        public const string ResetPassword = "/reset-password";
     }
 }
