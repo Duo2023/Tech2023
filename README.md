@@ -15,3 +15,6 @@ Other prequisites are recommended but can be swapped out or ignored.
 - TypeScript is used on the front end web application, but you could just use the native applications + web api instead.
 - Tailwind CSS is also a front end requirement.
 - Both TypeScript and Tailwind depend on NodeJS so you would also need to install it (https://nodejs.org/en/download)
+
+## Technologies Used
+<img src="./assets/img/dotnet-logo.png" width="100" height="100" alt="dotnet" width="18%">
