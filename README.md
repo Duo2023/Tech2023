@@ -16,6 +16,27 @@ Other prequisites are recommended but can be swapped out or ignored.
 - Tailwind CSS is also a front end requirement.
 - Both TypeScript and Tailwind depend on NodeJS so you would also need to install it (https://nodejs.org/en/download)
 
+## Getting Started
+To get started, you will need a valid email account for the web api to use, I recommend outlook during debugging and testing.
+
+Then in Visual Studio access the user secrets by right clicking on the Tech2023.Web.API project
+
+<img src="./assets/img/getting-started-user-secrets.png" width="300">
+
+After that copy in the contents and change the 'FromEmail', 'Username' and 'Password' to your own
+```jsonc
+{
+  "EmailOptions": {
+    "FromEmail": "example@outlook.com", /* Your own email */
+    "Port": 587, /* Default SMTP outlook setting */
+    "SenderName": "Tech2023", /* It doesn't really matter what you use */
+    "SmtpServer": "smtp-mail.outlook.com", /* Your own SMTP server if you want to use something else */
+    "Username": "[outlook-user]", /* Your smtp username */
+    "Password": "[outlook-password]" /* Your password */
+  }
+}
+```
+
 ## Technologies Used
 <p float="left">
   <img src="./assets/img/dotnet-logo.png" width="100" />
