@@ -11,7 +11,6 @@
         <title>@ViewData["Title"] - Tech2023.Web</title>
         <link rel="stylesheet" href="~/css/fonts.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     </head>
     <body class="text-white bg-background">
         <header>
@@ -20,12 +19,23 @@
                     <a class="text-center self-center flex items-center px-4 py-3 font-bold bg-primary rounded-2xl" asp-controller="Home" asp-action="Index">Tech2023</a>
                     <!-- WIP -->
 
-                    <div class="nav-items-container flex items-center md:order-2">
-                        <div class="flex flex-row space-x-4 mt-0 text-white font-semibold">
-                            <a class="nav-link px-4 py-2 rounded-2xl hover:underline" asp-controller="User" asp-action="Login">Log In</a>
-                            <a class="nav-link px-4 py-2 rounded-2xl bg-gradient-button" asp-controller="User" asp-action="Register">Register</a>
+                    @if (User.Identity is not null && User.Identity.IsAuthenticated) 
+                    {
+                        <div class="nav-items-container flex items-center mr-4">
+                            <div class="flex flex-row space-x-8 text-white">
+                                <button id="more" class="material-symbols-rounded">more_horiz</button>
+                                <button id="account-circle" class="material-symbols-rounded">account_circle</button>
+                            </div>
                         </div>
-                    </div>
+                    } else 
+                    {
+                        <div class="nav-items-container flex items-center">
+                            <div class="flex flex-row space-x-4 mt-0 text-white font-semibold">
+                                <a class="nav-link px-4 py-2 rounded-2xl hover:underline" asp-controller="User" asp-action="Login">Log In</a>
+                                <a class="nav-link px-4 py-2 rounded-2xl bg-gradient-button" asp-controller="User" asp-action="Register">Register</a>
+                            </div>
+                        </div>
+                    }
                 </div>
             </nav>
             @if (EnvironmentConfiguration.IsDebug)
