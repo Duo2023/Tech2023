@@ -5,6 +5,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 using Tech2023.DAL;
 using Tech2023.DAL.Models;
+using Tech2023.Web.API.Caching;
 
 namespace Tech2023.Web.API.Controllers;
 
@@ -16,7 +17,7 @@ public class PrivacyController : ControllerBase
     internal readonly IMemoryCache _cache;
     internal readonly IDbContextFactory<ApplicationDbContext> _factory;
     internal readonly ILogger<PrivacyController> _logger;
-    internal const string CacheSlot = "privacy_policy";
+    internal const CacheSlots CacheSlot = CacheSlots.PrivacyPolicy;
 
     public PrivacyController(IMemoryCache cache, IDbContextFactory<ApplicationDbContext> factory, ILogger<PrivacyController> logger)
     {
