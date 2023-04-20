@@ -48,7 +48,7 @@ public class EmailClient : IEmailClient
 
         await client.ConnectAsync(_options.Value.SmtpServer, _options.Value.Port, MailKit.Security.SecureSocketOptions.StartTls).ConfigureAwait(false);
 
-        await client.AuthenticateAsync(_options.Value.UserName, _options.Value.Password).ConfigureAwait(false);
+        await client.AuthenticateAsync(_options.Value.Username, _options.Value.Password).ConfigureAwait(false);
 
         var response = await client.SendAsync(email).ConfigureAwait(false);
 

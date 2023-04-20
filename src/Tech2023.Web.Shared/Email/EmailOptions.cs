@@ -39,7 +39,7 @@ public sealed class EmailOptions
     /// The smtp user name
     /// </summary>
     [Required]
-    public string UserName { get; set; }
+    public string Username { get; set; }
 
     /// <summary>
     /// The password for smtp authentication
