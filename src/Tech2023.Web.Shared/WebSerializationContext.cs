@@ -12,9 +12,9 @@ namespace Tech2023.Web.Shared;
 /// JSON source generator for all web related contexts
 /// </summary>
 [JsonSerializable(typeof(PingResponse))] // statistics
-[JsonSerializable(typeof(AuthResult))] // auth
-[JsonSerializable(typeof(LoginResult))]
 [JsonSerializable(typeof(PrivacyPolicy))] // privacy
+[JsonSerializable(typeof(Login))] // auth
+[JsonSerializable(typeof(Register))]
 [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
 public partial class WebSerializationContext : JsonSerializerContext
 {

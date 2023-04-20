@@ -1,9 +1,12 @@
 ﻿using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Runtime.CompilerServices;
+using System.Security.Claims;
 using System.Text.Json;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+
 using Tech2023.DAL;
 using Tech2023.Web.Shared;
 using Tech2023.Web.Shared.Authentication;
@@ -25,6 +28,7 @@ public sealed class AccountController : ControllerBase
     internal readonly IClaimsService _claimsService;
     internal readonly IJwtTokenService _jwtTokenService;
     internal readonly IEmailClient _emailClient;
+    internal readonly IOptions<JwtOptions> _options;
 #nullable restore
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -56,95 +60,70 @@ public sealed class AccountController : ControllerBase
         _emailClient = emailClient; 
     }
 
+    [HttpPost]
+    [Route(ApiRoutes.Users.Login)]
+    public async Task<IActionResult> LoginAsync([FromBody] Login login)
+    {
+        var user = await _userManager.FindByEmailAsync(login.Email);
 
-    /// <summary>
-    /// The register action registers a user for use of the application
-    /// </summary>
+        if (user is null || await _userManager.CheckPasswordAsync(user, login.Password))
+        {
+            return Unauthorized();
+        }
+
+        var roles = await _userManager.GetRolesAsync(user);
+
+        var claims = new List<Claim>()
+        {
+            new Claim(ClaimTypes.Name, user.UserName!),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
+
+        foreach (var role in roles)
+        {
+            claims.Add(new Claim(ClaimTypes.Role, role));
+        }
+
+        var token = _jwtTokenService.GetJwtToken(claims);
+        var refreshToken = AuthHelper.GenerateRefreshToken();
+
+        user.RefreshToken = refreshToken;
+        user.RefreshTokenExpiryTime = DateTime.Now.AddDays(_options.Value.RefreshTokenValid);
+
+        await _userManager.UpdateAsync(user);
+
+        return Ok();
+    }
+
+
     [HttpPost]
     [Route(ApiRoutes.Users.Register)]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<IActionResult> RegisterAsync([FromBody] Register register)
+    public async Task<IActionResult> RegisterAsync(Register register)
     {
-        if (register == null)
+        if (!ModelState.IsValid)
         {
-            return Conflict(GetJsonAuthResult(AuthResult.Fail(new string[]
-            {
-                "Register payload was found empty"
-            })));
+            return BadRequest();
         }
 
-        if (register.Password != register.ConfirmPassword)
+        if (await _userManager.FindByEmailAsync(register.Email) is not null)
         {
-            return Conflict(GetJsonAuthResult(AuthResult.Fail(new string[]
-            {
-                "Password should be the same as confirm password."
-            })));
+            return Conflict();
         }
-
-        IdentityResult result;
 
         ApplicationUser user = new()
         {
             Email = register.Email,
-            UserName = register.Email,
-            SecurityStamp = Guid.NewGuid().ToString()
+            SecurityStamp = Guid.NewGuid().ToString(),
         };
 
-        result = await _userManager.CreateAsync(user, register.Password);
+        var result = await _userManager.CreateAsync(user, register.Password);
 
         if (!result.Succeeded)
         {
-            return Conflict(AuthResult.Fail(result.Errors.Select(error => error.Description)));
+            return BadRequest();
         }
 
-        return CreatedAtAction(ApiRoutes.Users.Register, GetJsonAuthResult(AuthResult.Ok()));
-    }
-
-    /// <summary>
-    /// Endpoint for a user to login to
-    /// </summary>
-    [HttpPost]
-    [Route(ApiRoutes.Users.Login)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<IActionResult> LoginAsync([FromBody] Login login)
-    {
-        if (login is null)
-        {
-            return BadRequest(GetJsonAuthResult(AuthResult.Fail(new string[]
-            {
-                "Login body was found empty"
-            })));
-        }
-
-        if (string.IsNullOrWhiteSpace(login.Email))
-        {
-            return BadRequest(GetJsonAuthResult(AuthResult.Fail(new string[]
-            {
-                "Email was empty"
-            })));
-        }
-
-        var user = await _userManager.FindByEmailAsync(login.Email);
-
-        if (user is null || !await _userManager.CheckPasswordAsync(user, login.Password))
-        {
-            return Unauthorized(AuthResult.Fail(new string[]
-            {
-                "The email and password combination is invalid"
-            }));
-        }
-
-        var claims = await _claimsService.GetUserClaimsAsync(user);
-
-        var token = _jwtTokenService.GetJwtToken(claims);
-
-        return Ok(LoginResult.Ok(new TokenObject()
-        {
-            Token = new JwtSecurityTokenHandler().WriteToken(token),
-            Expiration = token.ValidTo
-        }));
+        return Ok();
     }
 
     [HttpPost]
@@ -161,10 +140,4 @@ public sealed class AccountController : ControllerBase
 
         return NoContent();
     }
-
-    /// <summary>
-    /// Gets a JSON text auth result
-    /// </summary>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static string GetJsonAuthResult(AuthResult result) => JsonSerializer.Serialize(result, WebSerializationContext.Default.AuthResult);
 }
