@@ -13,12 +13,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-        builder.Services.AddControllersWithViews()
-        .AddRazorOptions(options =>
-        {
-            options.ViewLocationFormats.Add("/{0}.cshtml");
-        })
-        .AddJsonOptions(options =>
+        builder.Services.AddControllersWithViews().AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.AddContext<WebSerializationContext>();
         });
