@@ -1,22 +1,32 @@
-<aside class="sidebar p-1 left-0 h-full w-min bg-secondary justify-end">
-    <div id="top-bar" class="flex flex-row mt-2 px-2">
+@using Tech2023.Web.Models;
+@model IEnumerable<Subject>
+
+@{
+    var topBarHeight = "3.5rem";
+}
+
+<aside class="sidebar left-0 h-full w-min bg-secondary">
+    <div id="top-bar" class="flex flex-row mt-2 px-2" style="height: @topBarHeight;">
         <div class="bg-background rounded-full py-3 my-auto">
             <input type="text" name="search" placeholder="🔎 Search" autocomplete="off" id="search-bar" class="bg-background ml-4 mr-2 active: outline-none w-auto">
         </div>
-        <button class="h-12 w-12 material-symbols-rounded relative navbar-toggler p-3 ml-1 hover:bg-background hover:rounded-full transition-all duration-200 ease-out" type="button" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
+        <button class="material-symbols-rounded relative navbar-toggler p-3 ml-1 hover:bg-background hover:rounded-full transition-all duration-200 ease-out" type="button" aria-controls="navbarSupportedContent"
+            aria-expanded="true" aria-label="Toggle navigation">
             left_panel_close
         </button>
     </div>
-    <div id="subject-list" class="flex flex-col">
-        @for(int i = 0; i < 5; i++)
-        {
-            <div class="subjects bg-secondary hover:bg-background py-3 mx-4 my-1 rounded-xl shadow-xl w-auto transition-colors duration-75 ease-linear">
-                <div class="flex flex-row px-4 font-semibold items-center justify-start text-md">
-                    <div class="subject-icon w-6 h-6 rounded-md bg-red-500 mr-3"></div>
-                    <p>Maths</p>
+    <div id="sidebar-items" class="flex flex-col justify-between" style="height: calc(100% - calc(@topBarHeight + 0.5rem))">
+        <div id="subject-list" class="flex flex-col">
+            @foreach(Subject subject in Model)
+            {
+                <div class="subjects bg-secondary hover:bg-background py-3 mx-4 my-1 rounded-xl shadow-xl w-auto transition-colors duration-50 ease-linear">
+                    <div class="flex flex-row px-4 font-semibold items-center justify-start text-md">
+                        <div class="subject-icon w-6 h-6 rounded-md mr-3" style="background-color: @subject.Color;"></div>
+                        <p>@subject.Title</p>
+                    </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
+
     </div>
 </aside>
