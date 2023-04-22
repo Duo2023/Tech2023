@@ -11,6 +11,7 @@ using Tech2023.Web.Shared.Authenticaton;
 using Tech2023.Web.Shared;
 using Tech2023.Core;
 using Tech2023.Web.Shared.Email;
+using Tech2023.Web.API.Workers;
 
 namespace Tech2023.Web.API;
 
@@ -100,6 +101,8 @@ public sealed class Startup
         services.AddTransient<IEmailClient, EmailClient>();
 
         services.AddMemoryCache();
+
+        services.AddHostedService<DatabaseStatsService>();
 
         services.AddTransient<IDataInitializer, Initializer>();
     }

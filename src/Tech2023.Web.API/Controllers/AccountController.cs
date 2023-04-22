@@ -45,7 +45,8 @@ public sealed class AccountController : ControllerBase
         RoleManager<ApplicationRole> roleManager,
         IClaimsService claimsService,
         IJwtTokenService jwtTokenService,
-        IEmailClient emailClient)
+        IEmailClient emailClient,
+        IOptions<JwtOptions> options)
     {
         Debug.Assert(userManager != null, GetCtorErrorMessage(nameof(userManager)));
         Debug.Assert(roleManager != null, GetCtorErrorMessage(nameof(roleManager)));
@@ -57,7 +58,8 @@ public sealed class AccountController : ControllerBase
         _roleManager = roleManager;
         _claimsService = claimsService;
         _jwtTokenService = jwtTokenService;
-        _emailClient = emailClient; 
+        _emailClient = emailClient;
+        _options = options;
     }
 
     [HttpPost]
