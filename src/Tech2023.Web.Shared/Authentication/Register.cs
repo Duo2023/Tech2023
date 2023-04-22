@@ -1,26 +1,28 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
-namespace Tech2023.Web.Shared;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
+namespace Tech2023.Web.Shared.Authentication;
+
+/// <summary>
+/// Register class
+/// </summary>
 public class Register
 {
-    /// <summary>
-    /// The email address to the target associated account
-    /// </summary>
-    [EmailAddress]
     [Required]
+    [DataType(DataType.EmailAddress)]
+    [JsonPropertyName("email")]
     public string Email { get; set; }
 
-    /// <summary>
-    /// The password for the target user account
-    /// </summary>
     [Required]
     [DataType(DataType.Password)]
+    [JsonPropertyName("password")]
     public string Password { get; set; }
 
     [Required]
-    [DataType(DataType.Password)]
+    [Compare(nameof(Password))]
+    [DataType(DataType.Password)] 
+    [JsonPropertyName("confirmPassword")]
     public string ConfirmPassword { get; set; }
 }

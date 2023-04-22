@@ -32,4 +32,7 @@ public class JwtOptions
     /// </summary>
     [JsonPropertyName("expiryInMinutes")]
     public uint ExpiryInMinutes { get; set; }
+
+    [JsonPropertyName("refreshTokenValidityInDays")]
+    public uint RefreshTokenValid { get; set; }
 }

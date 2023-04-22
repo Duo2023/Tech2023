@@ -1,4 +1,4 @@
-namespace Tech2023.Web;
+﻿namespace Tech2023.Web;
 
 public static class Routes
 {
@@ -8,5 +8,13 @@ public static class Routes
     public static class Application
     {
         public const string Home = "/app";
+    }
+
+    public static class User
+    {
+        public const string Login = "/login";
+        public const string Register = "/register";
+        public const string ForgotPassword = "/forgot-password";
+        public const string ResetPassword = "/reset-password";
     }
 }

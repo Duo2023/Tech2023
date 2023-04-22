@@ -14,7 +14,7 @@ public class HomeController : Controller
 
     public HomeController(ILogger<HomeController> logger, IHttpClientFactory factory)
     {
-        _logger = logger;
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _factory = factory;
     }
 

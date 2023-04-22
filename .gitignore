@@ -375,3 +375,4 @@ src/Tech2023.Web/wwwroot/js/*.txt
 # Typescript (tsc) - compiled JS files
 src/Tech2023.Web/scripts/build/*.js
 src/Tech2023.Web/scripts/build/*.js.map
+/src/Tech2023.Web/package-lock.json

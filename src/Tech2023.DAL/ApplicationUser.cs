@@ -8,4 +8,6 @@ namespace Tech2023.DAL;
 public class ApplicationUser : IdentityUser<Guid>
 {
     public DateTimeOffset Created { get; set; }
+    public string? RefreshToken { get; set; }
+    public DateTime RefreshTokenExpiryTime { get; set; }
 }

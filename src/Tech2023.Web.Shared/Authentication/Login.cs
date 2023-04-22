@@ -1,27 +1,23 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
-namespace Tech2023.Web.Shared.Authentication;
-
-// https://www.trystanwilcock.com/2022/08/13/net-6-0-jwt-token-authentication-c-sharp-api-tutorial/
+using System.Text.Json.Serialization;
 
 #nullable disable
 
+namespace Tech2023.Web.Shared;
+
 /// <summary>
-/// A login to send the web api and receive a <see cref="AuthResult"/> in response
+/// Login model for the user to sign into the api
 /// </summary>
 public class Login
 {
-    /// <summary>
-    /// The email address to the target associated account
-    /// </summary>
     [EmailAddress]
-    [Required]
+    [DataType(DataType.EmailAddress)]
+    [Required(AllowEmptyStrings = false)]
+    [JsonPropertyName("email")]
     public string Email { get; set; }
 
-    /// <summary>
-    /// The password for the target user account
-    /// </summary>
-    [Required]
     [DataType(DataType.Password)]
+    [Required(AllowEmptyStrings = false)]
+    [JsonPropertyName("password")]
     public string Password { get; set; }
 }
