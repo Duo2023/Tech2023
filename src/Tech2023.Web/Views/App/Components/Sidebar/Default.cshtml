@@ -5,12 +5,12 @@
     var topBarHeight = "3.5rem";
 }
 
-<aside class="sidebar left-0 h-full w-min bg-secondary">
+<aside id="sidebar" class="left-0 h-full w-min bg-secondary">
     <div id="top-bar" class="flex flex-row mt-2 px-2" style="height: @topBarHeight;">
-        <div class="bg-background rounded-full py-3 my-auto">
+        <div id="search-bar" class="bg-background rounded-full py-3 my-auto">
             <input type="text" name="search" placeholder="🔎 Search" autocomplete="off" id="search-bar" class="bg-background ml-4 mr-2 active: outline-none w-auto">
         </div>
-        <button class="material-symbols-rounded relative navbar-toggler p-3 ml-1 hover:bg-background hover:rounded-full transition-all duration-200 ease-out" type="button" aria-controls="navbarSupportedContent"
+        <button id="sidebar-toggle-btn" class="material-symbols-rounded relative navbar-toggler p-3 ml-1 hover:bg-background hover:rounded-full transition-all duration-200 ease-out" type="button" aria-controls="navbarSupportedContent"
             aria-expanded="true" aria-label="Toggle navigation">
             left_panel_close
         </button>

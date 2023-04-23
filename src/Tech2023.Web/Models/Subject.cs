@@ -4,15 +4,13 @@ public class Subject
 {
     public string Color { get; set; }
     public string Title { get; set; }
-    public string PaperUrl { get; set; }
     public CourseProvider CourseProvider { get; set; }
 
-    public Subject(string color, CourseProvider courseProvider, string title, string paperUrl)
+    public Subject(string color, CourseProvider courseProvider, string title)
     {
         Color = color;
         CourseProvider = courseProvider;
         Title = title;
-        PaperUrl = paperUrl;
     }
 }
 
