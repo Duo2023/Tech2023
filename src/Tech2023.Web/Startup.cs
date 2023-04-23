@@ -1,4 +1,5 @@
 ﻿using Tech2023.Web.Shared;
+using Tech2023.Web.Workers;
 
 namespace Tech2023.Web;
 
@@ -38,6 +39,9 @@ public sealed class Startup
             client.BaseAddress = new Uri(uriString);
         });
 
+#if DEBUG
+        services.AddHostedService<AutoReloadService>();
+#endif
     }
 
     /// <summary>
