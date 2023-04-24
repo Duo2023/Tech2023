@@ -47,6 +47,7 @@ public class AutoReloadService : IHostedService
         foreach (var process in _processes)
         {
             _logger.LogInformation("Killing tailwind reload process");
+            process.CloseMainWindow();
             process.Kill();
         }
 
