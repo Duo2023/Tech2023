@@ -5,13 +5,13 @@
     var topBarHeight = "3.5rem";
 }
 
-<aside id="sidebar" class="left-0 h-full w-min bg-secondary">
-    <div id="top-bar" class="flex flex-row mt-2 px-2" style="height: @topBarHeight;">
-        <div id="search-bar" class="bg-background rounded-full py-3 my-auto">
+<aside id="sidebar" class="group sidebar left-0 h-full w-80 data-[expanded=false]:w-20 bg-secondary transition-all duration-200 ease-out" data-expanded="true" aria-expanded="true">
+    <div id="top-bar" class="flex flex-row justify-center items-center mt-2 px-2" style="height: @topBarHeight;">
+        <div id="search-bar" class="bg-background group-data-[expanded=false]:hidden rounded-full py-3 my-auto">
             <input type="text" name="search" placeholder="🔎 Search" autocomplete="off" id="search-bar" class="bg-background ml-4 mr-2 active: outline-none w-auto">
         </div>
-        <button id="sidebar-toggle-btn" class="material-symbols-rounded relative navbar-toggler p-3 ml-1 hover:bg-background hover:rounded-full transition-all duration-200 ease-out" type="button" aria-controls="navbarSupportedContent"
-            aria-expanded="true" aria-label="Toggle navigation">
+        <button id="sidebar-toggle-btn" class="material-symbols-rounded relative navbar-toggler p-2 hover:bg-background hover:rounded-full transition-all duration-200 ease-out" 
+                type="button" onclick="TS.app.sidebar.toggleSidebar()" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
             left_panel_close
         </button>
     </div>
@@ -19,19 +19,19 @@
         <div id="subject-list" class="flex flex-col">
             @foreach(Subject subject in Model)
             {
-                <div class="subjects bg-secondary hover:bg-background py-3 mx-4 my-1 rounded-xl shadow-xl w-auto transition-colors duration-50 ease-linear">
-                    <div class="flex flex-row px-4 font-semibold items-center justify-start text-md">
-                        <div class="subject-icon w-6 h-6 rounded-md mr-3" style="background-color: @subject.Color;"></div>
-                        <p>@subject.Title (@subject.CourseProvider)</p>
+                <div class="subjects bg-secondary hover:bg-background py-3 mx-3 my-1 rounded-xl shadow-xl w-auto transition-colors duration-50 ease-linear">
+                    <div class="flex flex-row group-data-[expanded=false]:block px-4 max-h-6 h-6 font-semibold items-center justify-start text-md">
+                        <div class="absolute subject-icon w-6 h-6 z-10 rounded-md mr-3" style="background-color: @subject.Color;"></div>
+                        <p class="ml-10 group-data-[expanded=false]:hidden text-clip whitespace-nowrap overflow-x-hidden">@subject.Title (@subject.CourseProvider)</p>
                     </div>
                 </div>
             }
         </div>
         <div id="util-list" class="flex flex-col my-2">
-            <div class="bg-secondary hover:bg-background py-3 mx-4 my-1 rounded-xl shadow-xl w-auto transition-colors duration-50 ease-linear">
+            <div class="bg-secondary hover:bg-background py-3 mx-3 my-1 rounded-xl shadow-xl w-auto transition-colors duration-50 ease-linear">
                 <a class="flex flex-row px-4 font-semibold items-center justify-start text-md">
                     <span class="material-symbols-rounded-sm text-md w-6 h-6 rounded-md mr-3">settings</span>
-                    <p>Settings</p>
+                    <p class="group-data-[expanded=false]:hidden">Settings</p>
                 </a>
             </div>
         </div>

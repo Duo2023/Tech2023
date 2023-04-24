@@ -1,2 +1,3 @@
 //export * from "./app";
-export * from "./statistics"
+export * from "./App/index";
+export * from "./statistics";
