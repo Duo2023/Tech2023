@@ -1,4 +1,6 @@
-﻿namespace Tech2023.Web;
+﻿using System.Reflection;
+
+namespace Tech2023.Web;
 
 /// <summary>
 /// The program class
@@ -11,9 +13,7 @@ public sealed class Program
     /// <param name="args"></param>
     public static void Main(string[] args)
     {
-#if DEBUG
-        TailwindReload.Run();
-#endif
+        Console.Title = Assembly.GetExecutingAssembly().GetName().FullName;
 
         CreateHostBuilder(args).Build().Run();
     }
