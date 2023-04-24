@@ -7,6 +7,11 @@ root = true
 [*]
 indent_style = space
 
+# Typescript and Javascript Code files
+[*.{ts,js}]
+indent_size = 4
+max_line_length = 120
+
 # XML project files
 [*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj}]
 indent_size = 2
