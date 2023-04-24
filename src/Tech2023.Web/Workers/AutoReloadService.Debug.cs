@@ -9,6 +9,7 @@ namespace Tech2023.Web.Workers;
 public class AutoReloadService : IHostedService
 {
     internal readonly ILogger<AutoReloadService> _logger;
+    internal readonly List<string> _npmScripts = new() { "css:dev", "build:dev" }; // See: ../package.json
     internal readonly List<Process> _processes = new();
 
     /// <summary>
@@ -25,14 +26,17 @@ public class AutoReloadService : IHostedService
     /// </summary>
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        if (TryGetTailwindReloadArgs(out var file, out var args))
+        if (TryGetNpmFileName(out var file))
         {
-            _logger.LogInformation("Starting tailwind reload");
-            _processes.Add(Process.Start(GetTailwindStartInfo(file, args))!);
+            _logger.LogInformation("Starting Npm reload scripts");
+            foreach (string npmScript in _npmScripts)
+            {
+                _processes.Add(Process.Start(GetNpmRunStartInfo(file, "run " + npmScript))!);
+            }
         }
         else
         {
-            _logger.LogWarning("Tailwind reload is not supported on your platform: {os}", Environment.OSVersion);
+            _logger.LogWarning("npm reload scripts is not supported on your platform : {os}", Environment.OSVersion);
             return Task.CompletedTask;
         }
 
@@ -44,9 +48,9 @@ public class AutoReloadService : IHostedService
     /// </summary>
     public Task StopAsync(CancellationToken cancellationToken)
     {
+        _logger.LogInformation("Closing npm reload script processes");
         foreach (var process in _processes)
         {
-            _logger.LogInformation("Killing tailwind reload process");
             process.CloseMainWindow();
             process.Kill();
         }
@@ -54,7 +58,7 @@ public class AutoReloadService : IHostedService
         return Task.CompletedTask;
     }
 
-    internal static ProcessStartInfo GetTailwindStartInfo(string file, string args)
+    internal static ProcessStartInfo GetNpmRunStartInfo(string file, string args)
     {
         return new()
         {
@@ -65,24 +69,21 @@ public class AutoReloadService : IHostedService
         };
     }
 
-    internal static bool TryGetTailwindReloadArgs([NotNullWhen(true)] out string? file, [NotNullWhen(true)] out string? args)
+    internal static bool TryGetNpmFileName([NotNullWhen(true)] out string? file)
     {
         if (OperatingSystem.IsWindows())
         {
-            file = "powershell";
-            args = "npm run css:dev";
+            file = "npm.cmd";
             return true;
         }
         else if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS())
         {
             file = "npm";
-            args = "run css:dev";
             return true;
         }
         else
         {
             file = null;
-            args = null;
             return false;
         }
     }
