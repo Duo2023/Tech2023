@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build:prod": "webpack --mode=production",
-    "build:dev": "webpack --mode=development",
+    "build:dev": "webpack watch --mode=development",
     "css:prod": "npx tailwind build -i ./wwwroot/css/index.css -o ./wwwroot/css/site.css",
     "css:dev": "npx tailwind build -i ./wwwroot/css/index.css -o ./wwwroot/css/site.css --watch"
   },
