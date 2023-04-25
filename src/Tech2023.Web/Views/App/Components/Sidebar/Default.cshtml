@@ -21,8 +21,10 @@
             {
                 <div class="subjects bg-secondary hover:bg-background py-3 mx-3 my-1 rounded-xl shadow-xl w-auto transition-colors duration-50 ease-linear">
                     <div class="flex flex-row group-data-[expanded=false]:block px-4 max-h-6 h-6 font-semibold items-center justify-start text-md">
-                        <div class="absolute subject-icon w-6 h-6 z-10 rounded-md mr-3" style="background-color: @subject.Color;"></div>
-                        <p class="ml-10 group-data-[expanded=false]:hidden text-clip whitespace-nowrap overflow-x-hidden">@subject.Title (@subject.CourseProvider)</p>
+                        <div class="absolute subject-icon text-center w-6 h-6 z-10 rounded-md mr-3" style="background-color: @subject.Color;">
+                            <p class="drop-shadow-[0_0_1.5px_rgb(0,0,0,0.6)]">@subject.Title[0]</p>
+                        </div>
+                        <p class="ml-10 group-data-[expanded=false]:hidden text-clip whitespace-nowrap overflow-hidden">@subject.Title (@subject.CourseProvider)</p>
                     </div>
                 </div>
             }
@@ -31,7 +33,7 @@
             <div class="bg-secondary hover:bg-background py-3 mx-3 my-1 rounded-xl shadow-xl w-auto transition-colors duration-50 ease-linear">
                 <a class="flex flex-row px-4 font-semibold items-center justify-start text-md">
                     <span class="material-symbols-rounded-sm text-md w-6 h-6 rounded-md mr-3">settings</span>
-                    <p class="group-data-[expanded=false]:hidden">Settings</p>
+                    <p class="group-data-[expanded=false]:hidden text-clip whitespace-nowrap overflow-hidden">Settings</p>
                 </a>
             </div>
         </div>
