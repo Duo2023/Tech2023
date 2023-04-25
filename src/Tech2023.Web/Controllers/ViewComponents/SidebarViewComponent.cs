@@ -14,7 +14,7 @@ public class SidebarViewComponent : ViewComponent
         subjects.Add(new Subject("#ef4444", CourseProvider.CAIE, "Maths"));
         subjects.Add(new Subject("#316aff", CourseProvider.CAIE, "Physics"));
         subjects.Add(new Subject("#ff7b16", CourseProvider.NCEA, "Chemistry"));
-        subjects.Add(new Subject("#ffe800", CourseProvider.CAIE, "IT"));
+        subjects.Add(new Subject("#ffc515", CourseProvider.CAIE, "IT"));
 
         return View(subjects);
     }
