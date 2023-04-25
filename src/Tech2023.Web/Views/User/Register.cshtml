@@ -7,20 +7,20 @@
         <div class="flex flex-col items-center mx-8 my-8">
             <h1 class="font-bold mb-4">Register</h1>
             <form class="flex flex-col space-y-4" action="" method="post">
-                <div class="">
-                    <p class="ml-2 font-semibold leading-7">Username: </p>
-                   <input type="text" name="username" id="username" placeholder="Enter username" class="w-72 bg-background outline-none px-4 py-3 rounded-2xl">
+                <div class="flex flex-col">
+                    <label for="username" class="ml-2 font-semibold leading-7">Username: </label>
+                    <input type="text" name="username" id="username" placeholder="Enter username" class="w-72 px-4 py-3 rounded-2xl bg-background outline-none border-light-hint border-2 border-opacity-0 focus:border-opacity-75 transition-all duration-75 ease-out">
                 </div>
                 <div class="flex flex-col">
-                    <p class="ml-2 font-semibold leading-7">Password: </p>
-                    <input type="password" name="password" id="password" placeholder="Enter password" class="w-72 bg-background outline-none px-4 py-3 rounded-2xl">
+                    <label for="password" class="ml-2 font-semibold leading-7">Password: </label>
+                    <input type="password" name="password" id="password" placeholder="Enter password" class="w-72 px-4 py-3 rounded-2xl bg-background outline-none border-light-hint border-2 border-opacity-0 focus:border-opacity-75 transition-all duration-75 ease-out">
                 </div>
                 <div class="flex flex-col">
-                    <p class="ml-2 font-semibold leading-7">Confirm Password: </p>
-                    <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm password" class="w-72 bg-background outline-none px-4 py-3 rounded-2xl">
+                    <label for="confirm-password" class="ml-2 font-semibold leading-7">Confirm Password: </label>
+                    <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm password" class="w-72 px-4 py-3 rounded-2xl bg-background outline-none border-light-hint border-2 border-opacity-0 focus:border-opacity-75 transition-all duration-75 ease-out">
                     <div class="flex flex-row px-2 pb-2 pt-1">
                         <input id="show-password-checkbox" type="checkbox" value="false">
-                        <p id="show-password-text" class="ml-2 text-sm">Show passwords</p>
+                        <label for="show-password-checkbox" id="show-password-text" class="ml-2 text-sm">Show passwords</label>
                     </div>
                 </div>
                 <button id="register-button" type="submit" class="bg-primary font-bold px-4 py-3 rounded-xl">Register</button>
