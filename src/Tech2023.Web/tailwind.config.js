@@ -14,7 +14,7 @@ module.exports = {
                 secondary: "#191A1F",
                 background: "#131418",
                 hint: "#3E3E42",
-                "text-hint": "#ACADAE",
+                "light-hint": "#ACADAE",
             },
         },
     },
