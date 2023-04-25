@@ -17,6 +17,12 @@
     </div>
     <div id="sidebar-items" class="flex flex-col justify-between" style="height: calc(100% - calc(@topBarHeight + 0.5rem))">
         <div id="subject-list" class="flex flex-col">
+            <div id="favourites-section" class="section flex flex-row justify-start items-center h-6 mx-4 mt-1 text-text-hint group-data-[expanded=false]:invisible
+                    group-data-[expanded=false]:h-0 group-data-[expanded=false]:opacity-0 text-clip whitespace-nowrap overflow-hidden transition-all duration-75 ease-out">
+                <span class="material-symbols-rounded-sm">expand_more</span>
+                <div>⭐</div>
+                <p class="font-bold"> Favourites</p>
+            </div>
             @foreach(Subject subject in Model)
             {
                 <div class="subjects bg-secondary hover:bg-background py-3 mx-3 my-1 rounded-xl shadow-xl w-auto transition-colors duration-50 ease-linear">
@@ -24,7 +30,7 @@
                         <div class="absolute subject-icon text-center w-6 h-6 z-10 rounded-md mr-3" style="background-color: @subject.Color;">
                             <p class="drop-shadow-[0_0_1.5px_rgb(0,0,0,0.6)]">@subject.Title[0]</p>
                         </div>
-                        <p class="ml-10 group-data-[expanded=false]:hidden text-clip whitespace-nowrap overflow-hidden">@subject.Title (@subject.CourseProvider)</p>
+                        <p class="ml-10 group-data-[expanded=false]:invisible text-clip whitespace-nowrap overflow-hidden">@subject.Title (@subject.CourseProvider)</p>
                     </div>
                 </div>
             }
