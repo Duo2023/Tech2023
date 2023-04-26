@@ -2,7 +2,7 @@
 
 using Tech2023.Web.IntegrationTests.Sources;
 
-namespace Tech2023.Web.IntegrationTests;
+namespace Tech2023.Web.IntegrationTests.Client;
 
 public class BasicTests : IClassFixture<WebApplicationFactory<Startup>>
 {

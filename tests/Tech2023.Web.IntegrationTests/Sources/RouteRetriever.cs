@@ -47,7 +47,7 @@ public abstract class RouteRetriever
 
                 if (attribute.IsRelative)
                 {
-                    route = Path.Combine(attribute.BaseRoute!, route);
+                    route = attribute.BaseRoute!.CombinePaths(route);
                 }
 
                 _routes.Add(route);

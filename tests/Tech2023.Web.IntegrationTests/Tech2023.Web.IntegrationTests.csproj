@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Tech2023.Web.API\Tech2023.Web.API.csproj" />
     <ProjectReference Include="..\..\src\Tech2023.Web\Tech2023.Web.csproj" />
   </ItemGroup>
 
