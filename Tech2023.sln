@@ -30,7 +30,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tech2023.Web.API", "src\Tec
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tech2023.Web", "src\Tech2023.Web\Tech2023.Web.csproj", "{190CF9CC-33FF-4D3B-BD9E-AD53632F1544}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tech2023.Web.Shared", "src\Tech2023.Web.Shared\Tech2023.Web.Shared.csproj", "{FEBEF1FA-388E-4FA8-B6DD-FB8FB988F520}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tech2023.Web.Shared", "src\Tech2023.Web.Shared\Tech2023.Web.Shared.csproj", "{FEBEF1FA-388E-4FA8-B6DD-FB8FB988F520}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tech2023.Web.IntegrationTests", "tests\Tech2023.Web.IntegrationTests\Tech2023.Web.IntegrationTests.csproj", "{3D236789-925C-4B16-8B20-5F24110625D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,6 +102,10 @@ Global
 		{FEBEF1FA-388E-4FA8-B6DD-FB8FB988F520}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEBEF1FA-388E-4FA8-B6DD-FB8FB988F520}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEBEF1FA-388E-4FA8-B6DD-FB8FB988F520}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D236789-925C-4B16-8B20-5F24110625D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D236789-925C-4B16-8B20-5F24110625D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D236789-925C-4B16-8B20-5F24110625D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D236789-925C-4B16-8B20-5F24110625D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
