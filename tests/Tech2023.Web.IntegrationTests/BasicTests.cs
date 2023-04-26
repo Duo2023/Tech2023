@@ -15,8 +15,6 @@ public class BasicTests : IClassFixture<WebApplicationFactory<Startup>>
 
     [Theory]
     [ClassData(typeof(PublicRouteSource))]
-    [InlineData(Routes.Home)]
-    [InlineData(Routes.Privacy)]
     public async Task GetEndpointsReturnSuccess(string url)
     {
         var client = _factory.CreateClient();
@@ -24,5 +22,7 @@ public class BasicTests : IClassFixture<WebApplicationFactory<Startup>>
         var response = await client.GetAsync(url);
 
         response.EnsureSuccessStatusCode();
+
+        Assert.Equal("text/html; charset=utf-8", response.Content.Headers.ContentType!.ToString());
     }
 }
