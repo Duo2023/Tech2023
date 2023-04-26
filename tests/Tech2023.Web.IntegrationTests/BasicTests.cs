@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 
+using Tech2023.Web.IntegrationTests.Sources;
+
 namespace Tech2023.Web.IntegrationTests;
 
 public class BasicTests : IClassFixture<WebApplicationFactory<Startup>>
@@ -12,6 +14,7 @@ public class BasicTests : IClassFixture<WebApplicationFactory<Startup>>
     }
 
     [Theory]
+    [ClassData(typeof(PublicRouteSource))]
     [InlineData(Routes.Home)]
     [InlineData(Routes.Privacy)]
     public async Task GetEndpointsReturnSuccess(string url)
