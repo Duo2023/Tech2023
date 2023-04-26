@@ -11,6 +11,7 @@
       "src\\Tech2023.Web\\Tech2023.Web.csproj",
       "tests\\Tech2023.Core.Tests\\Tech2023.Core.Tests.csproj",
       "tests\\Tech2023.DAL.Tests\\Tech2023.DAL.Tests.csproj",
+      "tests\\Tech2023.Web.IntegrationTests\\Tech2023.Web.IntegrationTests.csproj",
       "tests\\Tech2023.Web.Tests\\Tech2023.Web.Tests.csproj"
     ]
   }
