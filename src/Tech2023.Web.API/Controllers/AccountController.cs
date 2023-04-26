@@ -14,6 +14,8 @@ using Tech2023.Web.Shared.Email;
 
 namespace Tech2023.Web.API.Controllers;
 
+// https://code-maze.com/using-refresh-tokens-in-asp-net-core-authentication/
+
 /// <summary>
 /// The users API controller, responsible for registering/signing in and various other auth activites
 /// </summary>
@@ -97,6 +99,47 @@ public sealed class AccountController : ControllerBase
         return Ok();
     }
 
+    [HttpPost]
+    [Route(ApiRoutes.Users.Refresh)]
+    public async Task<IActionResult> RefreshAsync(Token token)
+    {
+        if (token is null)
+        {
+            return BadRequest();
+        }
+
+        string accessToken = token.AccessToken;
+        string refreshToken = token.RefreshToken;
+
+        var principal = new ClaimsPrincipal();
+
+        if (principal is null)
+        {
+            return BadRequest();
+        }
+
+        string username = principal.Identity!.Name!;
+
+        var user = await _userManager.FindByNameAsync(username);
+
+        if (user == null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
+        {
+            return BadRequest();
+        }
+
+        var newAccessToken = "";
+        var newRefreshToken = AuthHelper.GenerateRefreshToken();
+
+        user.RefreshToken = newRefreshToken;
+
+        await _userManager.UpdateAsync(user);
+
+        return Ok(new Token()
+        {
+            AccessToken = newAccessToken,
+            RefreshToken = newRefreshToken
+        });
+    }
 
     [HttpPost]
     [Route(ApiRoutes.Users.Register)]

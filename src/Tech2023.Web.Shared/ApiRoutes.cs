@@ -25,7 +25,9 @@ public sealed class ApiRoutes
         public const string Login = "login";
 
         //[RouteVisibility(Visiblity.Public, Base)]
-        public const string ForgotPassword = "forgot_password";
+        public const string ForgotPassword = "forgot-password";
+
+        public const string Refresh = "refresh-token";
     }
 
     public static class Statistics
