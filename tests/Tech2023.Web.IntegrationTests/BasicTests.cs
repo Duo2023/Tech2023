@@ -14,7 +14,7 @@ public class BasicTests : IClassFixture<WebApplicationFactory<Startup>>
     }
 
     [Theory]
-    [ClassData(typeof(PublicRouteSource))]
+    [ClassData(typeof(PublicRouteSource<Routes>))]
     public async Task GetEndpointsReturnSuccess(string url)
     {
         var client = _factory.CreateClient();
