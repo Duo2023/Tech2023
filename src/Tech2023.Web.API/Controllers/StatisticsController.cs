@@ -1,13 +1,16 @@
 ﻿using System.Diagnostics;
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
+using Tech2023.DAL;
 using Tech2023.Web.Shared;
 using Tech2023.Web.Shared.Statistics;
 
 namespace Tech2023.Web.API.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[Produces(Defaults.ContentType)]
+[Route(Defaults.Controller)]
 public class StatisticsController : ControllerBase
 {
     /// <summary>
@@ -16,7 +19,6 @@ public class StatisticsController : ControllerBase
     /// <returns>A JSON response of <see cref="PingResponse"/></returns>
     [HttpGet]
     [Route(ApiRoutes.Statistics.Ping)]
-    [Produces("application/json")]
     public IActionResult Ping()
     {
         var response = new PingResponse(DateTime.Now - Process.GetCurrentProcess().StartTime, HttpContext.Connection.RemoteIpAddress?.ToString() ?? "0.0.0.0");

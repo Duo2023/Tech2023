@@ -6,11 +6,12 @@ using Microsoft.Extensions.Caching.Memory;
 using Tech2023.DAL;
 using Tech2023.DAL.Models;
 using Tech2023.Web.API.Caching;
+using Tech2023.Web.Shared;
 
 namespace Tech2023.Web.API.Controllers;
 
-[Produces("application/json")]
-[Route("api/[controller]")]
+[Produces(Defaults.ContentType)]
+[Route(Defaults.Controller)]
 [ApiController]
 public class PrivacyController : ControllerBase
 {

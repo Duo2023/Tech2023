@@ -19,8 +19,8 @@ namespace Tech2023.Web.API.Controllers;
 /// <summary>
 /// The users API controller, responsible for registering/signing in and various other auth activites
 /// </summary>
-[Route("api/[controller]")]
-[Produces("application/json")]
+[Route(Defaults.Controller)]
+[Produces(Defaults.ContentType)]
 [ApiController]
 public sealed class AccountController : ControllerBase
 {
