@@ -1,3 +1,5 @@
+@using Tech2023.Web.Shared;
+@model Login
 @{
     ViewData["Title"] = "Login";
 }
@@ -8,12 +10,12 @@
             <h1 class="font-bold mb-4">Login</h1>
             <form id="login-form" class="group flex flex-col space-y-4" data-invalid="unknown" action="" method="post" onsubmit="return false;">
                 <div class="flex flex-col">
-                    <label for="username" class="ml-2 font-semibold leading-7">Username:</label>
-                    <input type="text" name="username" id="username" placeholder="Enter username" required class="w-72 px-4 py-3 rounded-2xl bg-background outline-none 
+                    <label asp-for="Email" class="ml-2 font-semibold leading-7">Email:</label>
+                    <input type="text" name="username" id="username" placeholder="Enter email" required class="w-72 px-4 py-3 rounded-2xl bg-background outline-none 
                     border-light-hint border-2 border-opacity-0 focus:border-opacity-75 focus:invalid:border-red-600 transition-all duration-75 ease-out">
                 </div>
                 <div class="flex flex-col">
-                    <label for="password" class="ml-2 font-semibold leading-7">Password:</label>
+                    <label asp-for="Password" class="ml-2 font-semibold leading-7">Password:</label>
                     <input type="password" name="password" id="password" placeholder="Enter password" required class="w-72 px-4 py-3 rounded-2xl bg-background outline-none
                      border-light-hint border-2 border-opacity-0 focus:border-opacity-75 transition-all duration-75 ease-out">
                     <div class="flex flex-row justify-between px-2 pb-2 pt-1">
