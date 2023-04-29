@@ -1,6 +1,7 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+
+using Tech2023.DAL;
 
 #nullable disable
 
@@ -19,6 +20,7 @@ public class Login
     public string Email { get; set; }
 
     [DataType(DataType.Password)]
+    [MinLength(AuthConstants.MinPasswordLength)]
     [Display(Prompt = "Enter password")]
     [Required(AllowEmptyStrings = false, ErrorMessage = "You must enter a password")]
     [JsonPropertyName("password")]

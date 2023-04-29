@@ -92,6 +92,8 @@ public sealed class Startup
         services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
         {
             options.User.RequireUniqueEmail = false;
+            options.Password.RequiredLength = AuthConstants.MinPasswordLength;
+            options.Password.RequireUppercase = false;
         })
         .AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
