@@ -20,14 +20,14 @@ public class Register
 
     [Required(AllowEmptyStrings = false)]
     [DataType(DataType.Password)]
-    [MinLength(AuthConstants.MinPasswordLength)]
+    [MinLength(AuthConstants.MinPasswordLength, ErrorMessage = AuthConstants.PasswordLengthError)]
     [JsonPropertyName("password")]
     public string Password { get; set; }
 
     [Required(AllowEmptyStrings = false)]
     [Compare(nameof(Password))]
     [DataType(DataType.Password)]
-    [MinLength(AuthConstants.MinPasswordLength)]
+    [MinLength(AuthConstants.MinPasswordLength, ErrorMessage = AuthConstants.PasswordLengthError)]
     [JsonPropertyName("confirmPassword")]
     public string ConfirmPassword { get; set; }
 }

@@ -20,7 +20,7 @@ public class Login
     public string Email { get; set; }
 
     [DataType(DataType.Password)]
-    [MinLength(AuthConstants.MinPasswordLength)]
+    [MinLength(AuthConstants.MinPasswordLength, ErrorMessage = AuthConstants.PasswordLengthError)]
     [Display(Prompt = "Enter password")]
     [Required(AllowEmptyStrings = false, ErrorMessage = "You must enter a password")]
     [JsonPropertyName("password")]

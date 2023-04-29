@@ -10,4 +10,6 @@ public static class AuthConstants
     /// eg. a numeric password with 4 digits allowed would be 10^4
     /// </remarks>
     public const int MinPasswordLength = 8;
+
+    public const string PasswordLengthError = "The password length must be 8 or greater"; // update this value if you change MinPasswordLength
 }
