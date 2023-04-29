@@ -8,16 +8,18 @@
     <div class="bg-secondary rounded-3xl shadow-2xl">
         <div class="flex flex-col items-center mx-8 my-8">
             <h1 class="font-bold mb-4">Login</h1>
-            <form id="login-form" class="flex flex-col space-y-4" action="" method="post">
+            <form class="flex flex-col space-y-4" action="" method="post">
                 <div class="flex flex-col">
-                    <label asp-for="Email" class="ml-2 font-semibold leading-7">Email:</label>
-                    <input type="text" name="username" id="username" placeholder="Enter email" class="w-72 px-4 py-3 rounded-2xl bg-background outline-none 
+                    <label asp-for="Email" class="ml-2 font-semibold leading-7"></label>
+                    <input asp-for="Email" class="w-72 px-4 py-3 rounded-2xl bg-background outline-none 
                     border-light-hint border-2 border-opacity-0 focus:border-opacity-75 focus:invalid:border-red-600 transition-all duration-75 ease-out">
+                    <span asp-validation-for="Email" class="text-red-500"></span>
                 </div>
                 <div class="flex flex-col">
                     <label asp-for="Password" class="ml-2 font-semibold leading-7">Password:</label>
-                    <input type="password" name="password" id="password" placeholder="Enter password" class="w-72 px-4 py-3 rounded-2xl bg-background outline-none
+                    <input asp-for="Password" class="w-72 px-4 py-3 rounded-2xl bg-background outline-none
                      border-light-hint border-2 border-opacity-0 focus:border-opacity-75 transition-all duration-75 ease-out">
+                    <span asp-validation-for="Password" class="text-red-500"></span>
                     <div class="flex flex-row justify-between px-2 pb-2 pt-1">
                         <div class="flex flex-row">
                             <input id="show-password-checkbox" type="checkbox" value="false">
@@ -26,18 +28,7 @@
                         <a class="text-sm underline hover:no-underline" asp-controller="User" asp-action="ForgotPassword">Forgot password?</a>
                     </div>
                 </div>
-                <div class="w-72 bg-background p-3 border-2 border-red-500 rounded-2xl hidden">
-                    <h4 class="font-bold text-red-500">Invalid username</h4>
-                    <p class="text-sm">Please enter a username</p>
-                </div>
-                <div class="w-72 bg-background p-3 border-2 border-red-500 rounded-2xl hidden">
-                    <h4 class="font-bold text-red-500">Invalid password</h4>
-                    <p class="text-sm">Please enter a password</p>
-                </div>
-                <div class="w-72 bg-background p-3 border-2 border-red-500 rounded-2xl hidden">
-                    <h4 class="font-bold text-red-500">Invalid login credentials</h4>
-                    <p class="text-sm">Incorrect username / password</p>
-                </div>
+
                 <button id="login-button" type="submit" class="bg-primary font-bold px-4 py-3 rounded-xl">Login</button>
             </form>
             <br/>
@@ -45,3 +36,8 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
