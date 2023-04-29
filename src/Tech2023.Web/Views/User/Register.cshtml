@@ -6,7 +6,7 @@
     <div class="bg-secondary rounded-3xl shadow-2xl">
         <div class="flex flex-col items-center mx-8 my-8">
             <h1 class="font-bold mb-4">Register</h1>
-            <form id="register-form" class="group flex flex-col space-y-4" data-invalid="unknown" action="" method="post">
+            <form id="register-form" class="flex flex-col space-y-4" action="" method="post">
                 <div class="flex flex-col">
                     <label for="username" class="ml-2 font-semibold leading-7">Username: </label>
                     <input type="text" name="username" id="username" placeholder="Enter username" class="w-72 px-4 py-3 rounded-2xl bg-background outline-none
@@ -28,19 +28,19 @@
                         <label for="show-password-checkbox" id="show-password-text" class="ml-2 text-sm">Show passwords</label>
                     </div>
                 </div>
-                <div class="w-72 bg-background p-3 border-2 border-red-500 rounded-2xl hidden group-data-[invalid=empty-username]:block">
+                <div class="w-72 bg-background p-3 border-2 border-red-500 rounded-2xl hidden">
                     <h4 class="font-bold text-red-500">Invalid username</h4>
                     <p class="text-sm">Please enter a username</p>
                 </div>
-                <div class="w-72 bg-background p-3 border-2 border-red-500 rounded-2xl hidden group-data-[invalid=invalid-password]:block">
+                <div class="w-72 bg-background p-3 border-2 border-red-500 rounded-2xl hidden">
                     <h4 class="font-bold text-red-500">Invalid password</h4>
                     <p class="text-sm">Must contain atleast:<br> 8 letters, one uppercase and lowercase characters</p>
                 </div>
-                <div class="w-72 bg-background p-3 border-2 border-red-500 rounded-2xl hidden group-data-[invalid=passwords-do-not-match]:block">
+                <div class="w-72 bg-background p-3 border-2 border-red-500 rounded-2xl hidden">
                     <h4 class="font-bold text-red-500">Invalid passwords</h4>
                     <p class="text-sm">Passwords do not match!</p>
                 </div>
-                <button id="register-button" type="submit" onclick="TS.user.validation.validateRegisterForm()" class="bg-primary font-bold px-4 py-3 rounded-xl">Register</button>
+                <button id="register-button" type="submit" class="bg-primary font-bold px-4 py-3 rounded-xl">Register</button>
             </form>
             <br/>
             <a class="text-sm underline hover:no-underline" asp-controller="User" asp-action="Login">Already have an account?</a>
