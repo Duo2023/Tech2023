@@ -17,7 +17,7 @@ public class Login
     public string Email { get; set; }
 
     [DataType(DataType.Password)]
-    [Required(AllowEmptyStrings = false)]
+    [Required(AllowEmptyStrings = false, ErrorMessage = "You must enter a password")]
     [JsonPropertyName("password")]
     public string Password { get; set; }
 }
