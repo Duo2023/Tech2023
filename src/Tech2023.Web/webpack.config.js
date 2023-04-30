@@ -1,39 +1,15 @@
-const path = require("path");
+const { merge } = require("webpack-merge");
+const commonConfig = require("./webpack.common.js");
+const prodConfig = require("./webpack.prod.js");
+const devConfig = require("./webpack.dev.js");
 
-module.exports = {
-  entry: "./scripts/index.ts",
-  module: {
-    rules: [
-      {
-        test: /\.ts?$/,
-        use: "ts-loader",
-        exclude: /node_modules/,
-      },
-    ],
-  },
-  resolve: {
-    extensions: [".ts", ".js"],
-  },
-  output: {
-    library: {
-      name: "TS",
-      type: "var",
-    },
-    filename: "[name].[contenthash].js", // for more info: https://webpack.js.org/guides/caching/
-    path: path.resolve(__dirname, "./wwwroot/js"),
-    clean: true,
-  },
-  optimization: {
-    moduleIds: 'deterministic',
-    runtimeChunk: 'single',
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
-        },
-      },
-    },
-  },
+module.exports = (env, args) => {
+    switch (args.mode) {
+        case "production":
+            return merge(commonConfig, prodConfig);
+        case "development":
+            return merge(commonConfig, devConfig);
+        default:
+            throw new Error(`Can't find matching Configuration for mode: ${args.mode}!`);
+    }
 };

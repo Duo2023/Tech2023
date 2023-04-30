@@ -29,10 +29,18 @@
     <UpToDateCheckBuilt Include="tailwind.config.js" Set="Css" />
   </ItemGroup>
 
-  <Target Name="Client Side Dependencies" BeforeTargets="Build">
+  <Target Name="Client Side Dependencies" BeforeTargets="Build" >
     <Exec Command="npm install" />
     <Exec Command="npm run css:prod" />
-    <Exec Command="npm run build:prod" />
+  </Target>
+
+  <Target Name="Webpack Bundle" BeforeTargets="Build" DependsOnTargets="Webpack Development;Webpack Production"/>
+  <Target Name="Webpack Development" Condition=" '$(Configuration)' == 'Debug' ">
+      <Exec Command="npm run build:dev" />
+  </Target>
+
+  <Target Name="Webpack Production" Condition=" '$(Configuration)' == 'Release' ">
+      <Exec Command="npm run build:prod" />
   </Target>
 
 </Project>

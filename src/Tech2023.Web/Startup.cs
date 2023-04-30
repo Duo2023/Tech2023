@@ -1,5 +1,7 @@
 ﻿using Tech2023.Web.Shared;
-using Tech2023.Web.Workers;
+#if DEBUG
+    using Tech2023.Web.Workers;
+#endif
 
 namespace Tech2023.Web;
 
