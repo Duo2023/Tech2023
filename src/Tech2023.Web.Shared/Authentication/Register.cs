@@ -12,21 +12,25 @@ namespace Tech2023.Web.Shared.Authentication;
 /// </summary>
 public class Register
 {
-    [Required]
     [EmailAddress]
-    [DataType(DataType.EmailAddress)]
+    [Display(Name = nameof(Email), Prompt = "Enter email")]
+    [DataType(DataType.EmailAddress)] // Error message for this field is overriden in repective form using data-val-email
+    [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter an E-mail address")]
     [JsonPropertyName("email")]
     public string Email { get; set; }
 
-    [Required(AllowEmptyStrings = false)]
     [DataType(DataType.Password)]
     [MinLength(AuthConstants.MinPasswordLength, ErrorMessage = AuthConstants.PasswordLengthError)]
+    [Display(Prompt = "Enter password")]
+    [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter a password")]
     [JsonPropertyName("password")]
     public string Password { get; set; }
 
-    [Required(AllowEmptyStrings = false)]
-    [Compare(nameof(Password))]
+
     [DataType(DataType.Password)]
+    [Display(Prompt = "Confirm password")]
+    [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter a password")]
+    [Compare(nameof(Password), ErrorMessage = "Passwords do not match")]
     [MinLength(AuthConstants.MinPasswordLength, ErrorMessage = AuthConstants.PasswordLengthError)]
     [JsonPropertyName("confirmPassword")]
     public string ConfirmPassword { get; set; }

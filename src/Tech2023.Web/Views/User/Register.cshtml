@@ -1,3 +1,5 @@
+@using Tech2023.Web.Shared.Authentication;
+@model Register
 @{
     ViewData["Title"] = "Register";
 }
@@ -6,39 +8,31 @@
     <div class="bg-secondary rounded-3xl shadow-2xl">
         <div class="flex flex-col items-center mx-8 my-8">
             <h1 class="font-bold mb-4">Register</h1>
-            <form id="register-form" class="flex flex-col space-y-4" action="" method="post">
-                <div class="flex flex-col">
-                    <label for="username" class="ml-2 font-semibold leading-7">Username: </label>
-                    <input type="text" name="username" id="username" placeholder="Enter username" class="w-72 px-4 py-3 rounded-2xl bg-background outline-none
-                        border-light-hint border-2 border-opacity-0 focus:border-opacity-75 focus:invalid:border-red-600 transition-all duration-75 ease-out">
+            <form id="register-form" class="w-72 flex flex-col space-y-4" action="" method="post">
+                <div id="email-container" class="flex flex-col">
+                    <label asp-for="Email" class="ml-2 font-semibold leading-7"></label>
+                    <input asp-for="Email" data-val-email="Invalid E-mail Address" class="w-full px-4 py-3 rounded-2xl bg-background outline-none 
+                    border-light-hint border-2 border-opacity-0 focus:border-opacity-75 transition-all duration-75 ease-out">
+                    <span asp-validation-for="Email" class="mx-2 font-semibold text-red-500 empty:opacity-0 transition-all duration-200"></span>
                 </div>
-                <div class="flex flex-col">
-                    <label for="password" class="ml-2 font-semibold leading-7">Password: </label>
-                    <input type="password" name="password" id="password" placeholder="Enter password" 
-                        class="group w-72 px-4 py-3 rounded-2xl bg-background outline-none border-light-hint border-2 border-opacity-0 focus:border-opacity-75 
-                        focus:invalid:border-red-600 focus:valid:border-green-500 transition-all duration-75 ease-out">
+                <div id="password-container" class="flex flex-col">
+                    <label asp-for="Password" class="ml-2 font-semibold leading-7">Password:</label>
+                    <input asp-for="Password" class="w-full px-4 py-3 rounded-2xl bg-background outline-none 
+                    border-light-hint border-2 border-opacity-0 focus:border-opacity-75 transition-all duration-75 ease-out">
+                    <span asp-validation-for="Password" class="mx-2 font-semibold text-red-500 empty:opacity-0 transition-all duration-200"></span>
                 </div>
-                <div class="flex flex-col">
-                    <label for="confirm-password" class="ml-2 font-semibold leading-7">Confirm Password: </label>
-                    <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm password" 
-                        class="group w-72 px-4 py-3 rounded-2xl bg-background outline-none border-light-hint border-2 border-opacity-0 focus:border-opacity-75 
-                        focus:invalid:border-red-600 focus:valid:border-green-500 transition-all duration-75 ease-out">
-                    <div class="flex flex-row px-2 pb-2 pt-1">
-                        <input id="show-password-checkbox" type="checkbox" value="false">
-                        <label for="show-password-checkbox" id="show-password-text" class="ml-2 text-sm">Show passwords</label>
+                <div id="confirm-password-container" class="flex flex-col">
+                    <label asp-for="ConfirmPassword" class="ml-2 font-semibold leading-7">Confirm Password:</label>
+                    <input asp-for="ConfirmPassword" class="w-full px-4 py-3 rounded-2xl bg-background outline-none 
+                    border-light-hint border-2 border-opacity-0 focus:border-opacity-75 transition-all duration-75 ease-out">
+                    <span asp-validation-for="ConfirmPassword" class="mx-2 font-semibold text-red-500 empty:opacity-0 transition-all duration-200"></span>
+                    <div class="flex flex-row justify-between p-2 pt-1">
+                        <div class="flex flex-row">
+                            <input id="show-password-checkbox" type="checkbox" value="false" onclick="TS.user.forms.togglePasswordVisibility()">
+                            <label for="show-password-checkbox" id="show-password-text" class="ml-2 text-sm">Show password</label>
+                        </div>
+                        <a class="text-sm underline hover:no-underline" asp-controller="User" asp-action="ForgotPassword">Forgot password?</a>
                     </div>
-                </div>
-                <div class="w-72 bg-background p-3 border-2 border-red-500 rounded-2xl hidden">
-                    <h4 class="font-bold text-red-500">Invalid username</h4>
-                    <p class="text-sm">Please enter a username</p>
-                </div>
-                <div class="w-72 bg-background p-3 border-2 border-red-500 rounded-2xl hidden">
-                    <h4 class="font-bold text-red-500">Invalid password</h4>
-                    <p class="text-sm">Must contain atleast:<br> 8 letters, one uppercase and lowercase characters</p>
-                </div>
-                <div class="w-72 bg-background p-3 border-2 border-red-500 rounded-2xl hidden">
-                    <h4 class="font-bold text-red-500">Invalid passwords</h4>
-                    <p class="text-sm">Passwords do not match!</p>
                 </div>
                 <button id="register-button" type="submit" class="bg-primary font-bold px-4 py-3 rounded-xl">Register</button>
             </form>
@@ -47,3 +41,8 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -3,7 +3,7 @@ export module user.forms {
         const showPasswordCheckbox = document.getElementById("show-password-checkbox") as HTMLInputElement;
         let passwordFields = [
             document.getElementById("Password"),
-            // Will add register confirm password soom
+            document.getElementById("ConfirmPassword"),
         ] as HTMLInputElement[];
 
         if (showPasswordCheckbox.checked) {
