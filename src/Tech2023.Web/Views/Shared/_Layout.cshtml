@@ -58,9 +58,9 @@
         </footer>
 
         <!-- -->
-        <script type="text/javascript" asp-src-include="~/js/runtime*.js"></script>
-        <script type="text/javascript" asp-src-include="~/js/vendors*.js"></script>
-        <script type="text/javascript" asp-src-include="~/js/main*.js"></script>
+        <script type="text/javascript" asp-src-include="~/js/runtime.min.js" asp-append-version="true"></script>
+        <script type="text/javascript" asp-src-include="~/js/vendors.min.js" asp-append-version="true"></script>
+        <script type="text/javascript" asp-src-include="~/js/main.min.js" asp-append-version="true"></script>
         @await RenderSectionAsync("Scripts", required: false)
     </body>
 </html>
