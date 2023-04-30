@@ -361,3 +361,20 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Tailwind - auto-genrated CSS files
+src/Tech2023.Web/wwwroot/css/site.css
+
+# Webpack - auto-generated JS bundles and vendor license files
+src/Tech2023.Web/wwwroot/js/*.js
+src/Tech2023.Web/wwwroot/js/*.*.js
+src/Tech2023.Web/wwwroot/js/*.js.map
+src/Tech2023.Web/wwwroot/js/*.*.js.map
+src/Tech2023.Web/wwwroot/js/*.txt
+
+# Typescript (tsc) - compiled JS files
+src/Tech2023.Web/scripts/build/*.js
+src/Tech2023.Web/scripts/build/**/*.js
+src/Tech2023.Web/scripts/build/*.js.map
+src/Tech2023.Web/scripts/build/**/*.js.map
+/src/Tech2023.Web/package-lock.json

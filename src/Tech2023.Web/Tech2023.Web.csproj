@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>5b8d0484-4e8b-43d8-9231-a678a89aca83</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tech2023.Web.Shared\Tech2023.Web.Shared.csproj" />
+    <InternalsVisibleTo Include="$(AssemblyName).IntegrationTests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckBuilt Include="wwwroot/css/site.css" Set="Css" />
+    <UpToDateCheckBuilt Include="postcss.config.js" Set="Css" />
+    <UpToDateCheckBuilt Include="tailwind.config.js" Set="Css" />
+  </ItemGroup>
+
+  <Target Name="Client Side Dependencies" BeforeTargets="Build" >
+    <Exec Command="npm install" />
+    <Exec Command="npm run css:prod" />
+  </Target>
+
+  <Target Name="Webpack Bundle" BeforeTargets="Build" DependsOnTargets="Webpack Development;Webpack Production"/>
+  <Target Name="Webpack Development" Condition=" '$(Configuration)' == 'Debug' ">
+      <Exec Command="npm run build:dev" />
+  </Target>
+
+  <Target Name="Webpack Production" Condition=" '$(Configuration)' == 'Release' ">
+      <Exec Command="npm run build:prod" />
+  </Target>
+
+</Project>

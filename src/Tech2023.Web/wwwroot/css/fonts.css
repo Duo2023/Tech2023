@@ -1,0 +1,129 @@
+/*! manrope web font generator: https://gwfh.mranftl.com/fonts/manrope?subsets=latin,latin-ext */
+/* manrope-300 - latin_latin-ext */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 300;
+    src: url('../assets/fonts/manrope-v13-latin_latin-ext-300.eot'); /* IE9 Compat Modes */
+    src: url('../assets/fonts/manrope-v13-latin_latin-ext-300.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../assets/fonts/manrope-v13-latin_latin-ext-300.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../assets/fonts/manrope-v13-latin_latin-ext-300.woff') format('woff'), /* Modern Browsers */
+         url('../assets/fonts/manrope-v13-latin_latin-ext-300.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('../assets/fonts/manrope-v13-latin_latin-ext-300.svg#Manrope') format('svg'); /* Legacy iOS */
+  }
+  
+  /* manrope-regular - latin_latin-ext */
+  @font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../assets/fonts/manrope-v13-latin_latin-ext-regular.eot'); /* IE9 Compat Modes */
+    src: url('../assets/fonts/manrope-v13-latin_latin-ext-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../assets/fonts/manrope-v13-latin_latin-ext-regular.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../assets/fonts/manrope-v13-latin_latin-ext-regular.woff') format('woff'), /* Modern Browsers */
+         url('../assets/fonts/manrope-v13-latin_latin-ext-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('../assets/fonts/manrope-v13-latin_latin-ext-regular.svg#Manrope') format('svg'); /* Legacy iOS */
+  }
+  
+  /* manrope-600 - latin_latin-ext */
+  @font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 600;
+    src: url('../assets/fonts/manrope-v13-latin_latin-ext-600.eot'); /* IE9 Compat Modes */
+    src: url('../assets/fonts/manrope-v13-latin_latin-ext-600.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../assets/fonts/manrope-v13-latin_latin-ext-600.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../assets/fonts/manrope-v13-latin_latin-ext-600.woff') format('woff'), /* Modern Browsers */
+         url('../assets/fonts/manrope-v13-latin_latin-ext-600.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('../assets/fonts/manrope-v13-latin_latin-ext-600.svg#Manrope') format('svg'); /* Legacy iOS */
+  }
+  
+  /* manrope-700 - latin_latin-ext */
+  @font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../assets/fonts/manrope-v13-latin_latin-ext-700.eot'); /* IE9 Compat Modes */
+    src: url('../assets/fonts/manrope-v13-latin_latin-ext-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../assets/fonts/manrope-v13-latin_latin-ext-700.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../assets/fonts/manrope-v13-latin_latin-ext-700.woff') format('woff'), /* Modern Browsers */
+         url('../assets/fonts/manrope-v13-latin_latin-ext-700.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('../assets/fonts/manrope-v13-latin_latin-ext-700.svg#Manrope') format('svg'); /* Legacy iOS */
+  }
+
+/*! manrope web font generator: https://gwfh.mranftl.com/fonts/material-symbols-rounded?subsets=latin */
+
+/* Material Symbols Config */
+.material-symbols-rounded-sm {
+  font-family: 'Material Symbols Rounded';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+}
+
+.material-symbols-rounded {
+  font-family: 'Material Symbols Rounded';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 32px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+}
+
+/* material-symbols-rounded-300 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Material Symbols Rounded';
+  font-style: normal;
+  font-weight: 300;
+  src: url('../assets/fonts/icons/material-symbols-rounded-v104-latin-300.eot'); /* IE9 Compat Modes */
+  src: url('../assets/fonts/icons/material-symbols-rounded-v104-latin-300.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../assets/fonts/icons/material-symbols-rounded-v104-latin-300.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../assets/fonts/icons/material-symbols-rounded-v104-latin-300.woff') format('woff'), /* Modern Browsers */
+       url('../assets/fonts/icons/material-symbols-rounded-v104-latin-300.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../assets/fonts/icons/material-symbols-rounded-v104-latin-300.svg#MaterialSymbolsRounded') format('svg'); /* Legacy iOS */
+}
+
+/* material-symbols-rounded-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Material Symbols Rounded';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../assets/fonts/icons/material-symbols-rounded-v104-latin-regular.eot'); /* IE9 Compat Modes */
+  src: url('../assets/fonts/icons/material-symbols-rounded-v104-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../assets/fonts/icons/material-symbols-rounded-v104-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../assets/fonts/icons/material-symbols-rounded-v104-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../assets/fonts/icons/material-symbols-rounded-v104-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../assets/fonts/icons/material-symbols-rounded-v104-latin-regular.svg#MaterialSymbolsRounded') format('svg'); /* Legacy iOS */
+}
+
+/* material-symbols-rounded-500 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Material Symbols Rounded';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../assets/fonts/icons/material-symbols-rounded-v104-latin-500.eot'); /* IE9 Compat Modes */
+  src: url('../assets/fonts/icons/material-symbols-rounded-v104-latin-500.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../assets/fonts/icons/material-symbols-rounded-v104-latin-500.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../assets/fonts/icons/material-symbols-rounded-v104-latin-500.woff') format('woff'), /* Modern Browsers */
+       url('../assets/fonts/icons/material-symbols-rounded-v104-latin-500.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../assets/fonts/icons/material-symbols-rounded-v104-latin-500.svg#MaterialSymbolsRounded') format('svg'); /* Legacy iOS */
+}

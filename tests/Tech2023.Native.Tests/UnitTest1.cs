@@ -1,4 +1,4 @@
-namespace Tech2023.Core.Tests;
+namespace Tech2023.Native.Tests;
 
 public class UnitTest1
 {

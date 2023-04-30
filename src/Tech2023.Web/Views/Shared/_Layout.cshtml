@@ -1,0 +1,66 @@
+﻿@using Tech2023.Core;
+@{
+    string navbarHeight = "5rem";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - Tech2023.Web</title>
+        <link rel="stylesheet" href="~/css/fonts.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    </head>
+    <body class="text-white bg-background">
+        <header>
+            <nav class="nav-bar shadow-xl bg-secondary text-white" style="height: @navbarHeight">
+                <div class="flex h-full flex-wrap items-center justify-between mx-4 sm:mx-6">
+                    <a class="text-center self-center flex items-center px-4 py-3 font-bold bg-primary rounded-2xl" asp-controller="Home" asp-action="Index">Tech2023</a>
+                    <!-- WIP -->
+
+                    @if (User.Identity is not null && User.Identity.IsAuthenticated) 
+                    {
+                        <div class="nav-items-container flex items-center mr-4">
+                            <div class="flex flex-row space-x-8 text-white">
+                                <button id="more" class="material-symbols-rounded">more_horiz</button>
+                                <button id="account-circle" class="material-symbols-rounded">account_circle</button>
+                            </div>
+                        </div>
+                    } else 
+                    {
+                        <div class="nav-items-container flex items-center">
+                            <div class="flex flex-row space-x-4 mt-0 text-white font-semibold">
+                                <a class="nav-link px-4 py-2 rounded-2xl hover:underline" asp-controller="User" asp-action="Login">Log In</a>
+                                <a class="nav-link px-4 py-2 rounded-2xl bg-gradient-button" asp-controller="User" asp-action="Register">Register</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </nav>
+            @if (EnvironmentConfiguration.IsDebug)
+            {
+                <div class="fixed flex flex-row justify-around items-center bg-background font-bold border-t-0 border-2 border-hint right-6 rounded-br-3xl rounded-bl-3xl px-4 py-1">
+                    <button id="status-button" class="text-white hover:underline pr-4" onclick="TS.statistics.updateButton()">Api Status: </button>
+                    <p id="status-text" type="button" class="flex justify-center items-center bg-[#808080] text-background h-5 w-10 rounded-md">-</p>
+                </div>
+            }
+        </header>
+
+        <main role="main" id="main-body" class="width-screen" style="height: calc(100vh - @navbarHeight);">
+            @RenderBody()
+        </main>
+
+        <footer class="fixed bottom-0 right-0 px-2">
+            <div class="flex justify-end items-end w-auto text-slate-100 text-sm font-semibold">
+                &copy; @(DateTime.UtcNow.Year == 2023 ? 2023 : $"2023 - {DateTime.UtcNow.Year}") - Duo2023 - &ThinSpace;<a class="hover:underline" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+
+        <!-- -->
+        <script type="text/javascript" asp-src-include="~/js/runtime.min.js" asp-append-version="true"></script>
+        <script type="text/javascript" asp-src-include="~/js/vendors.min.js" asp-append-version="true"></script>
+        <script type="text/javascript" asp-src-include="~/js/main.min.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
+</html>

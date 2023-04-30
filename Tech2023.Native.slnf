@@ -1,0 +1,12 @@
+{
+  "solution": {
+    "path": "Tech2023.sln",
+    "projects": [
+      "src\\Tech2023.Native\\Tech2023.Native.Android\\Tech2023.Native.Android.csproj",
+      "src\\Tech2023.Native\\Tech2023.Native.Desktop\\Tech2023.Native.Desktop.csproj",
+      "src\\Tech2023.Native\\Tech2023.Native.iOS\\Tech2023.Native.iOS.csproj",
+      "src\\Tech2023.Native\\Tech2023.Native\\Tech2023.Native.csproj",
+      "tests\\Tech2023.Native.Tests\\Tech2023.Native.Tests.csproj"
+    ]
+  }
+}
