@@ -8,7 +8,7 @@ public class DatabaseStatsService : BackgroundService
 {
     internal readonly ILogger<DatabaseStatsService> _logger;
     internal readonly IDbContextFactory<ApplicationDbContext> _factory;
-    internal readonly static TimeSpan _duration = TimeSpan.FromMinutes(5);
+    internal static readonly TimeSpan _duration = TimeSpan.FromMinutes(5);
 
     public DatabaseStatsService(IServiceProvider provider)
     {
