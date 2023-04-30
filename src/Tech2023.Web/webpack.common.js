@@ -1,7 +1,6 @@
 const path = require("path");
 
 module.exports = {
-    entry: "./scripts/index.ts",
     module: {
         rules: [
             {
@@ -19,7 +18,7 @@ module.exports = {
             name: "TS",
             type: "var",
         },
-        filename: "[name].min.js", // for more info: https://webpack.js.org/guides/caching/
+        filename: "[name].min.js",
         path: path.resolve(__dirname, "./wwwroot/js"),
         clean: true,
     },
