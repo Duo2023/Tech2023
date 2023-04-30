@@ -35,10 +35,12 @@ public sealed class RouteVisibilityAttribute : Attribute
     /// <summary>
     /// Initializes a new instance of the <see cref="RouteVisibilityAttribute"/> class
     /// </summary>
-    /// <param name="visibility"></param>
-    /// <param name="baseUrl"></param>
+    /// <param name="visibility">The visibility of the route</param>
+    /// <param name="baseUrl">The base url of the route</param>
     public RouteVisibilityAttribute(Visiblity visibility, string baseUrl)
     {
+        ArgumentException.ThrowIfNullOrEmpty(baseUrl);
+
         Visiblity = visibility;
         BaseRoute = baseUrl;
     }
