@@ -10,7 +10,16 @@ export namespace statistics {
         ip: string;
     }
 
+    /** boolean flag to indicate whether the method is allowed to enter the function */
+    let updateButtonFlag: boolean = false;
+
     export async function updateButton(): Promise<void> {
+        if (updateButtonFlag) {
+            return; // early return while waiting for the next function
+        }
+
+        updateButtonFlag = true;
+
         const status = document.querySelector("#status-text") as HTMLParagraphElement;
         if (await isApiUp()) {
             status.textContent = "200";
@@ -19,6 +28,8 @@ export namespace statistics {
             status.textContent = "400";
             status.style.backgroundColor = "#ff3d3d";
         }
+
+        updateButtonFlag = false;
     }
 
      /**

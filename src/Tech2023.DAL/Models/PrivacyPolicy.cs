@@ -31,6 +31,7 @@ public class PrivacyPolicy
     /// The <see cref="DateTimeOffset"/> of when it was created, this will be <see cref="DateTimeOffset.UtcNow"/> for sync
     /// </summary>
     [Required]
+    [DataType(DataType.DateTime)]
     [JsonPropertyName("created")]
     public DateTimeOffset Created { get; set; }
 
@@ -38,6 +39,7 @@ public class PrivacyPolicy
     /// The <see cref="DateTimeOffset"/> of when it was last updated, this will be <see cref="DateTimeOffset.UtcNow"/> for sync
     /// </summary>
     [Required]
+    [DataType(DataType.DateTime)]
     [JsonPropertyName("updated")]
     public DateTimeOffset Updated { get; set; }
 }

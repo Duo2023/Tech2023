@@ -6,6 +6,9 @@ using MimeKit;
 
 namespace Tech2023.Web.Shared.Email;
 
+/// <summary>
+/// The default email client of the application which uses an SMTP server to send the mail
+/// </summary>
 public class EmailClient : IEmailClient
 {
     internal readonly ILogger<IEmailClient> _logger;
@@ -22,6 +25,7 @@ public class EmailClient : IEmailClient
         _logger = logger;
     }
 
+    /// <inheritdoc/>
     public async Task SendEmailAsync(string email, string subject, string htmlMessage)
     {
         ArgumentNullException.ThrowIfNull(email);
@@ -29,6 +33,7 @@ public class EmailClient : IEmailClient
         await ExceuteAsync(email, subject, htmlMessage);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal async Task ExceuteAsync(string targetAddress, string subject, string htmlMessage)
     {
         var email = new MimeMessage()
@@ -45,6 +50,9 @@ public class EmailClient : IEmailClient
         email.To.Add(MailboxAddress.Parse(targetAddress));
 
         using var client = new SmtpClient();
+
+        // TODO: Consider adding error handling methods, where if the email fails to send instead of ignoring the error,
+        // requeue the message on to a background service where emails can be retried.
 
         await client.ConnectAsync(_options.Value.SmtpServer, _options.Value.Port, MailKit.Security.SecureSocketOptions.StartTls).ConfigureAwait(false);
 
