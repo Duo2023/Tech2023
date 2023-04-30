@@ -9,8 +9,8 @@ namespace Tech2023.Web.Workers;
 public class AutoReloadService : IHostedService
 {
     internal readonly ILogger<AutoReloadService> _logger;
-    internal readonly List<string> _npmScripts = new() { "css:dev", "build:dev-reload" }; // See: ../package.json
-    internal readonly List<Process> _processes = new();
+    internal readonly string[] _npmScripts = new string[] { "css:dev", "build:dev-reload" }; // See: ../package.json
+    internal readonly Process[] _processes;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AutoReloadService"/> class
@@ -19,6 +19,7 @@ public class AutoReloadService : IHostedService
     public AutoReloadService(ILogger<AutoReloadService> logger)
     {
         _logger = logger;
+        _processes = new Process[_npmScripts.Length];
     }
 
     /// <summary>
@@ -26,12 +27,15 @@ public class AutoReloadService : IHostedService
     /// </summary>
     public Task StartAsync(CancellationToken cancellationToken)
     {
+        Debug.Assert(_npmScripts.Length == _processes.Length);
+
         if (TryGetNpmFileName(out var file))
         {
             _logger.LogInformation("Starting Npm reload scripts");
-            foreach (string npmScript in _npmScripts)
+
+            for (int i = 0; i < _npmScripts.Length; i++)
             {
-                _processes.Add(Process.Start(GetNpmRunStartInfo(file, "run " + npmScript))!);
+                _processes[i] = Process.Start(GetNpmRunStartInfo(file, "run " + _npmScripts[i]))!;
             }
         }
         else
