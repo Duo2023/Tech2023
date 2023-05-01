@@ -174,14 +174,14 @@ public sealed class AccountController : ControllerBase
     [HttpPost]
     [Route(ApiRoutes.Users.ForgotPassword)]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> ForgotPasswordAsync([FromQuery] string email)
+    public async Task<IActionResult> ForgotPasswordAsync([FromBody] EmailAddress address)
     {
-        if (email is null)
+        if (await _userManager.FindByEmailAsync(address.Email) == null)
         {
-            return BadRequest();
+            return NoContent(); // return the same thing regardless of whether it exists, its still an attack vector
         }
 
-        await _emailClient.SendEmailAsync(email, "Password Reset Request", "TODO");
+        await _emailClient.SendEmailAsync(address.Email, "Password Reset Request", "TODO");
 
         return NoContent();
     }

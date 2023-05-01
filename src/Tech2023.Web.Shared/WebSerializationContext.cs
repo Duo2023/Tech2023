@@ -15,6 +15,7 @@ namespace Tech2023.Web.Shared;
 [JsonSerializable(typeof(PrivacyPolicy))] // privacy
 [JsonSerializable(typeof(Login))] // auth
 [JsonSerializable(typeof(Register))]
+[JsonSerializable(typeof(EmailAddress))]
 [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
 public partial class WebSerializationContext : JsonSerializerContext
 {
