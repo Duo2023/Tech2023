@@ -8,7 +8,7 @@
     <div class="bg-secondary rounded-3xl shadow-2xl">
         <div class="flex flex-col items-center mx-8 my-8">
             <h1 class="font-bold mb-4">Register</h1>
-            <form id="register-form" class="w-72 flex flex-col space-y-4" action="" method="post">
+            <form id="register-form" class="w-72 flex flex-col" action="" method="post">
                 <div id="email-container" class="flex flex-col">
                     <label asp-for="Email" class="ml-2 font-semibold leading-7"></label>
                     <input asp-for="Email" data-val-email="Invalid E-mail Address" class="w-full px-4 py-3 rounded-2xl bg-background outline-none 
@@ -26,18 +26,14 @@
                     <input asp-for="ConfirmPassword" class="w-full px-4 py-3 rounded-2xl bg-background outline-none 
                     border-light-hint border-2 border-opacity-0 focus:border-opacity-75 transition-all duration-75 ease-out">
                     <span asp-validation-for="ConfirmPassword" class="mx-2 font-semibold text-red-500 empty:opacity-0 transition-all duration-200"></span>
-                    <div class="flex flex-row justify-between p-2 pt-1">
-                        <div class="flex flex-row">
-                            <input id="show-password-checkbox" type="checkbox" value="false" onclick="TS.user.forms.togglePasswordVisibility()">
-                            <label for="show-password-checkbox" id="show-password-text" class="ml-2 text-sm">Show password</label>
-                        </div>
-                        <a class="text-sm underline hover:no-underline" asp-controller="User" asp-action="ForgotPassword">Forgot password?</a>
+                    <div class="flex flex-row p-2 pt-1">
+                        <input id="show-password-checkbox" type="checkbox" value="false" onclick="TS.user.forms.togglePasswordVisibility()">
+                        <label for="show-password-checkbox" id="show-password-text" class="ml-2 text-sm">Show password</label>
                     </div>
                 </div>
-                <button id="register-button" type="submit" class="bg-primary font-bold px-4 py-3 rounded-xl">Register</button>
+                <button id="register-button" type="submit" class="bg-primary font-bold px-4 py-3 my-2 rounded-xl">Register</button>
             </form>
-            <br/>
-            <a class="text-sm underline hover:no-underline pt-3" asp-controller="User" asp-action="Login">Already have an account?</a>
+            <a class="text-sm underline hover:no-underline p-2" asp-controller="User" asp-action="Login">Already have an account?</a>
         </div>
     </div>
 </div>
