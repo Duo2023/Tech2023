@@ -1,7 +1,7 @@
 ﻿/**
  * Contains functions and data types for working with the statistics of the web API
  */
-export namespace statistics {
+export module statistics {
     /**
      * The same as Web.Shared/Statistics/PingResponse.cs but in TypeScript
      */
@@ -25,7 +25,7 @@ export namespace statistics {
             status.textContent = "200";
             status.style.backgroundColor = "#45fe57";
         } else {
-            status.textContent = "400";
+            status.textContent = "500";
             status.style.backgroundColor = "#ff3d3d";
         }
 
@@ -39,14 +39,14 @@ export namespace statistics {
      */
     export async function isApiUp(): Promise<boolean> {
         try {
-            const response = await fetch('https://localhost:7098/api/statistics/ping');
+            const response: Response = await fetch('https://localhost:7098/api/statistics/ping');
 
             if (!response.ok) {
                 console.error('error getting data from api');
                 return false;
             }
 
-            const json = await response.text();
+            const json: string = await response.text();
 
             const pingResponse: PingResponse = JSON.parse(json);
 
