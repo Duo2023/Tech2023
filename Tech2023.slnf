@@ -6,15 +6,11 @@
       "src\\Tech2023.Core\\Tech2023.Core.csproj",
       "src\\Tech2023.DAL.Migrations\\Tech2023.DAL.Migrations.csproj",
       "src\\Tech2023.DAL\\Tech2023.DAL.csproj",
-      "src\\Tech2023.Native\\Tech2023.Native.Android\\Tech2023.Native.Android.csproj",
-      "src\\Tech2023.Native\\Tech2023.Native.Desktop\\Tech2023.Native.Desktop.csproj",
-      "src\\Tech2023.Native\\Tech2023.Native\\Tech2023.Native.csproj",
       "src\\Tech2023.Web.API\\Tech2023.Web.API.csproj",
       "src\\Tech2023.Web.Shared\\Tech2023.Web.Shared.csproj",
       "src\\Tech2023.Web\\Tech2023.Web.csproj",
       "tests\\Tech2023.Core.Tests\\Tech2023.Core.Tests.csproj",
       "tests\\Tech2023.DAL.Tests\\Tech2023.DAL.Tests.csproj",
-      "tests\\Tech2023.Native.Tests\\Tech2023.Native.Tests.csproj",
       "tests\\Tech2023.Web.IntegrationTests\\Tech2023.Web.IntegrationTests.csproj",
       "tests\\Tech2023.Web.Tests\\Tech2023.Web.Tests.csproj"
     ]
