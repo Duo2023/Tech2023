@@ -36,7 +36,7 @@ public sealed class Startup
 
         services.AddHttpClient(Clients.API, client =>
         {
-            string uriString = Configuration["ApiUrl"] ?? throw new ConfigurationException("The API url should be configured");
+            string uriString = Environment.GetEnvironmentVariable("API_BASE_URL") ?? throw new ConfigurationException("The API url should be configured");
 
             client.BaseAddress = new Uri(uriString);
         });
