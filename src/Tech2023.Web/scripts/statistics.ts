@@ -4,6 +4,8 @@
 export module statistics {
     declare let API_BASE_URL: string | undefined;
 
+    const uri: URL = new URL("/statistics/ping", API_BASE_URL);
+
     /**
      * The same as Web.Shared/Statistics/PingResponse.cs but in TypeScript
      */
@@ -15,6 +17,20 @@ export module statistics {
     /** boolean flag to indicate whether the method is allowed to enter the function */
     let updateButtonFlag: boolean = false;
 
+    /* success and erorr messages & colors */
+
+    const successContent: string = "200";
+    const errorContent: string = "500";
+
+    const successColor: string = "#45fe57";
+    const errorColor: string = "#ff3d3d";
+
+    const statusIdentifier = "#status-text";
+
+    /**
+     * Updates the button using whether the api is a success or not
+     * @returns {Promise<void>} - Async void
+     */
     export async function updateButton(): Promise<void> {
         if (updateButtonFlag) {
             return; // early return while waiting for the next function
@@ -22,13 +38,14 @@ export module statistics {
 
         updateButtonFlag = true;
 
-        const status = document.querySelector("#status-text") as HTMLParagraphElement;
+        const status = document.querySelector(statusIdentifier) as HTMLParagraphElement;
+
         if (await isApiUp()) {
-            status.textContent = "200";
-            status.style.backgroundColor = "#45fe57";
+            status.textContent = successContent;
+            status.style.backgroundColor = successColor;
         } else {
-            status.textContent = "500";
-            status.style.backgroundColor = "#ff3d3d";
+            status.textContent = errorContent;
+            status.style.backgroundColor = errorColor;
         }
 
         updateButtonFlag = false;
@@ -37,13 +54,11 @@ export module statistics {
      /**
      * Checks if the API is up and running by sending a ping request to the server.
      * 
-     * @returns {Promise<boolean>} A Promise that resolves to true if the API is up and running, or false otherwise.
+     * @returns {Promise<boolean>} - A Promise that resolves to true if the API is up and running, or false otherwise.
      */
     export async function isApiUp(): Promise<boolean> {
         try {
-            const REQUEST_URI = API_BASE_URL + "/statistics/ping";
-
-            const response: Response = await fetch(REQUEST_URI);
+            const response: Response = await fetch(uri);
 
             if (!response.ok) {
                 console.error('error getting data from api');
