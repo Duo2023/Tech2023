@@ -5,13 +5,10 @@ public static class HtmlHexString
     /// <summary>
     /// Gets the color value as a hexadecimal string value
     /// </summary>
-    public static unsafe string GetHtmlHexString(uint color)
+    public static unsafe string GetHtmlHexString(uint color) => string.Create(9, color, (span, value) =>
     {
-        return string.Create(9, color, (s, c) =>
-        {
-            ref byte source = ref Unsafe.As<uint, byte>(ref color);
-            ref char destination = ref MemoryMarshal.GetReference(s);
+        span[0] = '#';
 
-        });
-    }
+        _ = value.TryFormat(span[1..], out _, "x8");
+    });
 }
