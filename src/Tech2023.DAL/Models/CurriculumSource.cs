@@ -1,0 +1,26 @@
+﻿namespace Tech2023.DAL.Models;
+
+/// <summary>
+/// The type of curriculum a resource or model is attributed
+/// </summary>
+/// <remarks>
+/// This is used for display purposes and is also used on the backend on web scraping
+/// </remarks>
+public enum CurriculumSource : byte
+{
+    /// <summary>
+    /// NCEA curriculum is the provider
+    /// </summary>
+    Ncea = 1, 
+
+    /// <summary>
+    /// Cambridge is the education provider
+    /// </summary>
+    Cambridge = 2,
+
+    /* Do not change the underlying value of enum as this is constant and a binary breaking change 
+     * This might have an equivalant layout in TypeScript front end
+     */
+
+    /* Open for more curriculums */
+}

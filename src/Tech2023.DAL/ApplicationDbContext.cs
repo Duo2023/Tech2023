@@ -28,9 +28,13 @@ public sealed class ApplicationDbContext : IdentityDbContext<ApplicationUser, Ap
         base.OnModelCreating(builder);
     }
 
-#nullable disable
     /// <summary>
     /// Table for the privacy policies of our application
     /// </summary>
-    public DbSet<PrivacyPolicy> PrivacyPolicies { get; set; }
+    public DbSet<PrivacyPolicy> PrivacyPolicies => Set<PrivacyPolicy>();
+
+    /// <summary>
+    /// All of the available subjects in the database
+    /// </summary>
+    public DbSet<Subject> Subjects => Set<Subject>();
 }
