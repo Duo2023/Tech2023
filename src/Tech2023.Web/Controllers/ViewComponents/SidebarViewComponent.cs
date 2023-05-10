@@ -1,6 +1,5 @@
-
-using Microsoft.AspNetCore.Mvc;
-using Tech2023.Web.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Tech2023.DAL.Models;
 
 namespace Tech2023.Web.ViewComponents;
 
@@ -9,12 +8,36 @@ public class SidebarViewComponent : ViewComponent
 {
     public IViewComponentResult Invoke()
     {
-        List<Subject> subjects = new List<Subject>();
-        //
-        subjects.Add(new Subject("#ef4444", CourseProvider.CAIE, "Maths"));
-        subjects.Add(new Subject("#316aff", CourseProvider.CAIE, "Physics"));
-        subjects.Add(new Subject("#ff7b16", CourseProvider.NCEA, "Chemistry"));
-        subjects.Add(new Subject("#ffc515", CourseProvider.CAIE, "IT"));
+        List<Subject> subjects = new(4) // temporary stand in
+        {
+            new Subject()
+            {
+                Name = "Maths",
+                DisplayColor = 0xef4444,
+                Source = CurriculumSource.Cambridge
+            },
+
+            new Subject()
+            {
+                Name = "Physics",
+                DisplayColor = 0x316aff,
+                Source = CurriculumSource.Cambridge,
+            },
+
+            new Subject()
+            {
+                Name = "Chemistry",
+                DisplayColor = 0xff7b16,
+                Source = CurriculumSource.Ncea
+            },
+
+            new Subject()
+            {
+                Name = "IT",
+                DisplayColor = 0xffc515,
+                Source = CurriculumSource.Cambridge
+            }
+        };
 
         return View(subjects);
     }

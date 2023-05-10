@@ -1,4 +1,5 @@
-@using Tech2023.Web.Models;
+@using Tech2023.Core;
+@using Tech2023.DAL.Models;
 @model IEnumerable<Subject>
 
 @{
@@ -23,14 +24,14 @@
                 <div>⭐</div>
                 <p class="font-bold"> Favourites</p>
             </div>
-            @foreach(Subject subject in Model)
+            @foreach(var subject in Model)
             {
                 <div class="subjects bg-secondary hover:bg-background py-3 mx-3 my-1 rounded-xl shadow-xl w-auto transition-colors duration-50 ease-linear">
                     <div class="flex flex-row group-data-[expanded=false]:block px-4 max-h-6 h-6 font-semibold items-center justify-start text-md">
-                        <div class="absolute subject-icon text-center w-6 h-6 z-10 rounded-md mr-3" style="background-color: @subject.Color;">
-                            <p class="drop-shadow-[0_0_1.5px_rgb(0,0,0,0.6)]">@subject.Title[0]</p>
+                        <div class="absolute subject-icon text-center w-6 h-6 z-10 rounded-md mr-3" style="background-color: @HtmlHexString.GetHtmlHexString(subject.DisplayColor ?? 0);"> @* Implement random color *@
+                            <p class="drop-shadow-[0_0_1.5px_rgb(0,0,0,0.6)]">@subject.Name[0]</p>
                         </div>
-                        <p class="ml-10 group-data-[expanded=false]:invisible text-clip whitespace-nowrap overflow-hidden">@subject.Title (@subject.CourseProvider)</p>
+                        <p class="ml-10 group-data-[expanded=false]:invisible text-clip whitespace-nowrap overflow-hidden">@subject.Name (@Enum.GetName(subject.Source))</p>
                     </div>
                 </div>
             }

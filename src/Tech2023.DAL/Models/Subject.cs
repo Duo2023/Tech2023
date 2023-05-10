@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-using Tech2023.DAL.Models;
-
-namespace Tech2023.DAL;
+namespace Tech2023.DAL.Models;
 
 /// <summary>
 /// Represents a subject that can any type of resource attached to it

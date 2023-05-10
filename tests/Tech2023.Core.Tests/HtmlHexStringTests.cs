@@ -3,11 +3,12 @@
 public class HtmlHexStringTests
 {
     [Theory]
-    [InlineData(0x4)]
-    public void ConvertToString_ReturnsExpectedResult(uint color)
+    [ClassData(typeof(HexStringProvider))]
+    public void ConvertToString_ReturnsExpectedResult(uint value, string expected)
     {
-        string output = HtmlHexString.GetHtmlHexString(color);
+        string output = HtmlHexString.GetHtmlHexString(value);
 
         Assert.NotNull(output);
+        Assert.Equal(expected, output);
     }
 }

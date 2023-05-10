@@ -5,10 +5,15 @@ public static class HtmlHexString
     /// <summary>
     /// Gets the color value as a hexadecimal string value
     /// </summary>
-    public static unsafe string GetHtmlHexString(uint color) => string.Create(9, color, (span, value) =>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static unsafe string GetHtmlHexString(uint value)
     {
-        span[0] = '#';
+        char* chars = stackalloc char[9]; // #FFFFFFFF max 
 
-        _ = value.TryFormat(span[1..], out _, "x8");
-    });
+        *chars = '#'; // first character is '#' to use in css properties like { color: 
+
+        _ = value.TryFormat(new Span<char>(chars + 1, 8), out int written, "x");
+
+        return new string(chars, 0, written + 1);
+    }
 }
