@@ -2,9 +2,7 @@
  * Contains functions and data types for working with the statistics of the web API
  */
 export module statistics {
-    declare let API_BASE_URL: string | undefined;
-
-    const uri: URL = new URL("/statistics/ping", API_BASE_URL);
+    const uri: URL = new URL("api/statistics/ping", API_BASE_URL);
 
     /**
      * The same as Web.Shared/Statistics/PingResponse.cs but in TypeScript
