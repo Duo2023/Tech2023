@@ -1,6 +1,8 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
+/* The converter here opts to use a 64-bit signed integer to represent it in JSON, instead of a string representation where some other version would use it */
+
 namespace Tech2023.Core.Json.Converters;
 
 /// <summary>
