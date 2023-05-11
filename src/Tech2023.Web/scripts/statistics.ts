@@ -51,9 +51,9 @@ export module statistics {
         updateButtonFlag = false;
     }
 
-     /**
+    /**
      * Checks if the API is up and running by sending a ping request to the server.
-     * 
+     *
      * @returns {Promise<boolean>} - A Promise that resolves to true if the API is up and running, or false otherwise.
      */
     export async function isApiUp(): Promise<boolean> {
@@ -61,7 +61,7 @@ export module statistics {
             const response: Response = await fetch(uri);
 
             if (!response.ok) {
-                console.error('error getting data from api');
+                console.error("error getting data from api");
                 return false;
             }
 
@@ -74,7 +74,7 @@ export module statistics {
 
             return true;
         } catch (error) {
-            console.error('Error fetching the PingResponse:', error);
+            console.error("Error fetching the PingResponse:", error);
             return false;
         }
     }

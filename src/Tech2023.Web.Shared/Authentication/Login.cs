@@ -12,9 +12,8 @@ namespace Tech2023.Web.Shared.Authentication;
 /// </summary>
 public class Login
 {
-    [EmailAddress]
+    [EmailAddress(ErrorMessage = "Invalid E-mail address")]
     [Display(Name = nameof(Email), Prompt = "Enter email")]
-    [DataType(DataType.EmailAddress)] // Error message for this field is overriden in repective form using data-val-email
     [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter an E-mail address")]
     [JsonPropertyName("email")]
     public string Email { get; set; }
