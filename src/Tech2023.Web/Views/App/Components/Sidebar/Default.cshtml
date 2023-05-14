@@ -31,7 +31,7 @@
                         <div class="absolute subject-icon text-center w-6 h-6 z-10 rounded-md mr-3" style="background-color: @HtmlHexString.GetHtmlHexString(subject.DisplayColor ?? 0);"> @* Implement random color *@
                             <p class="drop-shadow-[0_0_1.5px_rgb(0,0,0,0.6)]">@subject.Name[0]</p>
                         </div>
-                        <p class="ml-10 group-data-[expanded=false]:invisible text-clip whitespace-nowrap overflow-hidden">@subject.Name (@Enum.GetName(subject.Source))</p>
+                        <p class="ml-10 group-data-[expanded=false]:invisible text-clip whitespace-nowrap overflow-hidden">@subject.Name (@Html.DisplayTextFor(s => subject.Source))</p>
                     </div>
                 </div>
             }

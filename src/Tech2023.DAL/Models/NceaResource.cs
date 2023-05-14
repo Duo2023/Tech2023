@@ -47,4 +47,12 @@ public sealed class NceaResource
     [DataType(DataType.DateTime)]
     [JsonPropertyName("updated")]
     public DateTimeOffset Updated { get; set; }
+
+    /// <summary>
+    /// When it was created, this means when it was created in our database and not the ncea version
+    /// </summary>
+    [Required]
+    [DataType(DataType.DateTime)]
+    [JsonPropertyName("created")]
+    public DateTimeOffset Created { get; set; }
 }

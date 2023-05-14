@@ -1,4 +1,6 @@
-﻿namespace Tech2023.DAL.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Tech2023.DAL.Models;
 
 /// <summary>
 /// The type of curriculum a resource or model is attributed
@@ -11,11 +13,13 @@ public enum CurriculumSource : byte
     /// <summary>
     /// NCEA curriculum is the provider
     /// </summary>
-    Ncea = 1, 
+    [Display(Name = "NCEA")]
+    Ncea = 1,
 
     /// <summary>
     /// Cambridge is the education provider
     /// </summary>
+    [Display(Name = nameof(Cambridge))] // keep same because it looks fine
     Cambridge = 2,
 
     /* Do not change the underlying value of enum as this is constant and a binary breaking change 
