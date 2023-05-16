@@ -1,3 +1,3 @@
 //export * from "./app";
-export * from "./app/index";
+export * from "./core/index";
 export * from "./user/index";

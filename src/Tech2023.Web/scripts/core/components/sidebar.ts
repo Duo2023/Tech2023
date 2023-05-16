@@ -1,4 +1,4 @@
-export module app.sidebar {
+export module core.sidebar {
     export function toggleSidebar() {
         let sidebar = document.getElementById("sidebar") as HTMLDivElement;
         let sidebarButton = document.getElementById("sidebar-toggle-btn") as HTMLButtonElement;
