@@ -19,6 +19,11 @@ public sealed class Routes
         public const string Home = "/app";
     }
 
+    public static class Settings
+    {
+        public const string Home = "/settings";
+    }
+
     public static class User
     {
         [RouteVisibility(Visiblity.Public)]

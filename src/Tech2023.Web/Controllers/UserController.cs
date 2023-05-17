@@ -9,35 +9,56 @@ using Tech2023.Web.Shared.Authentication;
 
 namespace Tech2023.Web;
 
+/// <summary>
+/// User controller that creates 
+/// </summary>
 public class UserController : Controller
 {
     internal readonly ILogger<AppController> _logger;
     internal readonly IHttpClientFactory _factory;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UserController"/> class
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="factory"></param>
+    /// <exception cref="ArgumentNullException">Thrown if either parameters are null</exception>
     public UserController(ILogger<AppController> logger, IHttpClientFactory factory)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _factory = factory ?? throw new ArgumentNullException(nameof(factory));
     }
 
+    /// <summary>
+    /// Returns the login view
+    /// </summary>
     [Route(Routes.User.Login)]
     public IActionResult Login()
     {
         return View();
     }
 
+    /// <summary>
+    /// Returns the register view
+    /// </summary>
     [Route(Routes.User.Register)]
     public IActionResult Register()
     {
         return View();
     }
 
+    /// <summary>
+    /// Returns the forgot password view
+    /// </summary>
     [Route(Routes.User.ForgotPassword)]
     public IActionResult ForgotPassword()
     {
         return View();
     }
 
+    /// <summary>
+    /// Returns the reset password view
+    /// </summary>
     [Route(Routes.User.ResetPassword)]
     public IActionResult ResetPassword()
     {
