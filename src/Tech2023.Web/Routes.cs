@@ -24,18 +24,20 @@ public sealed class Routes
         public const string Home = "/settings";
     }
 
-    public static class User
-    {
-        [RouteVisibility(Visiblity.Public)]
-        public const string Login = "/login";
+    // replace when routing is sorted
 
-        [RouteVisibility(Visiblity.Public)]
-        public const string Register = "/register";
+    //public static class User
+    //{
+    //    //[RouteVisibility(Visiblity.Public)]
+    //    public const string Login = "/login";
 
-        [RouteVisibility(Visiblity.Public)]
-        public const string ForgotPassword = "/forgot-password";
+    //    [RouteVisibility(Visiblity.Public)]
+    //    public const string Register = "/register";
 
-        [RouteVisibility(Visiblity.Public)]
-        public const string ResetPassword = "/reset-password";
-    }
+    //    [RouteVisibility(Visiblity.Public)]
+    //    public const string ForgotPassword = "/forgot-password";
+
+    //    [RouteVisibility(Visiblity.Public)]
+    //    public const string ResetPassword = "/reset-password";
+    //}
 }

@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Tech2023.DAL;
 using Tech2023.DAL.Models;
 
-namespace Tech2023.Web.API;
+namespace Tech2023.Web;
 
 internal class Initializer : IDataInitializer
 {

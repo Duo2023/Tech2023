@@ -5,7 +5,7 @@ using Tech2023.Web.Shared;
 using Tech2023.Web.Shared.Authentication;
 using Tech2023.Web.Shared.Email;
 
-namespace Tech2023.Web.API.Extensions;
+namespace Tech2023.Web.Extensions;
 
 /// <summary>
 /// Configures application options
@@ -18,7 +18,6 @@ internal static class OptionExtensions
         Debug.Assert(configuration != null);
 
         services.AddOptions();
-        services.ValidateAndConfigure<JwtOptions>(nameof(JwtOptions), configuration);
         services.ValidateAndConfigure<EmailOptions>(nameof(EmailOptions), configuration);
 
         return services;
