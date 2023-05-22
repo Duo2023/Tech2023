@@ -35,8 +35,8 @@
                     border-light-hint border-2 border-opacity-0 focus:border-opacity-75 transition-all duration-75 ease-out">
                     <span asp-validation-for="Input.ConfirmPassword" class="mx-2 font-semibold text-red-500 empty:opacity-0 transition-all duration-200"></span>
                     <div class="flex flex-row p-2 pt-1">
-                        <input id="show-password-checkbox" type="checkbox" value="false" onclick="TS.user.forms.togglePasswordVisibility()">
-                        <label for="show-password-checkbox" id="show-password-text" class="ml-2 text-sm">Show password</label>
+                        <input id="show-password-checkbox" type="checkbox" value="false" onclick="TS.user.forms.togglePasswordVisibility(['Input_Password', 'Input_ConfirmPassword'])">
+                        <label for="show-password-checkbox" id="show-password-text" class="ml-2 text-sm">Show passwords</label>
                     </div>
                 </div>
                 <button id="register-button" type="submit" class="bg-primary font-bold px-4 py-3 my-4 rounded-xl">Register</button>
