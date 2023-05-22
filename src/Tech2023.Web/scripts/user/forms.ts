@@ -1,22 +1,18 @@
 export module user.forms {
-    export function togglePasswordVisibility() {
+    export function togglePasswordVisibility(fieldIDs: string[]) {
         const showPasswordCheckbox = document.getElementById("show-password-checkbox") as HTMLInputElement;
-        let passwordFields = [
-            document.getElementById("Password"),
-            document.getElementById("ConfirmPassword"),
-        ] as HTMLInputElement[];
+
+        let passwordFields = fieldIDs.map((fieldID) => {
+            return document.getElementById(fieldID) as HTMLInputElement;
+        });
 
         if (showPasswordCheckbox.checked) {
             passwordFields.forEach((field) => {
-                if (field != null) {
-                    field.type = "text";
-                }
+                field.type = "text";
             });
         } else {
             passwordFields.forEach((field) => {
-                if (field != null) {
-                    field.type = "password";
-                }
+                field.type = "password";
             });
         }
     }
