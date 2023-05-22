@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 using Tech2023.Core;
 using Tech2023.DAL;
+using Tech2023.Web.Extensions;
 using Tech2023.Web.Shared;
 using Tech2023.Web.Shared.Email;
 #if DEBUG
@@ -55,12 +56,20 @@ public sealed class Startup
         services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
         {
             options.SignIn.RequireConfirmedAccount = true;
+            options.User.RequireUniqueEmail = true;
+
+            options.Password.RequiredLength = AuthConstants.MinPasswordLength;
+            options.Password.RequireNonAlphanumeric = false;
+
         }).AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
 
 #if DEBUG
         services.AddHostedService<AutoReloadService>();
 #endif
+
+        services.AddApplicationOptions(Configuration);
+
         services.AddTransient<IEmailClient, EmailClient>();
 
         services.AddMemoryCache();
