@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 using Tech2023.Core;
 using Tech2023.DAL;
+using Tech2023.Web.Conventions;
 using Tech2023.Web.Extensions;
 using Tech2023.Web.Shared;
 using Tech2023.Web.Shared.Email;
@@ -41,6 +42,11 @@ public sealed class Startup
         services.AddMvc().AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.AddContext<WebSerializationContext>();
+        });
+
+        services.AddRazorPages(options =>
+        {
+            options.Conventions.Add(new FriendlyUrlConvention("Identity"));
         });
 
         services.Configure<RouteOptions>(options =>
