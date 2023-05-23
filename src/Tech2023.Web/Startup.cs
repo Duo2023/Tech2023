@@ -43,6 +43,11 @@ public sealed class Startup
             options.JsonSerializerOptions.AddContext<WebSerializationContext>();
         });
 
+        services.Configure<RouteOptions>(options =>
+        {
+            options.LowercaseUrls = true;
+        });
+
         services.AddDbContextFactory<ApplicationDbContext>(options =>
         {
 #if DEBUG
