@@ -1,0 +1,18 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Check Your Email";
+}
+
+<header class="h-full flex justify-center pt-16">
+    <div id="message-container" class="w-96 h-fit p-5 rounded-2xl bg-secondary border-4 border-hint">
+        <div class="flex flex-row items-center p-1 mb-2 bg-green-800/20 text-green-500 rounded-xl">
+            <span class="material-symbols-rounded px-3">check_circle</span>
+            <h1 class="font-bold">@ViewData["Title"]</h1>
+        </div>
+        <div class="font-semibold m-2">
+            <p>Check your inbox at @HtmlEncoder.Encode(Model.Email)</p>
+            <p>It could be in your junk mail</p>
+        </div>
+    </div>
+</header>

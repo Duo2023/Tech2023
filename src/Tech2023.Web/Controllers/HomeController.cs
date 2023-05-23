@@ -30,6 +30,16 @@ public class HomeController : Controller
         return View();
     }
 
+    [Route("/Home/HandleError/{code:int}")]
+    public IActionResult HandleError(int code)
+    {
+        return code switch
+        {
+            StatusCodes.Status404NotFound => View("~/Views/Shared/404.cshtml"),
+            _ => View("~/Views/Shared/ErrorCode.cshtml", code),
+        };
+    }
+
     [Route(Routes.Privacy)]
     public async Task<IActionResult> PrivacyAsync()
     {
