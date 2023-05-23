@@ -4,7 +4,15 @@
     ViewData["Title"] = "Account Locked";
 }
 
-<header>
-    <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">This account has been locked out, please try again later.</p>
+<header class="h-full flex justify-center pt-16">
+    <div id="message-container" class="w-96 h-fit p-5 rounded-2xl bg-secondary border-4 border-hint">
+        <div class="flex flex-row items-center p-1 mb-2 bg-red-800/20 text-red-500 rounded-xl">
+            <span class="material-symbols-rounded px-3">lock</span>
+            <h1 class="font-bold">@ViewData["Title"]</h1>
+        </div>
+        <div class="font-semibold m-2">
+            <p>This account has been locked out.</p>
+            <p>Please try again later.</p>
+        </div>
+    </div>
 </header>
