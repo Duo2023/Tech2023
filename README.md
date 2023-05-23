@@ -6,24 +6,22 @@
 
 ## Prerequisites
 - NET 7 SDK (https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
-</br>
-This dependency is guaranteed regardless of what you do with the project, as it is required for building.
-
-Other prequisites are recommended but can be swapped out or ignored.
-- The web api requires SQL server (https://www.microsoft.com/en-us/sql-server/sql-server-downloads) or a different DB which can be swapped out using ef configurations.
-- For native, Avalonia is needed so you can install the VS extension at (https://avaloniaui.net/GettingStarted#installation)
-- TypeScript is used on the front end web application, but you could just use the native applications + web api instead.
-- Tailwind CSS is also a front end requirement.
-- Both TypeScript and Tailwind depend on NodeJS so you would also need to install it (https://nodejs.org/en/download)
+- SQL Server (https://www.microsoft.com/en-us/sql-server/sql-server-downloads) or a different DB which can be swapped out with some modifications.
+- NodeJS (https://nodejs.org/en/download) because both Tailwind & TypeScript depend on it, and it's required for building
+- SMTP Server - You could use Outlook as it is default, or any other SMTP server.
 
 ## Getting Started
-To get started, you will need a valid email account for the web api to use, I recommend outlook during debugging and testing.
+Wherever folder you want the project, open the terminal and run
+```
+git clone https://github.com/Duo2023/Tech2023.git
+```
+Open the folder in Visual Studio and double click the solution file Tech2023.sln.
 
-Then in Visual Studio access the user secrets by right clicking on the Tech2023.Web.API project
+Then in Visual Studio access the user secrets by right clicking on the Tech2023.Web
 
 <img src="./assets/img/getting-started-user-secrets.png" width="300">
 
-After that copy in the contents and change the 'FromEmail', 'Username' and 'Password' to your own
+After that copy in the contents and change the 'FromEmail', 'Username' and 'Password' to your own from your SMTP Server
 ```jsonc
 {
   "EmailOptions": {
