@@ -17,8 +17,7 @@
         "API_BASE_URL": "https://localhost:7098/api"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7132;http://localhost:5104",
-      
+      "applicationUrl": "https://localhost:7132;http://localhost:5104"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -32,7 +31,7 @@
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "publishAllPorts": true,
-      "useSSL": true,
+      "useSSL": true
     }
   },
   "iisSettings": {
