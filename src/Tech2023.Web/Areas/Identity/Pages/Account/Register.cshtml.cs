@@ -53,7 +53,12 @@ public class RegisterModel : PageModel
 
         if (ModelState.IsValid)
         {
-            var user = new ApplicationUser();
+            var user = new ApplicationUser
+            {
+                Created = DateTimeOffset.UtcNow
+            };
+
+            user.Updated = user.Created;
 
             await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
             await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
