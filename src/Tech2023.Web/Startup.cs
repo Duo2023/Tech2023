@@ -112,6 +112,8 @@ public sealed class Startup
 
         app.UseRouting();
 
+        app.UseAuthentication();
+
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>
