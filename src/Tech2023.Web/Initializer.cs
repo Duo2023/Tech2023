@@ -70,6 +70,8 @@ internal class Initializer : IDataInitializer
             Created = DateTimeOffset.UtcNow
         };
 
+        user.Updated = user.Created;
+
         var result = await _userManager.CreateAsync(user, "sudoUser555!");
 
         System.Diagnostics.Debug.Assert(result.Succeeded, "Debug user failed to create");

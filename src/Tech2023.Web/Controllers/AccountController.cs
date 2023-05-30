@@ -1,25 +1,25 @@
-﻿#nullable disable
-
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 using System.Diagnostics;
 
 using Tech2023.DAL;
 
-namespace Tech2023.Web.Areas.Identity.Pages.Account;
+namespace Tech2023.Web.Controllers;
 
-public class LogoutModel : PageModel
+public class AccountController : Controller
 {
     internal readonly SignInManager<ApplicationUser> _signInManager;
 
-    public LogoutModel(SignInManager<ApplicationUser> signInManager)
+    public AccountController(SignInManager<ApplicationUser> signInManager)
     {
         _signInManager = signInManager;
     }
 
-    public async Task<IActionResult> OnPost(string returnUrl = null)
+    [HttpPost]
+    [ActionName("Logout")]
+    [Route("logout")]
+    public async Task<IActionResult> LogoutAsync(string returnUrl)
     {
         await _signInManager.SignOutAsync();
 
@@ -33,7 +33,7 @@ public class LogoutModel : PageModel
         {
             // This needs to be a redirect so that the browser performs a new
             // request and the identity for the user gets updated.
-            return RedirectToPage();
+            return RedirectToPage("/");
         }
     }
 }
