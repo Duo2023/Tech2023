@@ -49,6 +49,7 @@ public class RegisterModel : PageModel
 
     public async Task<IActionResult> OnPostAsync(string returnUrl = null)
     {
+#nullable restore
         returnUrl ??= Url.Content("~/");
 
         if (ModelState.IsValid)
@@ -71,6 +72,14 @@ public class RegisterModel : PageModel
                 var userId = await _userManager.GetUserIdAsync(user);
 
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                try
+                {
+                    int byteCount = Encoding.UTF8.GetByteCount(code);
+                    byte[]? arrayToReturnToPool;
+
+                    Span<byte>
+                }
 
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
