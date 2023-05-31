@@ -5,10 +5,23 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <div class="nav-items-container flex items-center mr-4">
-        <div class="flex flex-row space-x-8 text-white">
-            <button id="more" class="material-symbols-rounded">more_horiz</button>
+    <div class="nav-items-container flex flex-row space-x-8 items-center mr-4">
+        <button id="more" class="material-symbols-rounded">more_horiz</button>
+        <div class="inline-block">
             <button id="account-circle" class="material-symbols-rounded">account_circle</button>
+            <div class="z-10 absolute origin-top-right right-0 m-1  bg-background border-2 border-hint rounded-xl">
+                <h3 class="w-full p-3 border-b-2 border-hint">@User!.Identity!.Name</h3>
+                <ul class="flex flex-col space-y-2 p-2">
+                    <li>
+                        <form method="post" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/" class="text-left ">
+                            <button class="w-full inline-flex hover:bg-red-600 px-3 py-2 rounded-lg" type="submit">
+                                <span class="material-symbols-rounded-sm mr-1">logout</span>
+                                Logout
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 }
