@@ -18,6 +18,8 @@ public static class HtmlHexString
     {
         int length = CountLength(value);
 
+        Debug.Assert(length < 10);
+
         char* chars = stackalloc char[length];
 
         *chars = '#'; // set the first element in memory no matter what to #
@@ -38,9 +40,10 @@ public static class HtmlHexString
         while (--digits >= 0 || value != 0)
         {
             byte digit = (byte)(value & 0xF);
-            *(--buffer) = (char)(digit + (digit < 10 ? (byte)'0' : HexBase));
+            *--buffer = (char)(digit + (digit < 10 ? (byte)'0' : HexBase));
             value >>= 4;
         }
+
         return buffer;
     }
 
