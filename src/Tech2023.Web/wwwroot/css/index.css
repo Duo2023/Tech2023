@@ -3,7 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   h1 {
     @apply text-3xl py-2;
@@ -16,6 +15,10 @@
   h3 {
     @apply text-xl;
   }
+
+  h4 {
+    @apply text-lg;
+  }
 }
 
 @layer components {
@@ -27,9 +30,9 @@
 /* /privacy */
 
 footer#privacy-footer {
-    height: 50px;
-    position: absolute;
-    bottom: 20px;
-    left: 0;
-    right: 0;
+  height: 50px;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
 }

@@ -9,13 +9,22 @@
         <button id="more" class="material-symbols-rounded">more_horiz</button>
         <div class="inline-block">
             <button id="account-circle" class="material-symbols-rounded">account_circle</button>
-            <div class="z-10 absolute origin-top-right right-0 m-1  bg-background border-2 border-hint rounded-xl">
-                <h3 class="w-full p-3 border-b-2 border-hint">@User!.Identity!.Name</h3>
-                <ul class="flex flex-col space-y-2 p-2">
+            <div id="account-dropdown" class="z-10 absolute w-52 origin-top-right right-0 m-1 bg-background border-2 border-hint rounded-xl">
+                <div class="flex flex-col p-4 border-b-2 border-hint font-bold">
+                    <p class="text-light-hint">Logged in as:</p>
+                    <h4 class="w-full ml-1 overflow-x-clip overflow-ellipsis">@User!.Identity!.Name</h4>
+                </div>
+                <ul class="flex flex-col text-left space-y-2 p-2 font-semibold">
                     <li>
-                        <form method="post" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/" class="text-left ">
-                            <button class="w-full inline-flex hover:bg-red-600 px-3 py-2 rounded-lg" type="submit">
-                                <span class="material-symbols-rounded-sm mr-1">logout</span>
+                        <a asp-controller="Settings" asp-action="Index" class="w-full inline-flex hover:bg-hint/80 p-2 rounded-lg">
+                            <span class="material-symbols-rounded-sm mr-3">settings</span>
+                            Settings
+                        </a>
+                    </li>
+                    <li>
+                        <form method="post" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/">
+                            <button class="w-full inline-flex hover:bg-red-600/80 p-2 rounded-lg" type="submit">
+                                <span class="material-symbols-rounded-sm mr-3">logout</span>
                                 Logout
                             </button>
                         </form>
