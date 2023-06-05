@@ -27,7 +27,7 @@
                             Logout
                         </button>
 
-                        <dialog id="logout-modal" class="p-6 font-semibold bg-background border-4 border-hint text-white rounded-2xl backdrop:bg-black/30 backdrop:blur-2xl">
+                        <dialog id="logout-modal" class="p-6 font-semibold bg-background border-4 border-hint text-white rounded-2xl backdrop:bg-black/30 backdrop:backdrop-filter backdrop:backdrop-blur">
                             <h2>Logout from <strong>@User!.Identity!.Name</strong>?</h2>
                             <form method="post" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/" class="w-full flex flex-row justify-end mt-4 space-x-4">
                                 <button formmethod="dialog" type="submit" class="p-2 hover:underline">Go back!</button>
