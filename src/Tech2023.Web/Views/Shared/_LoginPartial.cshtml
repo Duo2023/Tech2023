@@ -29,14 +29,12 @@
 
                         <dialog id="logout-modal" class="p-6 font-semibold bg-background border-4 border-hint text-white rounded-2xl backdrop:bg-black/30 backdrop:blur-2xl">
                             <h2>Logout from <strong>@User!.Identity!.Name</strong>?</h2>
-                            <div id="button-container" class="w-full flex flex-row justify-end mt-4 space-x-4">
-                                <button onclick="TS.interactions.closeDialog('logout-modal')" class="p-2 hover:underline">Go back!</button>
-                                <form method="post" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/">
-                                    <button class="inline-flex bg-red-600/80 p-2 rounded-lg" type="submit">
-                                        Yes, Logout
-                                    </button>
-                                </form>
-                            </div>
+                            <form method="post" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/" class="w-full flex flex-row justify-end mt-4 space-x-4">
+                                <button formmethod="dialog" type="submit" class="p-2 hover:underline">Go back!</button>
+                                <button class="inline-flex bg-red-600/80 p-2 rounded-lg" type="submit">
+                                    Yes, Logout
+                                </button>
+                            </form>
                         </dialog>
                     </li>
                 </ul>
