@@ -16,6 +16,19 @@ export module interactions {
         } else {
             dialog.show();
         }
+
+        // To auto hide the dialog if the user clicks outside the dialog element:
+        dialog.addEventListener("click", (e) => {
+            const dialogDimensions = dialog.getBoundingClientRect();
+            if (
+                e.clientX < dialogDimensions.left ||
+                e.clientX > dialogDimensions.right ||
+                e.clientY < dialogDimensions.top ||
+                e.clientY > dialogDimensions.bottom
+            ) {
+                dialog.close();
+            }
+        });
     }
 
     export function closeDialog(id: string): void {
