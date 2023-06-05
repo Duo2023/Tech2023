@@ -8,8 +8,8 @@
     <div class="nav-items-container flex flex-row space-x-8 items-center mr-4">
         <button id="more" class="material-symbols-rounded">more_horiz</button>
         <div class="inline-block">
-            <button id="account-circle" class="material-symbols-rounded">account_circle</button>
-            <div id="account-dropdown" class="z-10 absolute w-52 origin-top-right right-0 m-1 bg-background border-2 border-hint rounded-xl">
+            <button id="account-circle" class="material-symbols-rounded" onclick="TS.interactions.toggleHiddenElement('account-dropdown');">account_circle</button>
+            <div id="account-dropdown" class="hidden z-10 absolute w-52 origin-top-right right-0 m-1 bg-background border-2 border-hint rounded-xl">
                 <div class="flex flex-col p-4 border-b-2 border-hint font-bold">
                     <p class="text-light-hint">Logged in as:</p>
                     <h4 class="w-full ml-1 overflow-x-clip overflow-ellipsis">@User!.Identity!.Name</h4>
@@ -22,12 +22,22 @@
                         </a>
                     </li>
                     <li>
-                        <form method="post" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/">
-                            <button class="w-full inline-flex hover:bg-red-600/80 p-2 rounded-lg" type="submit">
-                                <span class="material-symbols-rounded-sm mr-3">logout</span>
-                                Logout
-                            </button>
-                        </form>
+                        <button onclick="TS.interactions.showDialog('logout-modal', true)" class="w-full inline-flex hover:bg-red-600/80 p-2 rounded-lg">
+                            <span class="material-symbols-rounded-sm mr-3">logout</span>
+                            Logout
+                        </button>
+
+                        <dialog id="logout-modal" class="p-6 font-semibold bg-background border-4 border-hint text-white rounded-2xl backdrop:bg-black/30 backdrop:blur-2xl">
+                            <h2>Logout from <strong>@User!.Identity!.Name</strong>?</h2>
+                            <div id="button-container" class="w-full flex flex-row justify-end mt-4 space-x-4">
+                                <button onclick="TS.interactions.closeDialog('logout-modal')" class="p-2 hover:underline">Go back!</button>
+                                <form method="post" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/">
+                                    <button class="inline-flex bg-red-600/80 p-2 rounded-lg" type="submit">
+                                        Yes, Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </dialog>
                     </li>
                 </ul>
             </div>
