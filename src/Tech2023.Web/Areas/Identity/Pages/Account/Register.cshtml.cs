@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Tech2023.Web.Shared.Authentication;
 using Tech2023.Web.Shared.Email;
 using Tech2023.DAL;
+using Tech2023.Web.Shared;
 
 namespace Tech2023.Web.Areas.Identity.Pages.Account;
 
@@ -72,7 +73,7 @@ public class RegisterModel : PageModel
 
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                code = WebEncoderHelpers.EncodeAsUTF8ToBase64Url(code);
 
                 var callbackUrl = Url.Page(
                     "/Account/ConfirmEmail",
