@@ -7,6 +7,7 @@ namespace Tech2023.Benchmarking;
 [MemoryDiagnoser]
 public class WebEncodingTests
 {
+    internal const string ToDecode = "";
     internal const string Input
         = "CfDJ8MctbNpBxHFBmO4TqGmL8VWIN78T7spH6IepX0JcuxCJyNXrMr4Dj1h6hrBdMUD+2DEIqz/n/7fXZBmAKuuFURfTUPvBbT3hSi8QXvUmbhmXteHHNM5RUUyGS4wMlWtg4s70h8mNz8Z5FkVPosFpDQ+fOtBWZov0g13MRE75mUAyKR7RzjZ9WkvEmp4/NDSawC3iK2kDx8gM2p5HB8lqnFMp2XRZXLLpQ4uO93Ob8f8dCcviR/YQUXToAqbhFPervA==";
 
@@ -23,6 +24,18 @@ public class WebEncodingTests
     {
         return Impl.GetString(Input);
     }
+
+    //[Benchmark]
+    //public string ImplementationDecode()
+    //{
+
+    //}
+
+    //[Benchmark]
+    //public string OriginalDecode()
+    //{
+
+    //}
 }
 
 file class Impl

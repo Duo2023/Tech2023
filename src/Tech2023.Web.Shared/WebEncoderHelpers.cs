@@ -9,20 +9,130 @@ internal static class WebEncoderHelpers
 {
     internal const int StackallocThreshold = 128; // 128 bytes is the max amount of bytes before we go to heap basd allocations like ArrayPool
 
-    //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-    //public static bool TryDecodeFromFromBase64UrlUtf8String(ReadOnlySpan<char> input, [NotNullWhen(true)] out string? str)
-    //{
-    //    if (input.IsEmpty)
-    //    {
-    //        str = null;
-    //        return false;
-    //    }
+    private const char Base64PadCharacter = '=';
+    private const char Base64Character62 = '+';
+    private const char Base64Character63 = '/';
+    private const char Base64UrlCharacter62 = '-';
+    private const char Base64UrlCharacter63 = '_';  
 
-    //    int requiredByteCount = Encoding.UTF8.Get
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool TryDecodeFromBase64UrlEncoded(ReadOnlySpan<char> input, [NotNullWhen(true)] out string? output)
+    {
+        if (input.IsEmpty)
+        {
+            output = null;
+            return false;
+        }
 
-    //    str = "";
-    //    return true;
-    //}
+        int requiredBytes = ((input.Length * 3) + 3) / 4;
+
+        byte[]? bufferToReturnToPool = null;
+
+        Span<byte> buffer = requiredBytes <= 256 ? stackalloc byte[requiredBytes] : (bufferToReturnToPool = ArrayPool<byte>.Shared.Rent(requiredBytes));
+
+
+        if (!TryDecodeIntoBuffer(input, default, out int written))
+        {
+            output = null;
+            return false;
+        }
+
+
+        output = Encoding.UTF8.GetString(buffer[..written]);
+
+        return true;
+    }
+
+
+    internal static unsafe bool TryDecodeIntoBuffer(ReadOnlySpan<char> input, Span<byte> bytes, out int written)
+    {
+        int mod = input.Length % 4;
+
+        if (mod == 1)
+        {
+            written = 0;
+            return false;
+        }
+
+        bool needReplace = false;
+        int decodedLength = input.Length + (4 - mod) % 4;
+
+        for (int i = 0; (uint)i < (uint)input.Length; i++)
+        {
+            if (input[i] == Base64Character62 || input[i] == Base64Character63)
+            {
+                needReplace = true;
+                break;
+            }
+        }
+
+        if (needReplace)
+        {
+            char[]? bufferToReturnToPool = null;
+            Span<char> dest = decodedLength <= StackallocThreshold ? stackalloc char[StackallocThreshold] : (bufferToReturnToPool = ArrayPool<char>.Shared.Rent(decodedLength));
+
+            dest = dest[..decodedLength];
+
+            int i = 0;
+
+            for (; i < input.Length; i++)
+            {
+                if (input[i] == Base64Character62)
+                {
+                    dest[i] = Base64Character62;
+                }
+                else if (input[i] == Base64Character63)
+                {
+                    dest[i] = Base64Character63;
+                }
+                else
+                {
+                    dest[i] = input[i];
+                }
+            }
+
+            for (; i < decodedLength; i++)
+            {
+                dest[i] = Base64PadCharacter;
+            }
+            
+
+            bool result = Convert.TryFromBase64Chars(dest, bytes, out written);
+
+            if (bufferToReturnToPool != null)
+            {
+                ArrayPool<char>.Shared.Return(bufferToReturnToPool);
+            }
+
+            return result;
+        }
+        else
+        {
+            if (decodedLength == input.Length)
+            {
+                return Convert.TryFromBase64Chars(input, bytes, out written);
+            }
+
+            char[]? bufferToReturnToPool = null;
+
+            Span<char> decoded = decodedLength <= StackallocThreshold ? stackalloc char[StackallocThreshold] : (bufferToReturnToPool = ArrayPool<char>.Shared.Rent(decodedLength));
+
+            decoded = decoded[..decodedLength];
+
+            input.CopyTo(decoded);
+
+            bool result = Convert.TryFromBase64Chars(decoded, bytes, out written);
+
+            if (bufferToReturnToPool != null)
+            {
+                ArrayPool<char>.Shared.Return(bufferToReturnToPool);
+            }
+
+            return result;
+        }
+    }
+
+    #region Encode
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool TryEncodeToUtf8Base64Url(ReadOnlySpan<char> input, [NotNullWhen(true)] out string? str)
@@ -147,4 +257,5 @@ internal static class WebEncoderHelpers
         written = charsWritten;
         return true;
     }
+    #endregion // end Encode
 }
