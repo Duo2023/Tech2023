@@ -36,12 +36,24 @@ internal static class WebEncoderHelpers
         }
 
         int requiredByteCount = Encoding.UTF8.GetByteCount(input);
+        byte[]? bufferToReturnToPool = null;
 
-        Span<byte> buffer = requiredByteCount <= StackAllocThreshold ? stackalloc byte[requiredByteCount] : new byte[requiredByteCount];
+        Span<byte> buffer = requiredByteCount <= StackAllocThreshold 
+            ? stackalloc byte[requiredByteCount] 
+            : bufferToReturnToPool = ArrayPool<byte>.Shared.Rent(requiredByteCount);
+
+        buffer = buffer[..requiredByteCount];
 
         Encoding.UTF8.GetBytes(input, buffer);
 
-        return TryEncodeInternal(buffer, out str);
+        bool result = TryEncodeInternal(buffer, out str);
+
+        if (bufferToReturnToPool != null)
+        {
+            ArrayPool<byte>.Shared.Return(bufferToReturnToPool);
+        }
+
+        return result;
     }
 
     /// <summary>
