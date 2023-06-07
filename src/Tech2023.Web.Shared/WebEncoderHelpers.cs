@@ -37,7 +37,7 @@ internal static class WebEncoderHelpers
 
         int requiredByteCount = Encoding.UTF8.GetByteCount(input);
 
-        Span<byte> buffer = StackAllocThreshold <= 256 ? stackalloc byte[requiredByteCount] : new byte[requiredByteCount];
+        Span<byte> buffer = requiredByteCount <= StackAllocThreshold ? stackalloc byte[requiredByteCount] : new byte[requiredByteCount];
 
         Encoding.UTF8.GetBytes(input, buffer);
 
