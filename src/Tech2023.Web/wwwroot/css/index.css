@@ -19,6 +19,10 @@
   h4 {
     @apply text-lg;
   }
+
+  dialog {
+    @apply bg-background border-4 border-hint text-white p-6 rounded-2xl backdrop:bg-black/30 backdrop:backdrop-filter backdrop:backdrop-blur animate-grow backdrop:animate-fade-in;
+  }
 }
 
 @layer components {

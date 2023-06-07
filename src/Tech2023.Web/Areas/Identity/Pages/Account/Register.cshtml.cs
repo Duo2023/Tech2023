@@ -73,7 +73,10 @@ public class RegisterModel : PageModel
 
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                code = WebEncoderHelpers.EncodeAsUTF8ToBase64Url(code);
+                if (!WebEncoderHelpers.TryEncodeToUtf8Base64Url(code, out code))
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
 
                 var callbackUrl = Url.Page(
                     "/Account/ConfirmEmail",
