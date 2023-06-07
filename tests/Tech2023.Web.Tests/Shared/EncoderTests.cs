@@ -32,4 +32,20 @@ public class EncoderTests
 
         Assert.False(result);
     }
+
+    [Theory]
+    [InlineData("Q2ZESjhNY3RiTnBCeEhGQm1PNFRxR21MOFZXVWxwNW5TVCt5ejFONURGUVI4dGNyNG9sR2VxdWx5R054TThYV3lxdS9XclBMeWhCUzcwRGhtZ09UanNCNzA4eTZKOHBodEZydURaeU5DMlp4cU1NZVM0R0hOVnEwUXBaVytqSDNqN3AzMHBYdldTNnZLcHpJeXAvd1M2N2dvNjNtb1FSTDg5U0lmUEg0cVBjZkdNMGFKcXlYNlp0Z2Y5UVdLSjdmSU9KMXZ2R1VGS3hCUGNjblk4bU11WFljOVhIYWp6SHQ2cElleTdTMmwwTnZnb1JJSDliR3NoYno3ak9qdnY4NGQ5WWN0dz09")]
+    public void Decode_ShouldHaveIdenticalBehaviour(string input)
+    {
+        string expected = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(input));
+
+        if (WebEncoderHelpers.TryDecodeFromBase64UrlEncoded(input, out var result))
+        {
+            Assert.Equal(expected, result);
+        }
+        else
+        {
+            Assert.Fail("Decode method returned false");
+        }
+    }
 }

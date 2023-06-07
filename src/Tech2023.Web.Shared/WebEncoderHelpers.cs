@@ -30,17 +30,26 @@ internal static class WebEncoderHelpers
 
         Span<byte> buffer = requiredBytes <= 256 ? stackalloc byte[requiredBytes] : (bufferToReturnToPool = ArrayPool<byte>.Shared.Rent(requiredBytes));
 
-
-        if (!TryDecodeIntoBuffer(input, default, out int written))
+        if (!TryDecodeIntoBuffer(input, buffer, out int written))
         {
+            FreeBuffer(bufferToReturnToPool);
             output = null;
             return false;
         }
 
-
         output = Encoding.UTF8.GetString(buffer[..written]);
 
+        FreeBuffer(bufferToReturnToPool);
+
         return true;
+    }
+
+    internal static void FreeBuffer<T>(T[]? array)
+    {
+        if (array is not null)
+        {
+            ArrayPool<T>.Shared.Return(array);
+        }
     }
 
 
