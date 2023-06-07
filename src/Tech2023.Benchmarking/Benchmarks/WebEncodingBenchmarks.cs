@@ -13,7 +13,9 @@ public class WebEncodingTests
     [Benchmark(Baseline = true)]
     public string Implementation()
     {
-        return WebEncoderHelpers.EncodeAsUTF8ToBase64Url(Input);
+        WebEncoderHelpers.TryEncodeToUtf8Base64Url(Input, out var s);
+
+        return s!;
     }
 
     [Benchmark]

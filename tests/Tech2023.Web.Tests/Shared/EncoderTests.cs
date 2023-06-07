@@ -13,8 +13,23 @@ public class EncoderTests
     public void Encode_ShouldHaveIdenticialBehaviour(string input)
     {
         string expected = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(input));
-        string result = WebEncoderHelpers.EncodeAsUTF8ToBase64Url(input);
 
-        Assert.Equal(expected, result);
+        if (WebEncoderHelpers.TryEncodeToUtf8Base64Url(input, out var result))
+        {
+            Assert.Equal(expected, result);
+        }
+        else
+        {
+            Assert.Fail("Encode method returned false");
+        }
+    }
+
+    [Theory]
+    [InlineData(null)]
+    public void Encode_ShouldReturnFalse(string input)
+    {
+        bool result = WebEncoderHelpers.TryEncodeToUtf8Base64Url(input, out _);
+
+        Assert.False(result);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Buffers;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Tech2023.Web.Shared;
@@ -8,9 +9,39 @@ internal static class WebEncoderHelpers
 {
     internal const int StackallocThreshold = 128; // 128 bytes is the max amount of bytes before we go to heap basd allocations like ArrayPool
 
-    public static string EncodeAsUTF8ToBase64Url(string input)
+    //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+    //public static bool TryDecodeFromFromBase64UrlUtf8String(ReadOnlySpan<char> input, [NotNullWhen(true)] out string? str)
+    //{
+    //    if (input.IsEmpty)
+    //    {
+    //        str = null;
+    //        return false;
+    //    }
+
+    //    int requiredByteCount = Encoding.UTF8.Get
+
+    //    str = "";
+    //    return true;
+    //}
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool TryEncodeToUtf8Base64Url(ReadOnlySpan<char> input, [NotNullWhen(true)] out string? str)
     {
-        return Base64UrlEncode(Encoding.UTF8.GetBytes(input));
+        const int StackAllocThreshold = 256;
+
+        if (input.IsEmpty)
+        {
+            str = null;
+            return false;
+        }
+
+        int requiredByteCount = Encoding.UTF8.GetByteCount(input);
+
+        Span<byte> buffer = StackAllocThreshold <= 256 ? stackalloc byte[requiredByteCount] : new byte[requiredByteCount];
+
+        Encoding.UTF8.GetBytes(input, buffer);
+
+        return TryEncodeInternal(buffer, out str);
     }
 
     /// <summary>
@@ -19,13 +50,14 @@ internal static class WebEncoderHelpers
     /// <param name="input">The binary input to encode.</param>
     /// <returns>The base64url-encoded form of <paramref name="input"/>.</returns>
     [SkipLocalsInit]
-    internal static string Base64UrlEncode(ReadOnlySpan<byte> input)
+    internal static bool TryEncodeInternal(ReadOnlySpan<byte> input, [NotNullWhen(true)] out string? output)
     {
         const int StackAllocThreshold = 128;
 
         if (input.IsEmpty)
         {
-            return string.Empty;
+            output = null;
+            return false;
         }
 
         int bufferSize = GetArraySizeRequiredToEncode(input.Length);
@@ -35,15 +67,25 @@ internal static class WebEncoderHelpers
             ? stackalloc char[StackAllocThreshold]
             : bufferToReturnToPool = ArrayPool<char>.Shared.Rent(bufferSize);
 
-        var numBase64Chars = Base64UrlEncode(input, buffer);
-        var base64Url = new string(buffer[..numBase64Chars]);
+        string? base64Url = null;
+
+        if (TryEncodeInternal(input, buffer, out int written))
+        {
+            base64Url = new string(buffer[..written]);
+        }
+        else
+        {
+            output = null;
+            return false;
+        }
 
         if (bufferToReturnToPool != null)
         {
             ArrayPool<char>.Shared.Return(bufferToReturnToPool);
         }
 
-        return base64Url;
+        output = base64Url;
+        return true;
     }
 
     public static int GetArraySizeRequiredToEncode(int count)
@@ -52,18 +94,23 @@ internal static class WebEncoderHelpers
         return checked(numWholeOrPartialInputBlocks * 4);
     }
 
-    private static int Base64UrlEncode(ReadOnlySpan<byte> input, Span<char> output)
+    private static bool TryEncodeInternal(ReadOnlySpan<byte> input, Span<char> output, out int written)
     {
         Debug.Assert(output.Length >= GetArraySizeRequiredToEncode(input.Length));
 
         if (input.IsEmpty)
         {
-            return 0;
+            written = 0;
+            return false;
         }
 
         // Use base64url encoding with no padding characters. See RFC 4648, Sec. 5.
 
-        Convert.TryToBase64Chars(input, output, out int charsWritten);
+        if (!Convert.TryToBase64Chars(input, output, out int charsWritten))
+        {
+            written = 0;
+            return false;
+        }
 
         // Fix up '+' -> '-' and '/' -> '_'. Drop padding characters.
         for (var i = 0; i < charsWritten; i++)
@@ -80,10 +127,12 @@ internal static class WebEncoderHelpers
             else if (ch == '=')
             {
                 // We've reached a padding character; truncate the remainder.
-                return i;
+                written = i;
+                return true;
             }
         }
 
-        return charsWritten;
+        written = charsWritten;
+        return true;
     }
 }
