@@ -27,9 +27,9 @@
             @RenderBody()
         </main>
 
-        <footer class="fixed bottom-0 right-0 px-2">
+        <footer class="fixed bottom-0 right-0 px-2 pointer-events-none">
             <div class="flex justify-end items-end w-auto text-slate-100 text-sm font-semibold">
-                &copy; @(DateTime.UtcNow.Year == 2023 ? 2023 : $"2023 - {DateTime.UtcNow.Year}") - Duo2023 - &ThinSpace;<a class="hover:underline" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                &copy; @(DateTime.UtcNow.Year == 2023 ? 2023 : $"2023 - {DateTime.UtcNow.Year}") - Duo2023 - &ThinSpace;<a class="hover:underline pointer-events-auto" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
         </footer>
 
