@@ -13,32 +13,48 @@ internal static class WebEncoderHelpers
     private const char Base64Character62 = '+';
     private const char Base64Character63 = '/';
     private const char Base64UrlCharacter62 = '-';
-    private const char Base64UrlCharacter63 = '_';  
+    private const char Base64UrlCharacter63 = '_';
 
+    /// <summary>
+    /// Gets the bytes from the span of characters as UTF-8 and then performs a base64 decode when it is URI encoded.
+    /// </summary>
+    /// <param name="input">The input, which should be base64 url encoded</param>
+    /// <param name="output">The decoded output string</param>
+    /// <remarks>
+    /// Does the equivalant of <c>WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(str));</c>
+    /// </remarks>
+    /// <returns>Whether the operation suceeded or not, output is not <see langword="null"/> when true</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool TryDecodeFromBase64UrlEncoded(ReadOnlySpan<char> input, [NotNullWhen(true)] out string? output)
     {
-        if (input.IsEmpty)
+        // perform an early return when the input is empty
+        if (input.IsEmpty) 
         {
             output = null;
             return false;
         }
 
+        // calculate the number of bytes used to decode
         int requiredBytes = ((input.Length * 3) + 3) / 4;
 
+        // the tempory buffer used to decode the bytes into
         byte[]? bufferToReturnToPool = null;
 
+        // creates a span view of bytes over either stack allocated buffer or a rented buffer from an ArrayPool<byte>.Shared
         Span<byte> buffer = requiredBytes <= 256 ? stackalloc byte[requiredBytes] : (bufferToReturnToPool = ArrayPool<byte>.Shared.Rent(requiredBytes));
 
+        // try decode the input into the buffer, if it fails early return
         if (!TryDecodeIntoBuffer(input, buffer, out int written))
         {
-            FreeBuffer(bufferToReturnToPool);
+            FreeBuffer(bufferToReturnToPool); // free the rented buffer if required
             output = null;
             return false;
         }
 
+        // at this point we know that the buffer is valid and can be written to so no Try[method] needs to be used
         output = Encoding.UTF8.GetString(buffer[..written]);
 
+        // free the buffer and return gracefully
         FreeBuffer(bufferToReturnToPool);
 
         return true;
@@ -51,7 +67,6 @@ internal static class WebEncoderHelpers
             ArrayPool<T>.Shared.Return(array);
         }
     }
-
 
     internal static unsafe bool TryDecodeIntoBuffer(ReadOnlySpan<char> input, Span<byte> bytes, out int written)
     {
@@ -148,6 +163,7 @@ internal static class WebEncoderHelpers
     {
         const int StackAllocThreshold = 256;
 
+        // perform an early return if the input is empty
         if (input.IsEmpty)
         {
             str = null;
