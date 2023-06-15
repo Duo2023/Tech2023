@@ -17,6 +17,7 @@ public sealed class Routes
     {
         [RouteVisibility(Visiblity.Authenticated)]
         public const string Home = "/app";
+        public const string PaperViewer = "/paper";
     }
 
     public static class Settings

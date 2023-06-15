@@ -24,4 +24,10 @@ public class AppController : Controller
     {
         return View();
     }
+
+    [Route(Routes.Application.PaperViewer)]
+    public IActionResult PaperViewer()
+    {
+        return View();
+    }
 }
