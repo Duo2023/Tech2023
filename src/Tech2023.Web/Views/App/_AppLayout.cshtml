@@ -2,9 +2,9 @@
     Layout = "_Layout";
 }
 
-<div id="app-container" class="flex flex-row h-full">
+<div id="app-container" class="grid grid-cols-[min-content_auto] h-full">
     <vc:sidebar></vc:sidebar>
-    <div class="w-full">
+    <div>
         @RenderBody()
     </div>
 </div>
