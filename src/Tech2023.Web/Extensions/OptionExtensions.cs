@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Tech2023.Web.Shared;
 using Tech2023.Web.Shared.Authentication;
 using Tech2023.Web.Shared.Email;
+using Tech2023.Web.Workers;
 
 namespace Tech2023.Web.Extensions;
 
@@ -19,6 +20,7 @@ internal static class OptionExtensions
 
         services.AddOptions();
         services.ValidateAndConfigure<EmailOptions>(nameof(EmailOptions), configuration);
+        services.ValidateAndConfigure<PaperCrawlerOptions>(nameof(PaperCrawlerOptions), configuration);
 
         return services;
     }
