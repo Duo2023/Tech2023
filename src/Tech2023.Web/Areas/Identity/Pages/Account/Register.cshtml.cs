@@ -71,8 +71,6 @@ public class RegisterModel : PageModel
 
                 var userId = await _userManager.GetUserIdAsync(user);
 
-                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
                 var emailSuccess = await _confirmationService.SendEmailConfirmationAsync(user, 
                     (code) => Url.Page("/Account/ConfirmEmail", pageHandler: null, values: new { area = "Identity", userId, code, returnUrl }, Request.Scheme));
 
