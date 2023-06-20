@@ -21,21 +21,21 @@ public class RegisterModel : PageModel
     private readonly IUserStore<ApplicationUser> _userStore;
     private readonly IUserEmailStore<ApplicationUser> _emailStore;
     private readonly ILogger<RegisterModel> _logger;
-    private readonly IEmailClient _emailSender;
+    private readonly IEmailConfirmationService<ApplicationUser> _confirmationService;
 
     public RegisterModel(
         UserManager<ApplicationUser> userManager,
         IUserStore<ApplicationUser> userStore,
         SignInManager<ApplicationUser> signInManager,
         ILogger<RegisterModel> logger,
-        IEmailClient emailSender)
+        IEmailConfirmationService<ApplicationUser> confirmationService)
     {
         _userManager = userManager;
         _userStore = userStore;
         _emailStore = GetEmailStore();
         _signInManager = signInManager;
         _logger = logger;
-        _emailSender = emailSender;
+        _confirmationService = confirmationService;
     }
 
     [BindProperty]
@@ -73,19 +73,13 @@ public class RegisterModel : PageModel
 
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                if (!WebEncoderHelpers.TryEncodeToUtf8Base64Url(code, out code))
+                var emailSuccess = await _confirmationService.SendEmailConfirmationAsync(user, 
+                    (code) => Url.Page("/Account/ConfirmEmail", pageHandler: null, values: new { area = "Identity", userId, code, returnUrl }, Request.Scheme));
+
+                if (!emailSuccess)
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-
-                var callbackUrl = Url.Page(
-                    "/Account/ConfirmEmail",
-                    pageHandler: null,
-                    values: new { area = "Identity", userId, code, returnUrl },
-                    protocol: Request.Scheme);
-
-                await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                 return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl });
             }

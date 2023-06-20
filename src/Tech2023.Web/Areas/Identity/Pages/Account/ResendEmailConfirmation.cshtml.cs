@@ -12,12 +12,12 @@ namespace Tech2023.Web.Areas.Identity.Pages.Account;
 
 public class ResendEmailConfirmationModel : PageModel
 {
-    internal readonly IEmailClient _emailClient;
+    internal readonly IEmailConfirmationService<ApplicationUser> _confirmationService;
     internal readonly UserManager<ApplicationUser> _userManager;
 
-    public ResendEmailConfirmationModel(IEmailClient emailClient, UserManager<ApplicationUser> userManager)
+    public ResendEmailConfirmationModel(IEmailConfirmationService<ApplicationUser> confirmationService, UserManager<ApplicationUser> userManager)
     {
-        _emailClient = emailClient ?? throw new ArgumentNullException(nameof(emailClient));
+        _confirmationService = confirmationService ?? throw new ArgumentNullException(nameof(confirmationService));
         _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
     }
         
@@ -40,6 +40,16 @@ public class ResendEmailConfirmationModel : PageModel
         if (user is null)
         {
             return Page();
+        }
+
+        var userId = await _userManager.GetUserIdAsync(user);
+
+        var emailSuccess = await _confirmationService.SendEmailConfirmationAsync(user,
+                    (code) => Url.Page("/Account/ConfirmEmail", pageHandler: null, values: new { area = "Identity", userId, code, returnUrl = Url.Content("~/") }, Request.Scheme));
+
+        if (!emailSuccess)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         return RedirectToPage("/Account/Login");

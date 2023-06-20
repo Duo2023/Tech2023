@@ -8,6 +8,7 @@ using Tech2023.DAL;
 using Tech2023.Web.Conventions;
 using Tech2023.Web.Extensions;
 using Tech2023.Web.Shared;
+using Tech2023.Web.Shared.Authentication;
 using Tech2023.Web.Shared.Email;
 #if DEBUG
     using Tech2023.Web.Workers;
@@ -81,11 +82,11 @@ public sealed class Startup
 
         services.AddApplicationOptions(Configuration);
 
-        services.AddTransient<IEmailClient, EmailClient>();
-
         services.AddMemoryCache();
 
         services.AddTransient<IEmailClient, EmailClient>();
+
+        services.AddTransient<IEmailConfirmationService<ApplicationUser>, EmailConfirmationService>();
 
         services.AddTransient<IDataInitializer, Initializer>();
     }
