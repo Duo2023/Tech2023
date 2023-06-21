@@ -17,6 +17,12 @@ public class EmailConfirmationService : IEmailConfirmationService<ApplicationUse
     internal readonly IEmailClient _emailClient;
     internal readonly UserManager<ApplicationUser> _userManager;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="EmailConfirmationService"/> class
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="emailClient"></param>
+    /// <param name="userManager"></param>
     public EmailConfirmationService(ILogger<IEmailConfirmationService<ApplicationUser>> logger, IEmailClient emailClient, 
         UserManager<ApplicationUser> userManager)
     {
