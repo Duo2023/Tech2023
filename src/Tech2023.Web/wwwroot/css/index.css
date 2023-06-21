@@ -3,6 +3,17 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --navbar-height: 5rem;
+  --sidebar-width: 20rem;
+  --sidebar-expanded-width: 20rem;
+  --sidebar-collapsed-width: 4.25rem;
+}
+
+#navbar {
+  height: var(--navbar-height);
+}
+
 @layer base {
   h1 {
     @apply text-3xl py-2;
@@ -28,6 +39,20 @@
 @layer components {
   .bg-gradient-button {
     @apply bg-gradient-to-br from-primary to-indigo-800;
+  }
+
+  /* Layout CSS */
+  #sidebar {
+    @apply w-full md:w-[var(--sidebar-width)] data-[expanded=false]:w-[var(--sidebar-width)];
+  }
+
+  #app-body-container {
+    max-height: calc(100vh - var(--navbar-height));
+    @apply w-screen md:max-w-[calc(100vw_-_var(--sidebar-width))];
+  }
+
+  .layout-transition {
+    @apply transition-all duration-200 ease-out;
   }
 }
 
