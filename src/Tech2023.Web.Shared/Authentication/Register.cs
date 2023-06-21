@@ -8,7 +8,7 @@ using Tech2023.DAL;
 namespace Tech2023.Web.Shared.Authentication;
 
 /// <summary>
-/// Registration input model used to get data to create the user
+/// Registration input model used to get data to create the user.
 /// </summary>
 public class Register
 {

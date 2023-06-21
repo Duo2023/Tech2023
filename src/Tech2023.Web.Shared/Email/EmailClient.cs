@@ -13,6 +13,7 @@ public class EmailClient : IEmailClient
 {
     internal readonly ILogger<IEmailClient> _logger;
     internal readonly IOptions<EmailOptions> _options;
+    internal readonly MailboxAddress _senderAddress;
 
     /// <summary>
     /// Initializes a new instance 
@@ -23,6 +24,7 @@ public class EmailClient : IEmailClient
     {
         _options = options;
         _logger = logger;
+        _senderAddress = MailboxAddress.Parse(options.Value.FromEmail);
     }
 
     /// <inheritdoc/>
@@ -30,15 +32,26 @@ public class EmailClient : IEmailClient
     {
         ArgumentNullException.ThrowIfNull(email);
 
-        await ExceuteAsync(email, subject, htmlMessage);
+        var result = await ExceuteAsync(email, subject, htmlMessage);
+
+        /*
+         * TODD: Implement email retry sevice
+         * 
+         * Possible ideas, immediate retry, con of resource intensive,
+         * Queue to background queue, too long a wait time??
+         */
+        if (!result) 
+        {
+            _logger.LogError("Email failed to send to: {address}", email);
+        }
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal async Task ExceuteAsync(string targetAddress, string subject, string htmlMessage)
+    internal async Task<bool> ExceuteAsync(string targetAddress, string subject, string htmlMessage)
     {
         var email = new MimeMessage()
         {
-            Sender = MailboxAddress.Parse(_options.Value.FromEmail),
+            Sender = _senderAddress,
             Subject = subject,
             Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = htmlMessage }
         };
@@ -47,19 +60,35 @@ public class EmailClient : IEmailClient
 
         email.From.Add(email.Sender);
 
-        email.To.Add(MailboxAddress.Parse(targetAddress));
+        if (!MailboxAddress.TryParse(targetAddress, out MailboxAddress target))
+        {
+            return false;
+        }
 
-        using var client = new SmtpClient();
+        email.To.Add(target);
 
-        // TODO: Consider adding error handling methods, where if the email fails to send instead of ignoring the error,
-        // requeue the message on to a background service where emails can be retried.
+        var client = new SmtpClient();
 
-        await client.ConnectAsync(_options.Value.SmtpServer, _options.Value.Port, MailKit.Security.SecureSocketOptions.StartTls).ConfigureAwait(false);
+        try
+        {
+            await client.ConnectAsync(_options.Value.SmtpServer, _options.Value.Port, MailKit.Security.SecureSocketOptions.StartTls).ConfigureAwait(false);
 
-        await client.AuthenticateAsync(_options.Value.Username, _options.Value.Password).ConfigureAwait(false);
+            await client.AuthenticateAsync(_options.Value.Username, _options.Value.Password).ConfigureAwait(false);
 
-        var response = await client.SendAsync(email).ConfigureAwait(false);
+            var res = await client.SendAsync(email).ConfigureAwait(false);
 
-        _logger.LogInformation("{emailSendResponse}", response);
+            _logger.LogInformation("{emailResponse}", res);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("{exception}", ex);
+            return false;
+        }
+        finally
+        {
+            client.Dispose();
+        }
+
+        return true;
     }
 }
