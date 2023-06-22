@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace Tech2023.DAL.Models;
@@ -13,8 +14,9 @@ public class Subject
     /// </summary>
     [Key]
     [Required]
+    [DatabaseGenerated(DatabaseGeneratedOption.None)]
     [JsonPropertyName("id")]
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     /// <summary>
     /// Represents the name of the subject, 

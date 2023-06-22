@@ -58,6 +58,9 @@ public sealed class Startup
         services.AddDbContextFactory<ApplicationDbContext>(options =>
         {
 #if DEBUG
+            options.EnableDetailedErrors();
+            options.EnableSensitiveDataLogging();
+
             options.UseInMemoryDatabase($"{Assembly.GetExecutingAssembly().FullName}");
 #else
             options.UseSqlServer(Configuration.GetConnectionString("Default"), 
