@@ -5,13 +5,9 @@
 
 :root {
   --navbar-height: 5rem;
-  --sidebar-width: 20rem;
   --sidebar-expanded-width: 20rem;
   --sidebar-collapsed-width: 4.25rem;
-}
-
-#navbar {
-  height: var(--navbar-height);
+  --sidebar-width: var(--sidebar-expanded-width);
 }
 
 @layer base {
@@ -42,17 +38,21 @@
   }
 
   /* Layout CSS */
+  #navbar {
+    height: var(--navbar-height);
+  }
+
   #sidebar {
-    @apply w-full md:w-[var(--sidebar-width)] data-[expanded=false]:w-[var(--sidebar-width)];
+    @apply w-full md:w-[var(--sidebar-width)] data-[expanded=false]:w-[var(--sidebar-width)] layout-transition;
   }
 
   #app-body-container {
     max-height: calc(100vh - var(--navbar-height));
-    @apply w-screen md:max-w-[calc(100vw_-_var(--sidebar-width))];
+    @apply w-screen md:max-w-[calc(100vw_-_var(--sidebar-width))] md:layout-transition;
   }
 
   .layout-transition {
-    @apply transition-all duration-200 ease-out;
+    @apply transition-all duration-200;
   }
 }
 
