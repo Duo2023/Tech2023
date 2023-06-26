@@ -2,6 +2,15 @@
     ViewData["Title"] = "Paper Viewer";
 }
 
-<div class="h-full">
+<div class=" flex flex-col h-full">
+    <div id="paper-navbar" class="flex flex-row items-center justify-between h-14 px-4">
+        <div class="flex flex-row space-x-2">
+            <button class="material-symbols-rounded-sm">west</button>
+            <div>
+                <p class="text-xs font-bold text-light-hint leading-[0.5rem]">Mathematics</p>
+                <h3 class="leading-5">Paper 1 - May/June 2022 - Variant 1</h3>
+            </div>
+        </div>
+    </div>
     <iframe src="https://papers.gceguide.com/A%20Levels/Mathematics%20(9709)/2022/9709_s22_qp_11.pdf" frameborder="0" class="h-full outline-none w-full sm:w-[70vw] sm:resize-x mx-0 sm:mx-auto"></iframe>
 </div>
