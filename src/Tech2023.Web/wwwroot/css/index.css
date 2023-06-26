@@ -43,16 +43,16 @@
   }
 
   #sidebar {
-    @apply w-full md:w-[var(--sidebar-width)] data-[expanded=false]:w-[var(--sidebar-width)] layout-transition;
+    @apply w-screen md:w-[var(--sidebar-width)] data-[expanded=false]:w-[var(--sidebar-width)] layout-transition;
   }
 
   #app-body-container {
     max-height: calc(100vh - var(--navbar-height));
-    @apply w-screen md:max-w-[calc(100vw_-_var(--sidebar-width))] md:layout-transition;
+    @apply w-[calc(100vw_-_var(--sidebar-collapsed-width))] md:w-[calc(100vw_-_var(--sidebar-width))] ml-[var(--sidebar-collapsed-width)] md:ml-0 md:layout-transition;
   }
 
   .layout-transition {
-    @apply transition-all duration-200;
+    @apply transition-[width] duration-200;
   }
 }
 
