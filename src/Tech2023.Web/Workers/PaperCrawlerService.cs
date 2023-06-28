@@ -13,17 +13,19 @@ public class PaperCrawlerService : BackgroundService
     internal readonly ILogger<PaperCrawlerService> _logger;
     internal readonly IDbContextFactory<ApplicationDbContext> _contextFactory;
     internal readonly IOptions<PaperCrawlerOptions> _options;
+    internal readonly IHttpClientFactory _httpFactory;
 
-    public PaperCrawlerService(ILogger<PaperCrawlerService> logger, IDbContextFactory<ApplicationDbContext> contextFactory, IOptions<PaperCrawlerOptions> options)
+    public PaperCrawlerService(ILogger<PaperCrawlerService> logger, IDbContextFactory<ApplicationDbContext> contextFactory, IOptions<PaperCrawlerOptions> options, IHttpClientFactory httpFactory)
     {
         _logger = logger;
         _contextFactory = contextFactory;
         _options = options;
+        _httpFactory = httpFactory;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        using var timer = new PeriodicTimer(default);
+        using var timer = new PeriodicTimer(TimeSpan.FromMinutes(_options.Value.Frequency));
 
         if (!_options.Value.Enable)
         {
@@ -39,7 +41,7 @@ public class PaperCrawlerService : BackgroundService
                     return;
                 }
 
-                await InternalExecuteAsync();
+                await InternalExecuteAsync(stoppingToken);
             }
         }
         catch (OperationCanceledException)
@@ -48,8 +50,13 @@ public class PaperCrawlerService : BackgroundService
         }
     }
 
-    internal async Task InternalExecuteAsync()
+    internal async Task InternalExecuteAsync(CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
+        using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
+
+        var httpClient = _httpFactory.CreateClient(Clients.Crawler);
+
+
+        
     }
 }

@@ -79,6 +79,11 @@ public sealed class Startup
         }).AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
 
+        services.AddHttpClient(Clients.Crawler, client =>
+        {
+            client.BaseAddress = new Uri("https://www.nzqa.govt.nz/"); // change this to a configuration switch potentially
+        });
+
 #if DEBUG
         services.AddHostedService<AutoReloadService>();
 #endif

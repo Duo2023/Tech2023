@@ -12,4 +12,10 @@ public class PaperCrawlerOptions
     /// </summary>
     [JsonPropertyName("enable")]
     public bool Enable { get; }
+
+    /// <summary>
+    /// The frequency that the web crawler runs, this property is measured in minutes
+    /// </summary>
+    [JsonPropertyName("frequency")]
+    public int Frequency { get; set; }
 }
