@@ -2,46 +2,27 @@
     ViewData["Title"] = "Home";
 }
 
-<div id="dashboard" class="mx-4">
-    <section>
-        <h1 class="font-bold">My subjects</h1>
-        <div id="subjects-container" class="grid grid-flow-col auto-cols-min gap-8 overflow-x-auto">
+<div id="dashboard" class="grid max-h-full mx-4 overflow-y-auto">
+    <h1 class="font-bold">My subjects</h1>
+    <div id="subjects-list" class="grid grid-flow-col auto-cols-min gap-8 overflow-x-auto">
+        @for (int i = 0; i < 8; i++)
+        {
             <a asp-controller="App" asp-action="PaperViewer" class="subject-item h-44 w-72 my-2 bg-gradient-to-br from-yellow-400 to-orange-600 rounded-3xl">
                 <h1 class="p-5 font-bold drop-shadow-xl">Maths</h1>
             </a>
-            <a asp-controller="App" asp-action="PaperViewer" class="subject-item h-44 w-72 my-2 bg-gradient-to-br from-yellow-400 to-orange-600 rounded-3xl">
-                <h1 class="p-5 font-bold drop-shadow-xl">Maths</h1>
-            </a>
-            <a asp-controller="App" asp-action="PaperViewer" class="subject-item h-44 w-72 my-2 bg-gradient-to-br from-yellow-400 to-orange-600 rounded-3xl">
-                <h1 class="p-5 font-bold drop-shadow-xl">Maths</h1>
-            </a>
-            <a asp-controller="App" asp-action="PaperViewer" class="subject-item h-44 w-72 my-2 bg-gradient-to-br from-yellow-400 to-orange-600 rounded-3xl">
-                <h1 class="p-5 font-bold drop-shadow-xl">Maths</h1>
-            </a>
-            <a asp-controller="App" asp-action="PaperViewer" class="subject-item h-44 w-72 my-2 bg-gradient-to-br from-yellow-400 to-orange-600 rounded-3xl">
-                <h1 class="p-5 font-bold drop-shadow-xl">Maths</h1>
-            </a>
-            <a asp-controller="App" asp-action="PaperViewer" class="subject-item h-44 w-72 my-2 bg-gradient-to-br from-yellow-400 to-orange-600 rounded-3xl">
-                <h1 class="p-5 font-bold drop-shadow-xl">Maths</h1>
-            </a>
-            <a asp-controller="App" asp-action="PaperViewer" class="subject-item h-44 w-72 my-2 bg-gradient-to-br from-yellow-400 to-orange-600 rounded-3xl">
-                <h1 class="p-5 font-bold drop-shadow-xl">Maths</h1>
-            </a>
-            <a asp-controller="App" asp-action="PaperViewer" class="subject-item h-44 w-72 my-2 bg-gradient-to-br from-yellow-400 to-orange-600 rounded-3xl">
-                <h1 class="p-5 font-bold drop-shadow-xl">Maths</h1>
-            </a>
-        </div>
-            <!-- There are some horozontal element(s) overflow to deal with here-->
-    </section>
-    <section>
-        <h1 class="font-bold">Recent</h1>
-        <div id="subjects-container" class="flex flex-row space-x-8">
+        }
+    </div>
+
+    <h1 class="font-bold">Recent</h1>
+    <div id="recent-papers-list" class="grid grid-flow-col auto-cols-min gap-8 overflow-x-auto">
+        @for (int i = 0; i < 8; i++)
+        {
             <a asp-controller="App" asp-action="PaperViewer" class="subject-item h-44 w-72 my-2 p-5 bg-gradient-to-br from-gray-400 to-gray-600 rounded-3xl">
                 <div class="font-bold drop-shadow-xl">
                     <h2>Maths</h2>
                     <h1>Paper 1 - Feb/Mar (Zone 1)</h1>
                 </div>
             </a>
-        </div>
-    </section>
+        }
+    </div>
 </div>
