@@ -44,4 +44,7 @@ public class Subject
     /// </summary>
     [JsonPropertyName("displayColor")]
     public uint? DisplayColor { get; set; }
+
+    public ICollection<NceaResource>? NceaResource { get; }
+    public ICollection<NceaResource>? CambridgeResource { get; }
 }

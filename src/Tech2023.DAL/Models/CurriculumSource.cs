@@ -22,9 +22,14 @@ public enum CurriculumSource : byte
     [Display(Name = nameof(Cambridge))] // keep same because it looks fine
     Cambridge = 2,
 
+
+
     /* Do not change the underlying value of enum as this is constant and a binary breaking change 
      * This might have an equivalant layout in TypeScript front end
      */
 
     /* Open for more curriculums */
 }
+
+// 0b0000_0001
+// 0b0000_0101
