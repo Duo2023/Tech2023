@@ -1,4 +1,4 @@
 module.exports = {
     mode: "production",
-    entry: "./scripts/index.ts",
+    entry: { main: "./scripts/index.ts" },
 };

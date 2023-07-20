@@ -1,7 +1,8 @@
 const path = require("path");
-const webpack = require('webpack');
+const webpack = require("webpack");
 
 module.exports = {
+    entry: { "pdf.worker": "pdfjs-dist/build/pdf.worker.entry" },
     module: {
         rules: [
             {

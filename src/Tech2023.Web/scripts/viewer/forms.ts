@@ -1,41 +1,45 @@
-//import * as pdfjsLib from 'pdfjs-dist/webpack'
+import * as pdfjsLib from "pdfjs-dist";
 
 export module viewer.forms {
     export function load(canvasId: string, file: string): void {
-        //var loadingTask = pdfjsLib.getDocument(file);
+        //pdfjsLib.GlobalWorkerOptions.workerSrc = "./pdf.worker.min.js";
+        var loadingTask = pdfjsLib.getDocument(file);
 
-        //loadingTask.promise.then(function (pdf) {
-        //    console.log('PDF loaded');
+        loadingTask.promise.then(
+            function (pdf) {
+                console.log("PDF loaded");
 
-        //    // Fetch the first page
-        //    var pageNumber = 1;
-        //    pdf.getPage(pageNumber).then(function (page) {
-        //        console.log('Page loaded');
+                // Fetch the first page
+                var pageNumber = 1;
+                pdf.getPage(pageNumber).then(function (page) {
+                    console.log("Page loaded");
 
-        //        var scale = 1.5;
-        //        var viewport = page.getViewport({ scale: scale });
+                    var scale = 1.5;
+                    var viewport = page.getViewport({ scale: scale });
 
-        //        // Prepare canvas using PDF page dimensions
-        //        var canvas = document.getElementById(canvasId) as HTMLCanvasElement;
+                    // Prepare canvas using PDF page dimensions
+                    var canvas = document.getElementById(canvasId) as HTMLCanvasElement;
 
-        //        var context = canvas.getContext('2d');
+                    var context = canvas.getContext("2d");
 
-        //        canvas.height = viewport.height;
-        //        canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
 
-        //        // Render PDF page into canvas context
-        //        var renderContext = {
-        //            canvasContext: context,
-        //            viewport: viewport
-        //        };
-        //        var renderTask = page.render(renderContext);
-        //        renderTask.promise.then(function () {
-        //            console.log('Page rendered');
-        //        });
-        //    });
-        //}, function (reason) {
-        //    // PDF loading error
-        //    console.error(reason);
-        //});
+                    // Render PDF page into canvas context
+                    var renderContext = {
+                        canvasContext: context,
+                        viewport: viewport,
+                    };
+                    var renderTask = page.render(renderContext);
+                    renderTask.promise.then(function () {
+                        console.log("Page rendered");
+                    });
+                });
+            },
+            function (reason) {
+                // PDF loading error
+                console.error(reason);
+            }
+        );
     }
 }
