@@ -5,9 +5,9 @@
     "noEmitOnError": true,
     "removeComments": false,
     "sourceMap": true,
-    "moduleResolution": "node",
-    "module": "es6",
-    "target": "es6",
+    "moduleResolution": "Node",
+    "module": "ES6",
+    "target": "ES6",
     "outDir": "./scripts/build"
   },
   "include": ["./scripts/**/*.ts"]
