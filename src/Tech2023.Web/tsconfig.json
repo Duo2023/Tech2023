@@ -5,7 +5,7 @@
     "noEmitOnError": true,
     "removeComments": false,
     "sourceMap": true,
-    "moduleResolution": "nodenext",
+    "moduleResolution": "node",
     "module": "es6",
     "target": "es6",
     "outDir": "./scripts/build"
