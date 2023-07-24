@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Diagnostics;
+
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -55,6 +57,8 @@ internal class Initializer : IDataInitializer
 #if DEBUG
         await CreateDebuggingDataAsync(context);
 #endif
+
+        Debugger.Break();
     }
 
 #if DEBUG
@@ -63,6 +67,7 @@ internal class Initializer : IDataInitializer
         await CreateSubjectsAsync(context);
         await CreateDebugUserAsync(context);
     }
+
     internal async Task CreateDebugUserAsync(ApplicationDbContext context)
     {
         const string Username = "sudo@sudo.com";
@@ -75,13 +80,6 @@ internal class Initializer : IDataInitializer
             Created = DateTimeOffset.UtcNow
         };
 
-        // TODO: Create a custom UserManager to perform this and to eagerly to laod it
-
-        //await foreach (var item in context.Subjects)
-        //{
-        //    user.SavedSubjects.Add(item);
-        //}
-
         user.Updated = user.Created;
 
         var result = await _userManager.CreateAsync(user, "sudoUser555!");
@@ -91,22 +89,20 @@ internal class Initializer : IDataInitializer
         await _userManager.AddToRoleAsync(user, Roles.Administrator);
     }
 
-    internal async Task CreateSubjectsAsync(ApplicationDbContext context)
+    internal static async Task CreateSubjectsAsync(ApplicationDbContext context)
     {
-        List<Subject> subjects = new(5)
+        await Queries.Subjects.CreateSubjectAsync(context, new Subject()
         {
-            CreateSubject("Maths", CurriculumSource.Ncea),
-            CreateSubject("English", CurriculumSource.Ncea),
-            CreateSubject("Spanish", CurriculumSource.Ncea),
-            CreateSubject("English", CurriculumSource.Cambridge),
-            CreateSubject("Physics", CurriculumSource.Cambridge)
-        };
+            Source = CurriculumSource.Cambridge,
+            Name = "Maths",
+        });
 
-        context.Subjects.AddRange(subjects);
-
-        await context.SaveChangesAsync();
+        await Queries.Subjects.CreateSubjectAsync(context, new Subject()
+        {
+            Source = CurriculumSource.Ncea,
+            Name = "Maths",
+        });
     }
-
 
     internal static Subject CreateSubject(string name, CurriculumSource source)
     {

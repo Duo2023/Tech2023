@@ -2,6 +2,8 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
+using Tech2023.Core;
+
 namespace Tech2023.DAL.Models;
 
 /// <summary>
@@ -44,6 +46,9 @@ public class Subject
     /// </summary>
     [JsonPropertyName("displayColor")]
     public uint? DisplayColor { get; set; }
+#if DEBUG
+    = HtmlHexString.NextColor();
+#endif
 
     public ICollection<NceaResource>? NceaResource { get; }
     public ICollection<NceaResource>? CambridgeResource { get; }

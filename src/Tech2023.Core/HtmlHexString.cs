@@ -10,6 +10,12 @@ public static class HtmlHexString
 {
     internal const int HexBase = 'W';
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static uint NextColor()
+    {
+        return (uint)Random.Shared.Next();
+    }
+
     /// <summary>
     /// Gets the color value as a hexadecimal string value
     /// </summary>
