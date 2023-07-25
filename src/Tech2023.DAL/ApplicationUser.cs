@@ -14,5 +14,5 @@ public class ApplicationUser : IdentityUser<Guid>
     public DateTimeOffset Updated { get; set; }
 
 #nullable disable
-    public virtual ICollection<Subject> SavedSubjects { get; }
+    public virtual ICollection<Subject> SavedSubjects { get; } = new List<Subject>();
 }

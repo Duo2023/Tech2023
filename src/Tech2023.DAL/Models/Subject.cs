@@ -52,4 +52,6 @@ public class Subject
 
     public ICollection<NceaResource>? NceaResource { get; }
     public ICollection<NceaResource>? CambridgeResource { get; }
-}
+
+    public ICollection<ApplicationUser> SavedUsers { get; } = new List<ApplicationUser>();
+ }

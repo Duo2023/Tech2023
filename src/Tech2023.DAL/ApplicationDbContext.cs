@@ -37,4 +37,8 @@ public sealed class ApplicationDbContext : IdentityDbContext<ApplicationUser, Ap
     /// All of the available subjects in the database
     /// </summary>
     public DbSet<Subject> Subjects => Set<Subject>();
+
+    public DbSet<NceaResource> NceaResources => Set<NceaResource>();
+
+    public DbSet<CambridgeResource> CambridgeResource => Set<CambridgeResource>();
 }

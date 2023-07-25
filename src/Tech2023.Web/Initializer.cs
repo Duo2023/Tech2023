@@ -57,8 +57,6 @@ internal class Initializer : IDataInitializer
 #if DEBUG
         await CreateDebuggingDataAsync(context);
 #endif
-
-        Debugger.Break();
     }
 
 #if DEBUG
@@ -74,6 +72,7 @@ internal class Initializer : IDataInitializer
 
         ApplicationUser user = new()
         {
+            Id = Guid.NewGuid(),
             Email = Username,
             UserName = Username,
             EmailConfirmed = true,
@@ -82,9 +81,14 @@ internal class Initializer : IDataInitializer
 
         user.Updated = user.Created;
 
+        //foreach (var item in context.Subjects)
+        //{
+        //    user.SavedSubjects.Add(item);
+        //}
+
         var result = await _userManager.CreateAsync(user, "sudoUser555!");
 
-        System.Diagnostics.Debug.Assert(result.Succeeded, "Debug user failed to create");
+        Debug.Assert(result.Succeeded, "Debug user failed to create");
 
         await _userManager.AddToRoleAsync(user, Roles.Administrator);
     }
@@ -102,6 +106,8 @@ internal class Initializer : IDataInitializer
             Source = CurriculumSource.Ncea,
             Name = "Maths",
         });
+
+        await context.SaveChangesAsync();
     }
 
     internal static Subject CreateSubject(string name, CurriculumSource source)
