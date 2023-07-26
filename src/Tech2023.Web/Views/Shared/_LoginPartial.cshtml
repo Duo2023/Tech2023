@@ -21,6 +21,15 @@
                             Settings
                         </a>
                     </li>
+                    @if (User.IsInRole(Roles.Administrator))
+                    {
+                        <li>
+                            <a asp-area="Admin" asp-page="/Home" class="w-full inline-flex hover:bg-hint/80 p-2 rounded-lg">
+                                <span class="material-symbols-rounded-sm mr-3">admin_panel_settings</span>
+                                Admin Panel
+                            </a>
+                        </li>
+                    }
                     <li>
                         <button onclick="TS.interactions.showDialog('logout-modal', true)" class="w-full inline-flex hover:bg-red-600/80 p-2 rounded-lg">
                             <span class="material-symbols-rounded-sm mr-3">logout</span>
