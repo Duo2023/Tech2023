@@ -57,7 +57,6 @@ internal class Initializer : IDataInitializer
 #if DEBUG
         await CreateDebuggingDataAsync(context);
 #endif
-        Debugger.Break();
     }
 
 #if DEBUG
@@ -65,6 +64,23 @@ internal class Initializer : IDataInitializer
     {
         await CreateSubjectsAsync(context);
         await CreateDebugUserAsync(context);
+        await AddUsersToSubjectsAsync(context);
+    }
+
+    internal static async Task AddUsersToSubjectsAsync(ApplicationDbContext context)
+    {
+        var subjects = await context.Subjects.ToListAsync();
+
+        foreach (var user in context.Users)
+        {
+            user.Updated = DateTimeOffset.UtcNow;
+
+            user.SavedSubjects.AddRange(subjects);
+
+            context.Update(user);
+        }
+
+        await context.SaveChangesAsync();
     }
 
     internal async Task CreateDebugUserAsync(ApplicationDbContext context)
@@ -87,11 +103,6 @@ internal class Initializer : IDataInitializer
         Debug.Assert(result.Succeeded, "Debug user failed to create");
 
         await _userManager.AddToRoleAsync(user, Roles.Administrator);
-
-        foreach (var item in context.Subjects)
-        {
-            user.SavedSubjects.Add(item);
-        }
     }
 
     internal static async Task CreateSubjectsAsync(ApplicationDbContext context)

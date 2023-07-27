@@ -52,6 +52,4 @@ public class Subject
 
     public ICollection<NceaResource>? NceaResource { get; }
     public ICollection<NceaResource>? CambridgeResource { get; }
-
-    public virtual ICollection<ApplicationUser> SavedUsers { get; } = new List<ApplicationUser>();
  }

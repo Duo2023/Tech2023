@@ -26,6 +26,9 @@ public sealed class ApplicationDbContext : IdentityDbContext<ApplicationUser, Ap
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
+        builder.Entity<ApplicationUser>()
+            .HasMany(user => user.SavedSubjects);
     }
 
     /// <summary>
