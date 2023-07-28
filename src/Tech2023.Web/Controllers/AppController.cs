@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Tech2023.Web;
 
 /// <summary>
 /// The app controller, serves most of the main content of the application
 /// </summary>
+[Authorize]
 public class AppController : Controller
 {
     internal readonly ILogger<AppController> _logger;
