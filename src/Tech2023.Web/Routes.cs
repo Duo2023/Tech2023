@@ -32,6 +32,17 @@ public sealed class Routes
         public const string Home = "/admin";
     }
 
+    public static class Account
+    {
+        public const string Login = "/account/login";
+        public const string Register = "/account/register";
+        public const string ConfirmEmail = "/account/confirm_email";
+        public const string ResendEmailConfirmation = "/account/resend_email_confirmation";
+        public const string RegisterConfirmation = "/account/register_confirmation";
+        public const string ForgotPassword = "/account/forgot_password";
+        public const string Lockout = "/account/lockout";
+    }
+
     // replace when routing is sorted
 
     //public static class User
