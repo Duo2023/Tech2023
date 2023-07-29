@@ -27,6 +27,11 @@ public sealed class Routes
         public const string Home = "/settings";
     }
 
+    public static class Admin
+    {
+        public const string Home = "/admin";
+    }
+
     // replace when routing is sorted
 
     //public static class User

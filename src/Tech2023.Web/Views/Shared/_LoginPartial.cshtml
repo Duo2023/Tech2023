@@ -24,7 +24,7 @@
                     @if (User.IsInRole(Roles.Administrator))
                     {
                         <li>
-                            <a asp-area="Admin" asp-page="/Home" class="w-full inline-flex hover:bg-hint/80 p-2 rounded-lg">
+                            <a href="@Routes.Admin.Home" class="w-full inline-flex hover:bg-hint/80 p-2 rounded-lg">
                                 <span class="material-symbols-rounded-sm mr-3">admin_panel_settings</span>
                                 Admin Panel
                             </a>
