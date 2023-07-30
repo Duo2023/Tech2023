@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Text.Json.Serialization;
+
+using Microsoft.AspNetCore.Identity;
+
+using Tech2023.DAL.Models;
 
 namespace Tech2023.DAL;
 
@@ -7,5 +11,12 @@ namespace Tech2023.DAL;
 /// </summary>
 public class ApplicationUser : IdentityUser<Guid>
 {
+    [JsonPropertyName("created")]
+    public DateTimeOffset Created { get; set; }
 
+    [JsonPropertyName("updated")]
+    public DateTimeOffset Updated { get; set; }
+
+#nullable disable
+    public virtual List<Subject> SavedSubjects { get; set; } = new();
 }

@@ -1,0 +1,14 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "moduleResolution": "Node",
+    "module": "ES6",
+    "target": "ES6",
+    "outDir": "./scripts/build"
+  },
+  "include": ["./scripts/**/*.ts"]
+}

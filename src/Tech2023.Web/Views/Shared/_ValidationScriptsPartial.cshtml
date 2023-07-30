@@ -1,2 +1,7 @@
-﻿<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+﻿<script src="~/lib/aspnet-validation.min.js"></script>
+<script>
+    const validation = new aspnetValidation.ValidationService();
+    validation.ValidationInputCssClassName = "focus:border-red-600";
+    validation.ValidationInputValidCssClassName = "focus:border-green-500";
+    validation.bootstrap();
+</script>
