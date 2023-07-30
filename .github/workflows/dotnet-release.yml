@@ -4,6 +4,8 @@
 name: .NET Release
 
 on:
+  push:
+    branches: [ "main", "dev" ]
   pull_request:
     branches: [ "main", "dev" ]
 
