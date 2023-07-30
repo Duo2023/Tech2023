@@ -4,10 +4,8 @@
 name: .NET Release
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "dev" ]
 
 jobs:
   build:
@@ -19,9 +17,9 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
-    - name: Setup Android
-      run: dotnet workload install android
     - name: Restore dependencies
       run: dotnet restore Tech2023.slnf
     - name: Build
       run: dotnet build Tech2023.slnf --no-restore -c Release
+    - name: Test
+      run: dotnet test --no-build --verbosity normal -c Release
