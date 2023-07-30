@@ -7,7 +7,7 @@ namespace Tech2023.Web.Shared.Files;
 /// <summary>
 /// Implements file saving through the <see cref="IFileSaver"/> interface
 /// </summary>
-public class FileSaver : IFileSaver
+public sealed class FileSaver : IFileSaver
 {
     // options for creating the file stream object
     internal static readonly FileStreamOptions _options = new()

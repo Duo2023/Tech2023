@@ -51,6 +51,11 @@ public class EmailConfirmationService : IEmailConfirmationService<ApplicationUse
 
         var url = urlCreate(token);
 
+        if (url == null)
+        {
+            return false;
+        }
+
         await _emailClient.SendEmailAsync(user.Email!, "Confirm Your Email", $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(url)}'>clicking here</a>.");
 
         return true;
