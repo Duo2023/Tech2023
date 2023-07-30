@@ -1,18 +1,16 @@
-﻿using System.Diagnostics;
-using System.Reflection;
+﻿using System.Reflection;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 using Tech2023.Core;
 using Tech2023.DAL;
-using Tech2023.Web.Conventions;
 using Tech2023.Web.Extensions;
 using Tech2023.Web.Shared;
 using Tech2023.Web.Shared.Authentication;
 using Tech2023.Web.Shared.Email;
 #if DEBUG
-    using Tech2023.Web.Workers;
+using Tech2023.Web.Workers;
 #endif
 
 namespace Tech2023.Web;
@@ -44,11 +42,6 @@ public sealed class Startup
         services.AddMvc().AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.AddContext<WebSerializationContext>();
-        });
-
-        services.AddRazorPages(options =>
-        {
-            options.Conventions.Add(new FriendlyUrlConvention("Identity"));
         });
 
         services.Configure<RouteOptions>(options =>
@@ -128,8 +121,6 @@ public sealed class Startup
 
         app.UseEndpoints(endpoints =>
         {
-            endpoints.MapRazorPages();
-
             endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
