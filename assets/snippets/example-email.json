@@ -1,0 +1,11 @@
+/* This is an example using your outlook account */
+{
+  "EmailOptions": {
+    "FromEmail": "example@outlook.com",
+    "Port": 587,
+    "SenderName": "Tech2023",
+    "SmtpServer": "smtp-mail.outlook.com",
+    "Username": "[outlook-user]",
+    "Password": "[outlook-password]"
+  }
+}
