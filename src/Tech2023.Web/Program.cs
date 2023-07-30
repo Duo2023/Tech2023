@@ -1,4 +1,7 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("Tech2023.Web.IntegrationTests")]
 
 namespace Tech2023.Web;
 
