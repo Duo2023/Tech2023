@@ -172,16 +172,21 @@ public class AccountController : Controller
     [Route(Routes.Account.ConfirmEmail)]
     public async Task<IActionResult> ConfirmEmailAsync([FromQuery] string userId, [FromQuery] string code)
     {
+        const string Error = "Error confirming your email";
+        const string Success = "Thank you for confirming your email";
+
+        string message = Error;
+
         if (userId is null || code is null)
         {
-            return NotFound();
+            goto Exit;
         }
 
         var user = await _userManager.FindByIdAsync(userId);
 
         if (user is null)
         {
-            return NotFound();
+            goto Exit;
         }
 
         var url = WebEncoders.Base64UrlDecode(code);
@@ -190,17 +195,12 @@ public class AccountController : Controller
 
         var result = await _userManager.ConfirmEmailAsync(user, code);
 
-        string message;
-
         if (result.Succeeded)
         {
-            message = "Thank you for confirming your email";
-        }
-        else
-        {
-            message = "Error confirming your email";
+            message = Success;
         }
 
+    Exit:
         return View("ConfirmEmail", message);
     }
 
