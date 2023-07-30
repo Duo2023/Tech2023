@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 
 using Tech2023.DAL;
@@ -21,6 +22,9 @@ public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStar
 
         builder.ConfigureServices(services =>
         {
+#if DEBUG // this messes up the tests
+            services.RemoveHostedService<Workers.AutoReloadService>();
+#endif
             services.RemoveService<IConfigureOptions<EmailOptions>>();
 
             services.RemoveDbContextFactory<ApplicationDbContext>();
@@ -59,6 +63,18 @@ internal static class ServiceExtensions
             .RemoveService<IDbContextFactorySource<TDbContext>>()
             .RemoveService<DbContextOptions<TDbContext>>();
 #pragma warning restore EF1001 // Internal EF Core API usage.
+    }
+
+    public static IServiceCollection RemoveHostedService<THostedService>(this IServiceCollection services) where THostedService : class, IHostedService
+    {
+        var service = services.FirstOrDefault(s => s.ImplementationType == typeof(THostedService));
+
+        if (service != null)
+        {
+            services.Remove(service);
+        }
+
+        return services;
     }
 
     public static IServiceCollection RemoveService<TService>(this IServiceCollection services)
