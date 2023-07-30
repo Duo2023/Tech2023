@@ -1,43 +1,45 @@
-@using Tech2023.Web.Models;
+@using Tech2023.Core;
+@using Tech2023.DAL.Models;
 @model IEnumerable<Subject>
 
 @{
     var topBarHeight = "3.5rem";
 }
 
-<aside id="sidebar" class="group sidebar fixed sm:relative left-0 p-1 h-full w-full sm:w-80 data-[expanded=false]:w-20 bg-secondary transition-all duration-200 ease-out" data-expanded="true" aria-expanded="true">
-    <div id="top-bar" class="flex flex-row justify-between items-center w-full mt-2 px-2" style="height: @topBarHeight;">
-        <div id="search-bar" class="bg-background group-data-[expanded=false]:hidden rounded-full py-3 my-auto">
-            <input type="text" name="search" placeholder="🔎 Search" autocomplete="off" id="search-bar" class="bg-background ml-4 mr-2 active: outline-none w-auto">
+<aside id="sidebar" class="group sidebar z-20 fixed md:relative left-0 p-1 h-full bg-secondary" data-expanded="true" aria-expanded="true">
+    <div id="top-bar" class="inline-flex justify-between items-center w-full mt-2 px-2" style="height: @topBarHeight;">
+        <div id="search-bar" class="bg-background w-11/12 group-data-[expanded=false]:w-0 opacity-100 group-data-[expanded=false]:opacity-0 
+                rounded-full py-3 my-auto transition-all duration-150 ease-out">
+            <input type="text" name="search" placeholder="🔎 Search" autocomplete="off" id="search-bar" class="bg-background ml-4 mr-2 active: outline-none w-10/12 group-data-[expanded=false]:w-0 ">
         </div>
-        <button id="sidebar-toggle-btn" class="material-symbols-rounded relative navbar-toggler p-2 hover:bg-background hover:rounded-full transition-all duration-200 ease-out" 
-                type="button" onclick="TS.app.sidebar.toggleSidebar()" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+        <button id="sidebar-toggle-btn" class="material-symbols-rounded relative w-auto navbar-toggler p-2 hover:bg-background hover:rounded-full transition-all duration-200 ease-out" 
+                type="button" onclick="TS.core.sidebar.toggleSidebar()" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
             left_panel_close
         </button>
     </div>
     <div id="sidebar-items" class="flex flex-col justify-between" style="height: calc(100% - calc(@topBarHeight + 0.5rem))">
         <div id="subject-list" class="flex flex-col">
-            <div id="favourites-section" class="section flex flex-row justify-start items-center h-6 mx-4 mt-1 text-light-hint group-data-[expanded=false]:invisible
+            <div id="favourites-section" class="section inline-flex justify-start items-center h-6 mx-4 mt-1 text-light-hint group-data-[expanded=false]:invisible
                     group-data-[expanded=false]:h-0 group-data-[expanded=false]:opacity-0 text-clip whitespace-nowrap overflow-hidden transition-all duration-75 ease-out">
                 <span class="material-symbols-rounded-sm">expand_more</span>
                 <div>⭐</div>
                 <p class="font-bold"> Favourites</p>
             </div>
-            @foreach(Subject subject in Model)
+            @foreach(var subject in Model)
             {
-                <div class="subjects bg-secondary hover:bg-background py-3 mx-3 my-1 rounded-xl shadow-xl w-auto transition-colors duration-50 ease-linear">
-                    <div class="flex flex-row group-data-[expanded=false]:block px-4 max-h-6 h-6 font-semibold items-center justify-start text-md">
-                        <div class="absolute subject-icon text-center w-6 h-6 z-10 rounded-md mr-3" style="background-color: @subject.Color;">
-                            <p class="drop-shadow-[0_0_1.5px_rgb(0,0,0,0.6)]">@subject.Title[0]</p>
+                <div class="subjects bg-secondary hover:bg-background py-3 mx-3 group-data-[expanded=false]:mx-0 my-1 rounded-xl shadow-xl w-auto transition-colors duration-50 ease-linear">
+                    <div class="inline-flex px-4 max-h-6 h-6 font-semibold items-center justify-start text-md">
+                        <div class="relative subject-icon text-center w-6 h-6 z-10 rounded-md mr-3" style="background-color: @HtmlHexString.GetHtmlHexString(subject.DisplayColor ?? 0);"> @* Implement random color *@
+                            <p class="drop-shadow-[0_0_1.5px_rgb(0,0,0,0.6)]">@subject.Name[0]</p>
                         </div>
-                        <p class="ml-10 group-data-[expanded=false]:invisible text-clip whitespace-nowrap overflow-hidden">@subject.Title (@subject.CourseProvider)</p>
+                        <p class="group-data-[expanded=false]:invisible text-clip whitespace-nowrap overflow-hidden">@subject.Name (@Html.DisplayTextFor(s => subject.Source))</p>
                     </div>
                 </div>
             }
         </div>
         <div id="util-list" class="flex flex-col my-2">
-            <div class="bg-secondary hover:bg-background py-3 mx-3 my-1 rounded-xl shadow-xl w-auto transition-colors duration-50 ease-linear">
-                <a class="flex flex-row px-4 font-semibold items-center justify-start text-md">
+            <div class="bg-secondary hover:bg-background py-3 mx-3 group-data-[expanded=false]:mx-0 my-1 rounded-xl shadow-xl w-auto transition-colors duration-50 ease-linear">
+                <a class="inline-flex px-4 font-semibold items-center justify-start text-md" asp-action="Index" asp-controller="Settings">
                     <span class="material-symbols-rounded-sm text-md w-6 h-6 rounded-md mr-3">settings</span>
                     <p class="group-data-[expanded=false]:hidden text-clip whitespace-nowrap overflow-hidden">Settings</p>
                 </a>

@@ -1,6 +1,11 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+
+using Tech2023.DAL;
 using Tech2023.DAL.Models;
+using Tech2023.Web.API.Caching;
 using Tech2023.Web.Models;
 using Tech2023.Web.Shared;
 
@@ -8,13 +13,14 @@ namespace Tech2023.Web.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-    private readonly IHttpClientFactory _factory;
-    private static readonly Lazy<PrivacyPolicy> _errorPrivacyPolicy = new(() => new PrivacyPolicy { Content = "Couldn't get Privacy Policy" });
+    internal readonly ILogger<HomeController> _logger;
+    internal readonly IMemoryCache _cache;
+    internal readonly IDbContextFactory<ApplicationDbContext> _factory;
 
-    public HomeController(ILogger<HomeController> logger, IHttpClientFactory factory)
+    public HomeController(ILogger<HomeController> logger, IMemoryCache cache, IDbContextFactory<ApplicationDbContext> factory)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _cache = cache;
         _factory = factory;
     }
 
@@ -24,46 +30,40 @@ public class HomeController : Controller
         return View();
     }
 
+    [Route("/Home/HandleError/{code:int}")]
+    public IActionResult HandleError(int code)
+    {
+        return code switch
+        {
+            StatusCodes.Status404NotFound => View("~/Views/Shared/404.cshtml"),
+            _ => View("~/Views/Shared/ErrorCode.cshtml", code),
+        };
+    }
+
     [Route(Routes.Privacy)]
     public async Task<IActionResult> PrivacyAsync()
     {
-        var client = _factory.CreateClient(Clients.API);
-
-        client.Timeout = TimeSpan.FromMilliseconds(500);
-
-        try
+        if (_cache.TryGetValue(CacheSlots.PrivacyPolicy, out var data))
         {
-            var response = await client.GetAsync(ApiRoutes.Privacy.Base);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                return Error($"Status Code: {response.StatusCode} sent back by {ApiRoutes.Privacy.Base}");
-            }
-
-            PrivacyPolicy? policy = await response.Content.ReadFromJsonAsync(WebSerializationContext.Default.PrivacyPolicy);
+            var policy = (PrivacyPolicy?)data;
 
             if (policy is null)
             {
-                return Error($"API contract broken: Privacy API");
+                _logger.LogError("Cache in privacy policy returned null");
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
             return View(policy);
         }
-        catch (HttpRequestException exception)
-        {
-            return Error(exception.Message);
-        }
-        catch (TaskCanceledException)
-        {
-            return Error("Task was cancelled for retrieving privacy policy because it took too long");
-        }
 
-        IActionResult Error(string message)
-        {
-            _logger.LogError("{error}", message);
+        using var context = _factory.CreateDbContext();
 
-            return View(_errorPrivacyPolicy.Value);
-        }
+        var privacyPolicy = await Queries.Privacy.GetCurrentPrivacyPolicy(context);
+
+        // TODO: Configure time expiry, sliding expiration etc
+        _cache.Set(CacheSlots.PrivacyPolicy, privacyPolicy);
+
+        return View(privacyPolicy);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

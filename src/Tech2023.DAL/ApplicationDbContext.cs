@@ -26,11 +26,22 @@ public sealed class ApplicationDbContext : IdentityDbContext<ApplicationUser, Ap
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
+        builder.Entity<ApplicationUser>()
+            .HasMany(user => user.SavedSubjects);
     }
 
-#nullable disable
     /// <summary>
     /// Table for the privacy policies of our application
     /// </summary>
-    public DbSet<PrivacyPolicy> PrivacyPolicies { get; set; }
+    public DbSet<PrivacyPolicy> PrivacyPolicies => Set<PrivacyPolicy>();
+
+    /// <summary>
+    /// All of the available subjects in the database
+    /// </summary>
+    public DbSet<Subject> Subjects => Set<Subject>();
+
+    public DbSet<NceaResource> NceaResources => Set<NceaResource>();
+
+    public DbSet<CambridgeResource> CambridgeResource => Set<CambridgeResource>();
 }

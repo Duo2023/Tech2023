@@ -3,4 +3,5 @@
 public static class Clients
 {
     public const string API = "api";
+    public const string Crawler = "crawler";
 }

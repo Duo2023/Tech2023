@@ -1,0 +1,12 @@
+@{
+    Layout = "_Layout";
+}
+
+<div id="app-container" class="grid grid-cols-[auto] md:grid-cols-[min-content_auto] h-full">
+    <vc:sidebar></vc:sidebar>
+    <!-- Extra styles are applied to the app-body-container so that it does not overflow outside 
+         the screen width and height. These styles are specified in the ~/css/index.css -->
+    <div id="app-body-container">
+        @RenderBody()
+    </div>
+</div>

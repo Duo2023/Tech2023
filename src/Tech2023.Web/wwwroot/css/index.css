@@ -3,6 +3,12 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --navbar-height: 5rem;
+  --sidebar-expanded-width: 20rem;
+  --sidebar-collapsed-width: 4.25rem;
+  --sidebar-width: var(--sidebar-expanded-width);
+}
 
 @layer base {
   h1 {
@@ -16,20 +22,46 @@
   h3 {
     @apply text-xl;
   }
+
+  h4 {
+    @apply text-lg;
+  }
+
+  dialog {
+    @apply bg-background border-4 border-hint text-white p-6 rounded-2xl backdrop:bg-black/30 backdrop:backdrop-filter backdrop:backdrop-blur animate-grow backdrop:animate-fade-in;
+  }
 }
 
 @layer components {
   .bg-gradient-button {
     @apply bg-gradient-to-br from-primary to-indigo-800;
   }
+
+  /* Layout CSS */
+  #navbar {
+    height: var(--navbar-height);
+  }
+
+  #sidebar {
+    @apply w-screen md:w-[var(--sidebar-width)] data-[expanded=false]:w-[var(--sidebar-width)] layout-transition;
+  }
+
+  #app-body-container {
+    max-height: calc(100vh - var(--navbar-height));
+    @apply w-[calc(100vw_-_var(--sidebar-collapsed-width))] md:w-[calc(100vw_-_var(--sidebar-width))] ml-[var(--sidebar-collapsed-width)] md:ml-0 md:layout-transition;
+  }
+
+  .layout-transition {
+    @apply transition-[width] duration-200;
+  }
 }
 
 /* /privacy */
 
 footer#privacy-footer {
-    height: 50px;
-    position: absolute;
-    bottom: 20px;
-    left: 0;
-    right: 0;
+  height: 50px;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
 }

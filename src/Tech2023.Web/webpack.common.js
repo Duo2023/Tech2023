@@ -1,7 +1,8 @@
 const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
-    entry: "./scripts/index.ts",
+    entry: { "pdf.worker": "pdfjs-dist/build/pdf.worker.entry" },
     module: {
         rules: [
             {
@@ -19,7 +20,7 @@ module.exports = {
             name: "TS",
             type: "var",
         },
-        filename: "[name].min.js", // for more info: https://webpack.js.org/guides/caching/
+        filename: "[name].min.js",
         path: path.resolve(__dirname, "./wwwroot/js"),
         clean: true,
     },

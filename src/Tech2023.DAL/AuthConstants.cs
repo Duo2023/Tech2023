@@ -11,5 +11,5 @@ public static class AuthConstants
     /// </remarks>
     public const int MinPasswordLength = 8;
 
-    public const string PasswordLengthError = "The password length must be 8 or greater"; // update this value if you change MinPasswordLength
+    public const string PasswordLengthError = "Passwords must be 8+ characters long"; // update this value if you change MinPasswordLength
 }

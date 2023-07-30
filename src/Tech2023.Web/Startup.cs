@@ -1,6 +1,16 @@
-﻿using Tech2023.Web.Shared;
+﻿using System.Reflection;
+
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
+using Tech2023.Core;
+using Tech2023.DAL;
+using Tech2023.Web.Extensions;
+using Tech2023.Web.Shared;
+using Tech2023.Web.Shared.Authentication;
+using Tech2023.Web.Shared.Email;
 #if DEBUG
-    using Tech2023.Web.Workers;
+using Tech2023.Web.Workers;
 #endif
 
 namespace Tech2023.Web;
@@ -34,22 +44,59 @@ public sealed class Startup
             options.JsonSerializerOptions.AddContext<WebSerializationContext>();
         });
 
-        services.AddHttpClient(Clients.API, client =>
+        services.Configure<RouteOptions>(options =>
         {
-            string uriString = Configuration["ApiUrl"] ?? throw new ConfigurationException("The API url should be configured");
+            options.LowercaseUrls = true;
+        });
 
-            client.BaseAddress = new Uri(uriString);
+        services.AddDbContextFactory<ApplicationDbContext>(options =>
+        {
+#if DEBUG
+            options.EnableDetailedErrors();
+            options.EnableSensitiveDataLogging();
+
+            options.UseInMemoryDatabase($"{Assembly.GetExecutingAssembly().FullName}");
+#else
+            options.UseSqlServer(Configuration.GetConnectionString("Default"), 
+                migrations => migrations.MigrationsAssembly("Tech2023.DAL.Migrations"));
+#endif
+        });
+
+        services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+        {
+            options.SignIn.RequireConfirmedAccount = true;
+            options.User.RequireUniqueEmail = true;
+
+            options.Password.RequiredLength = AuthConstants.MinPasswordLength;
+            options.Password.RequireNonAlphanumeric = false;
+
+        }).AddEntityFrameworkStores<ApplicationDbContext>()
+        .AddDefaultTokenProviders();
+
+        services.AddHttpClient(Clients.Crawler, client =>
+        {
+            client.BaseAddress = new Uri("https://www.nzqa.govt.nz/"); // change this to a configuration switch potentially
         });
 
 #if DEBUG
         services.AddHostedService<AutoReloadService>();
 #endif
+
+        services.AddApplicationOptions(Configuration);
+
+        services.AddMemoryCache();
+
+        services.AddTransient<IEmailClient, EmailClient>();
+
+        services.AddTransient<IEmailConfirmationService<ApplicationUser>, EmailConfirmationService>();
+
+        services.AddTransient<IDataInitializer, Initializer>();
     }
 
     /// <summary>
     /// Method gets called by the runtime, configures the HTTP request pipeline
     /// </summary>
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDataInitializer initializer)
     {
         if (env.IsDevelopment())
         {
@@ -61,10 +108,14 @@ public sealed class Startup
             app.UseHsts();
         }
 
+        app.UseStatusCodePagesWithReExecute("/Home/HandleError/{0}");
+
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
         app.UseRouting();
+
+        app.UseAuthentication();
 
         app.UseAuthorization();
 
@@ -74,5 +125,7 @@ public sealed class Startup
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
         });
+
+        Async.RunSync(initializer.InitializeAsync);
     }
 }

@@ -1,21 +1,63 @@
-
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Tech2023.Web.Models;
+using Microsoft.EntityFrameworkCore;
+
+using Tech2023.DAL;
+using Tech2023.DAL.Models;
+using Tech2023.Web.Extensions;
 
 namespace Tech2023.Web.ViewComponents;
 
 [ViewComponent]
 public class SidebarViewComponent : ViewComponent
 {
-    public IViewComponentResult Invoke()
-    {
-        List<Subject> subjects = new List<Subject>();
-        //
-        subjects.Add(new Subject("#ef4444", CourseProvider.CAIE, "Maths"));
-        subjects.Add(new Subject("#316aff", CourseProvider.CAIE, "Physics"));
-        subjects.Add(new Subject("#ff7b16", CourseProvider.NCEA, "Chemistry"));
-        subjects.Add(new Subject("#ffc515", CourseProvider.CAIE, "IT"));
+    internal readonly UserManager<ApplicationUser> _userManager;
 
-        return View(subjects);
+    public SidebarViewComponent(UserManager<ApplicationUser> userManager)
+    {
+        _userManager = userManager;
     }
+
+    public async Task<IViewComponentResult> InvokeAsync()
+    {
+        var user = await _userManager.FindByUserAsync(UserClaimsPrincipal);
+
+        return View(user.SavedSubjects);
+    }
+
+    //public IViewComponentResult Invoke()
+    //{
+    //    //List<Subject> subjects = new(4) // temporary stand in
+    //    //{
+    //    //    new Subject()
+    //    //    {
+    //    //        Name = "Maths",
+    //    //        DisplayColor = 0xef4444,
+    //    //        Source = CurriculumSource.Cambridge
+    //    //    },
+
+    //    //    new Subject()
+    //    //    {
+    //    //        Name = "Physics",
+    //    //        DisplayColor = 0x316aff,
+    //    //        Source = CurriculumSource.Cambridge,
+    //    //    },
+
+    //    //    new Subject()
+    //    //    {
+    //    //        Name = "Chemistry",
+    //    //        DisplayColor = 0xff7b16,
+    //    //        Source = CurriculumSource.Ncea
+    //    //    },
+
+    //    //    new Subject()
+    //    //    {
+    //    //        Name = "IT",
+    //    //        DisplayColor = 0xffc515,
+    //    //        Source = CurriculumSource.Cambridge
+    //    //    }
+    //    //};
+
+    //    return View(subjects);
+    //}
 }
