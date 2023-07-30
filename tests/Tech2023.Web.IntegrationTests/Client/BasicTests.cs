@@ -4,11 +4,11 @@ using System.Net;
 
 namespace Tech2023.Web.IntegrationTests.Client;
 
-public class BasicTests : IClassFixture<WebApplicationFactory<Startup>>
+public class BasicTests : IClassFixture<CustomWebApplicationFactory<Startup>>
 {
-    private readonly WebApplicationFactory<Startup> _factory;
+    private readonly CustomWebApplicationFactory<Startup> _factory;
 
-    public BasicTests(WebApplicationFactory<Startup> factory)
+    public BasicTests(CustomWebApplicationFactory<Startup> factory)
     {
         _factory = factory;
     }
