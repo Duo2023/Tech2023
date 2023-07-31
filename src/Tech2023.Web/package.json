@@ -15,7 +15,7 @@
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^10.4.14",
-    "pdfjs-dist": "^3.8.162",
+    "pdfjs-dist": "3.8.162",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.3.2",
     "ts-loader": "^9.4.2",
