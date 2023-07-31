@@ -50,7 +50,7 @@ public class EmailClient : IEmailClient
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal async Task<bool> ExceuteAsync(string targetAddress, string subject, string htmlMessage)
     {
-        var email = new MimeMessage()
+        using var email = new MimeMessage()
         {
             Sender = _senderAddress,
             Subject = subject,
