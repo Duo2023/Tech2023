@@ -2,7 +2,7 @@ import * as pdfjsLib from "pdfjs-dist";
 
 export module viewer.forms {
     export function load(canvasId: string, file: string): void {
-        //pdfjsLib.GlobalWorkerOptions.workerSrc = "./pdf.worker.min.js";
+        pdfjsLib.GlobalWorkerOptions.workerSrc = "./pdf.worker.min.js";
         var loadingTask = pdfjsLib.getDocument(file);
 
         loadingTask.promise.then(

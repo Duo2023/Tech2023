@@ -1,8 +1,8 @@
 const path = require("path");
 const webpack = require("webpack");
+const copyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-    entry: { "pdf.worker": "pdfjs-dist/build/pdf.worker.entry" },
     module: {
         rules: [
             {
@@ -37,4 +37,15 @@ module.exports = {
             },
         },
     },
+    plugins: [
+        new copyPlugin({
+            patterns: [
+                {
+                    from: path.resolve(__dirname, "./node_modules/pdfjs-dist/build/pdf.worker.min.js"),
+                    to: path.resolve(__dirname, "./wwwroot/js"),
+                    info: { minimized: true },
+                },
+            ],
+        }),
+    ],
 };
