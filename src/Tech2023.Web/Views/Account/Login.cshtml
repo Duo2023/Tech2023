@@ -28,7 +28,7 @@
                     <span asp-validation-for="Password" class="mx-2 font-semibold text-red-500 empty:opacity-0 transition-all duration-200"></span>
                     <div class="flex flex-row justify-between p-2 pt-1">
                         <div class="flex flex-row">
-                            <input id="show-password-checkbox" type="checkbox" value="false" onclick="TS.user.forms.togglePasswordVisibility(['Input_Password'])">
+                            <input id="show-password-checkbox" type="checkbox" value="false" onclick="TS.user.forms.togglePasswordVisibility(['Password'])">
                             <label for="show-password-checkbox" id="show-password-text" class="ml-2 text-sm">Show password</label>
                         </div>
                         <a class="text-sm underline hover:no-underline" href="@Routes.Account.ForgotPassword">Forgot password?</a>
