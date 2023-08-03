@@ -9,7 +9,7 @@ namespace Tech2023.Web.Workers;
 public class AutoReloadService : IHostedService
 {
     internal readonly ILogger<AutoReloadService> _logger;
-    internal readonly string[] _npmScripts = new string[] { "css:dev", "build:dev-reload" }; // See: ../package.json
+    internal readonly string[] _npmScripts = new string[] { "css:dev-reload", "build:dev-reload" }; // See: ../package.json
     internal readonly Process[] _processes;
 
     /// <summary>
