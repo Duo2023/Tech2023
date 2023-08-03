@@ -16,7 +16,7 @@ public class PrivacyPolicy
     /// </summary>
     [Key]
     [Required]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [DatabaseGenerated(DatabaseGeneratedOption.None)]
     [JsonPropertyName("version")]
     public int Version { get; set; }
 

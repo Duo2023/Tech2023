@@ -29,6 +29,12 @@ public sealed class ApplicationDbContext : IdentityDbContext<ApplicationUser, Ap
 
         builder.Entity<ApplicationUser>()
             .HasMany(user => user.SavedSubjects);
+
+        builder.Entity<Subject>()
+            .HasMany(s => s.NceaResource);
+
+        builder.Entity<Subject>()
+            .HasMany(s => s.CambridgeResource);
     }
 
     /// <summary>
@@ -44,4 +50,6 @@ public sealed class ApplicationDbContext : IdentityDbContext<ApplicationUser, Ap
     public DbSet<NceaResource> NceaResources => Set<NceaResource>();
 
     public DbSet<CambridgeResource> CambridgeResource => Set<CambridgeResource>();
+
+    public DbSet<Resource> Resources => Set<Resource>();
 }
