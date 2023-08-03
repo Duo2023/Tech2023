@@ -107,17 +107,9 @@ internal class Initializer : IDataInitializer
 
     internal static async Task CreateSubjectsAsync(ApplicationDbContext context)
     {
-        await Queries.Subjects.CreateSubjectAsync(context, new Subject()
-        {
-            Source = CurriculumSource.Cambridge,
-            Name = "Maths",
-        });
+        await Queries.Subjects.CreateSubjectAsync(context, CreateSubject("Maths", CurriculumSource.Cambridge));
 
-        await Queries.Subjects.CreateSubjectAsync(context, new Subject()
-        {
-            Source = CurriculumSource.Ncea,
-            Name = "Maths",
-        });
+        await Queries.Subjects.CreateSubjectAsync(context, CreateSubject("Maths", CurriculumSource.Ncea));
 
         await context.SaveChangesAsync();
     }
@@ -126,7 +118,7 @@ internal class Initializer : IDataInitializer
     {
         return new()
         {
-            Name = name,
+            Name = name.ToUpper(),
             Source = source,
             DisplayColor = (uint)Random.Shared.Next()
         };
