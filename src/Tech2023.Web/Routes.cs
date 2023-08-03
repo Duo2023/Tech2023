@@ -28,6 +28,9 @@ public sealed class Routes
 
         [RouteVisibility(Visiblity.Authenticated)]
         public const string PaperViewer = "/paper";
+        
+        // [RouteVisibility(Visiblity.Authenticated)]
+        public const string PaperBrowser = "/browse/{curriculum}/{subject}";
     }
 
     public static class Settings

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Tech2023.DAL.Models;
 
 namespace Tech2023.Web;
 
@@ -31,5 +32,19 @@ public class AppController : Controller
     public IActionResult PaperViewer()
     {
         return View();
+    }
+
+    [Route(Routes.Application.PaperBrowser)]
+    public IActionResult PaperBrowser(string curriculum, string subject)
+    {
+        if (curriculum == "ncea" && subject == "maths") {
+            var selectedSubject = new Subject
+            {
+                Name = "Maths",
+                Source = CurriculumSource.Ncea,
+            };
+            return View(selectedSubject);
+        }
+        return NotFound();
     }
 }

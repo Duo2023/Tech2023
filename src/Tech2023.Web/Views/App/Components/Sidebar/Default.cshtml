@@ -1,6 +1,7 @@
 @using Tech2023.Core;
 @using Tech2023.DAL.Models;
-@model IEnumerable<Subject>
+@using Tech2023.Web.Models;
+@model SidebarViewModel;
 
 @{
     var topBarHeight = "3.5rem";
@@ -25,16 +26,16 @@
                 <div>⭐</div>
                 <p class="font-bold"> Favourites</p>
             </div>
-            @foreach(var subject in Model)
+            @foreach(var subject in Model.Subjects)
             {
-                <div class="subjects bg-secondary hover:bg-background py-3 mx-3 group-data-[expanded=false]:mx-0 my-1 rounded-xl shadow-xl w-auto transition-colors duration-50 ease-linear">
+                <a asp-controller="App" asp-action="PaperBrowser" class="subjects bg-secondary hover:bg-background py-3 mx-3 group-data-[expanded=false]:mx-0 my-1 rounded-xl shadow-xl w-auto transition-colors duration-50 ease-linear">
                     <div class="inline-flex px-4 max-h-6 h-6 font-semibold items-center justify-start text-md">
                         <div class="relative subject-icon text-center w-6 h-6 z-10 rounded-md mr-3" style="background-color: @HtmlHexString.GetHtmlHexString(subject.DisplayColor ?? 0);"> @* Implement random color *@
                             <p class="drop-shadow-[0_0_1.5px_rgb(0,0,0,0.6)]">@subject.Name[0]</p>
                         </div>
                         <p class="group-data-[expanded=false]:invisible text-clip whitespace-nowrap overflow-hidden">@subject.Name (@Html.DisplayTextFor(s => subject.Source))</p>
                     </div>
-                </div>
+                </a>
             }
         </div>
         <div id="util-list" class="flex flex-col my-2">
