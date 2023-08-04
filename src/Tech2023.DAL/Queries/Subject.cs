@@ -24,5 +24,17 @@ public static partial class Queries
 
             await context.SaveChangesAsync();
         }
+
+        public static async Task<Subject?> FindSubjectAsync(ApplicationDbContext context, CurriculumSource source, string name)
+        {
+            Debug.Assert(context != null);
+
+            name = name.ToUpper();
+
+            return await context.Subjects
+                .Where(s => s.Name == name)
+                .Where(s => s.Source == source)
+                .FirstOrDefaultAsync();
+        }
     }
 }

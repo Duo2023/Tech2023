@@ -49,12 +49,7 @@ public class AppController : Controller
 
         using var context = await _context.CreateDbContextAsync();
 
-        subject = subject.ToUpper();
-
-        var selected = await context.Subjects
-            .Where(s => s.Source == source)
-            .Where(s => s.Name == subject)
-            .FirstOrDefaultAsync();
+        var selected = await Queries.Subjects.FindSubjectAsync(context, source, subject);
 
         if (selected is null)
         {

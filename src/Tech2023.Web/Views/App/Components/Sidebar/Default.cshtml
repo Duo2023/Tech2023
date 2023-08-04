@@ -34,7 +34,7 @@
                         <div class="relative subject-icon text-center w-6 h-6 z-10 rounded-md mr-3" style="background-color: @HtmlHexString.GetHtmlHexString(subject.DisplayColor ?? 0);"> @* Implement random color *@
                             <p class="drop-shadow-[0_0_1.5px_rgb(0,0,0,0.6)]">@subject.Name[0]</p>
                         </div>
-                        <p class="group-data-[expanded=false]:invisible text-clip whitespace-nowrap overflow-hidden">@CultureInfo.CurrentCulture.TextInfo.ToTitleCase(subject.Name) (@Html.DisplayTextFor(s => subject.Source))</p>
+                        <p class="group-data-[expanded=false]:invisible text-clip whitespace-nowrap overflow-hidden">@subject.Name.ToTitleCase() (@Html.DisplayTextFor(s => subject.Source))</p>
                     </div>
                 </a>
             }
