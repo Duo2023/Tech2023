@@ -1,9 +1,11 @@
+@using Tech2023.Core;
 @using Tech2023.DAL.Models;
 @model Subject;
 
 @{
-    ViewData["Title"] = "Paper Browser";
+    string standardName = StringHelpers.ToTitleCase(Model.Name);
+
+    ViewData["Title"] = $"Browse {Html.DisplayTextFor(s => s.Source)} {standardName}";
 } 
 
-
-<h1>@Model.Name</h1>
+<h1>@standardName</h1>
