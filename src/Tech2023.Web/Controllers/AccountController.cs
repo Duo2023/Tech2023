@@ -140,6 +140,11 @@ public class AccountController : Controller
             }
             foreach (var error in result.Errors)
             {
+                if (error.Code == "DuplicateUserName") // workaround for https://github.com/Duo2023/Tech2023/issues/33 should not be kept
+                {
+                    continue;
+                }
+
                 ModelState.AddModelError(string.Empty, error.Description);
             }
         }
