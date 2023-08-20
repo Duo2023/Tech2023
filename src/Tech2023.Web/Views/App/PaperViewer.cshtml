@@ -3,7 +3,9 @@
     var paperLink = "https://papers.gceguide.com/A%20Levels/Mathematics%20(9709)/2022/9709_s22_qp_11.pdf";
 }
 
-<div class="flex flex-col h-full" onload="TS.viewer.forms.load('display-canvas', '@paperLink')">
+<vc:sidebar></vc:sidebar> @* TODO: Make sidebar have relevant items *@
+
+<div class="flex flex-col h-full w-full" onload="TS.viewer.forms.load('display-canvas', '@paperLink')">
     <div id="paper-navbar" class="flex flex-row items-center justify-between h-14 px-3 bg-secondary">
         <div class="flex flex-row space-x-3">
             <a asp-controller="App" asp-action="Home" class="material-symbols-rounded-sm">west</a>

@@ -2,7 +2,9 @@
     ViewData["Title"] = "Home";
 }
 
-<div id="dashboard" class="grid max-h-full mx-4 overflow-y-auto">
+<vc:sidebar></vc:sidebar>
+
+<div id="dashboard" class="flex flex-col mx-4 overflow-y-auto">
     <h1 class="font-bold">My subjects</h1>
     <div id="subjects-list" class="grid grid-flow-col auto-cols-min gap-8 overflow-x-auto">
         @for (int i = 0; i < 8; i++)
