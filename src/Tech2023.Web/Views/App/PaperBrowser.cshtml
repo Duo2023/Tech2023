@@ -13,13 +13,16 @@
 <div id="paper-browser" class="max-h-full overflow-y-scroll">
     <h1 class="mx-3 font-bold">@standardName</h1>
 
-    <div id="papers">
-        @for (int i = 2017; i < 2023; i++) {
-            <div class="paper-category">@i</div>
-            @for (int j = 0; j < 8; j++) {
-                <div class="paper">Paper 1 - Feb/Mar (Zone 1)</div>
+    <div id="papers" class="w-full overflow-x-hidden mr-1">
+        @for (int i = 2023; i > 2017; i--)
+        {
+            <h1 class="paper-category bg-light-hint bg-opacity-10 m-1 px-3 rounded-lg">@i</h1>
+            @for (int j = 0; j < 8; j++)
+            {
+                <a asp-controller="App" asp-action="PaperViewer">
+                    <h2 class="paper w-full bg-hint bg-opacity-20 even:bg-opacity-30 m-2 px-3 py-3 rounded-lg">📜 Paper 1 - Feb/Mar (Zone 1)</h2>
+                </a>
             }
         }
     </div>
-
 </div>
