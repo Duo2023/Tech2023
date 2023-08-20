@@ -14,23 +14,23 @@
                     <p class="text-light-hint">Logged in as:</p>
                     <h4 class="w-full ml-1 overflow-x-clip overflow-ellipsis">@User!.Identity!.Name</h4>
                 </div>
-                <ul class="flex flex-col text-left space-y-2 p-2 font-semibold">
-                    <li>
-                        <a asp-controller="Settings" asp-action="Index" class="w-full inline-flex hover:bg-hint/80 p-2 rounded-lg">
-                            <span class="material-symbols-rounded-sm mr-3">settings</span>
-                            Settings
-                        </a>
-                    </li>
+                <div class="flex flex-col text-left space-y-2 p-2 font-semibold">
+                    
+                    <a asp-controller="Settings" asp-action="Index" class="w-full inline-flex hover:bg-hint/80 p-2 rounded-lg">
+                        <span class="material-symbols-rounded-sm mr-3">settings</span>
+                        Settings
+                    </a>
+                    
                     @if (User.IsInRole(Roles.Administrator))
                     {
-                        <li>
-                            <a href="@Routes.Admin.Home" class="w-full inline-flex hover:bg-hint/80 p-2 rounded-lg">
-                                <span class="material-symbols-rounded-sm mr-3">admin_panel_settings</span>
-                                Admin Panel
-                            </a>
-                        </li>
+                        
+                        <a href="@Routes.Admin.Home" class="w-full inline-flex hover:bg-hint/80 p-2 rounded-lg">
+                            <span class="material-symbols-rounded-sm mr-3">admin_panel_settings</span>
+                            Admin Panel
+                        </a>
+                        
                     }
-                    <li>
+                    <div id="logout-button">
                         <button onclick="TS.interactions.showDialog('logout-modal', true)" class="w-full inline-flex hover:bg-red-600/80 p-2 rounded-lg">
                             <span class="material-symbols-rounded-sm mr-3">logout</span>
                             Logout
@@ -45,8 +45,8 @@
                                 </button>
                             </form>
                         </dialog>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
