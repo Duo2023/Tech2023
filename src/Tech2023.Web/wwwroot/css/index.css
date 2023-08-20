@@ -5,9 +5,7 @@
 
 :root {
   --navbar-height: 5rem;
-  --sidebar-expanded-width: 20rem;
-  --sidebar-collapsed-width: 4.25rem;
-  --sidebar-width: var(--sidebar-expanded-width);
+  --sidebar-width: 20rem;
 }
 
 @layer base {
@@ -43,16 +41,12 @@
   }
 
   #sidebar {
-    @apply w-screen md:w-[var(--sidebar-width)] data-[expanded=false]:w-[var(--sidebar-width)] layout-transition;
+    @apply w-screen md:w-[var(--sidebar-width)];
   }
 
   #app-body-container {
     max-height: calc(100vh - var(--navbar-height));
-    @apply w-[calc(100vw_-_var(--sidebar-collapsed-width))] md:w-[calc(100vw_-_var(--sidebar-width))] ml-[var(--sidebar-collapsed-width)] md:ml-0 md:layout-transition;
-  }
-
-  .layout-transition {
-    @apply transition-[width] duration-200;
+    @apply w-screen md:w-[calc(100vw_-_var(--sidebar-width))];
   }
 }
 
