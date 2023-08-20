@@ -30,13 +30,3 @@
     @apply bg-gradient-to-br from-primary to-indigo-800;
   }
 }
-
-/* /privacy */
-
-footer#privacy-footer {
-  height: 50px;
-  position: absolute;
-  bottom: 20px;
-  left: 0;
-  right: 0;
-}
