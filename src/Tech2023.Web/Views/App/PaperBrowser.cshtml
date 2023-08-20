@@ -10,4 +10,16 @@
 
 <vc:sidebar></vc:sidebar> @* TODO: Make sidebar have relevant items *@
 
-<h1>@standardName</h1>
+<div id="paper-browser" class="max-h-full overflow-y-scroll">
+    <h1 class="mx-3 font-bold">@standardName</h1>
+
+    <div id="papers">
+        @for (int i = 2017; i < 2023; i++) {
+            <div class="paper-category">@i</div>
+            @for (int j = 0; j < 8; j++) {
+                <div class="paper">Paper 1 - Feb/Mar (Zone 1)</div>
+            }
+        }
+    </div>
+
+</div>
