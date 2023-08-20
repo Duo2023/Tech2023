@@ -7,19 +7,10 @@
         <link rel="stylesheet" href="~/css/fonts.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     </head>
-    <body class="grid grid-rows-[min-content_auto] h-screen w-screen overscroll-none text-white bg-background">
-        <header>
-            <nav id="navbar" class="py-4 shadow-xl bg-secondary text-white">
-                <div class="flex h-full flex-wrap items-center justify-between mx-4 sm:mx-6">
-                    <a class="text-center self-center flex items-center px-4 py-3 font-bold bg-primary rounded-2xl" asp-controller="Home" asp-action="Index">Tech2023</a>
-                    <partial name="_LoginPartial" />
-                </div>
-            </nav>
-        </header>
-
-        <main role="main" id="main" style="max-width: 100vw;">
+    <body>
+        <div class="h-screen w-screen overscroll-none text-white bg-background">
             @RenderBody()
-        </main>
+        </div>
 
         <footer class="fixed bottom-0 right-0 px-2 pointer-events-none">
             <div class="flex justify-end items-end w-auto text-slate-100 text-sm font-semibold">

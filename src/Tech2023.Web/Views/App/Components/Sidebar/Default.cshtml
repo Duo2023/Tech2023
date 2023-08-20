@@ -3,10 +3,16 @@
 @model SidebarViewModel;
 
 <aside id="sidebar" 
-       class="sidebar z-20 grid grid-rows-[min-content_auto] fixed md:relative h-full w-full md:w-min bg-secondary rounded-t-[2.5rem] md:rounded-none
-             translate-y-[calc(100vh_-_10.5rem)] md:translate-y-0 left-0 p-1"> @* TODO: Implement swipe up gesture for mobile devices + layout changes *@
+       class="sidebar z-20 grid grid-rows-[min-content_auto] md:grid-rows-[min-content_min-content_auto] fixed md:relative h-full w-full md:w-min bg-secondary rounded-t-[2.5rem] md:rounded-none
+             translate-y-[calc(100vh_-_5.5rem)] md:translate-y-0 left-0 p-1"> @* TODO: Implement swipe up gesture for mobile devices + layout changes *@
     
-    <div class="flex flex-col items-center w-full px-4 py-2">
+    <div class="hidden md:flex flex-wrap justify-between items-center mx-1 p-2">
+            <a asp-controller="App" asp-action="Index"
+                class="text-center self-center flex items-center px-4 py-3 font-bold bg-primary rounded-2xl" >Tech2023</a>
+            <partial name="_LoginPartial" />
+    </div>
+
+    <div class="flex flex-col items-center w-full px-3 py-2">
         <div class="md:hidden h-1 w-12 mb-2 bg-light-hint rounded-full"></div>
         <input type="text" name="search" placeholder="🔎 Search" autocomplete="off" id="search-bar" 
                class="bg-background w-full px-5 py-3 rounded-full outline-none border-2 border-light-hint border-opacity-0 focus:border-opacity-80
