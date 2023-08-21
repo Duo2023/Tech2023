@@ -5,7 +5,7 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <div class="nav-items-container flex flex-row space-x-8 items-center mr-4">
+    <div class="nav-items-container flex flex-row space-x-8 items-baseline mr-2">
         <button id="more" class="material-symbols-rounded">more_horiz</button>
         <div class="inline-block">
             <button id="account-circle" class="material-symbols-rounded" onclick="TS.interactions.toggleHiddenElement('account-dropdown');">account_circle</button>

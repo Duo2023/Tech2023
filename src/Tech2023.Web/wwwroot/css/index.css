@@ -3,10 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --navbar-height: 5rem;
-}
-
 @layer base {
   h1 {
     @apply text-3xl py-2;
@@ -32,10 +28,5 @@
 @layer components {
   .bg-gradient-button {
     @apply bg-gradient-to-br from-primary to-indigo-800;
-  }
-
-  /* Layout CSS */
-  #navbar {
-    height: var(--navbar-height);
   }
 }
