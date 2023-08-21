@@ -3,26 +3,32 @@
 @model Subject;
 
 @{
-    string standardName = StringHelpers.ToTitleCase(Model.Name);
-
-    ViewData["Title"] = $"Browse {Html.DisplayTextFor(s => s.Source)} {standardName}";
+    string subjectName = StringHelpers.ToTitleCase(Model.Name);
+    string subjectSource = Html.DisplayTextFor(s => s.Source);
+    
+    ViewData["Title"] = $"Browse {subjectSource} {subjectName}";
 } 
 
 <vc:sidebar></vc:sidebar> @* TODO: Make sidebar have relevant items *@
 
 <div id="paper-browser" class="max-h-full overflow-y-scroll">
-    <h1 class="mx-3 font-bold">@standardName</h1>
+    <h2 class="m-3 font-bold">Papers for @subjectName (@subjectSource)</h2>
 
-    <div id="papers" class="w-full overflow-x-hidden mr-1">
+    <div id="papers" class="w-full overflow-x-hidden pr-1">
         @for (int i = 2023; i > 2017; i--)
         {
-            <h1 class="paper-category bg-light-hint bg-opacity-10 m-1 px-3 rounded-lg">@i</h1>
-            @for (int j = 0; j < 8; j++)
-            {
-                <a asp-controller="App" asp-action="PaperViewer">
-                    <h2 class="paper w-full bg-hint bg-opacity-20 even:bg-opacity-30 m-2 px-3 py-3 rounded-lg">📜 Paper 1 - Feb/Mar (Zone 1)</h2>
-                </a>
-            }
+            <h4 class="paper-category sticky top-0 w-full bg-hint p-3 px-4 font-bold">@i</h4>
+            <ul>
+                @for (int j = 0; j < 8; j++)
+                {
+                    <li class="bg-secondary even:bg-opacity-30 border-b-2 border-hint">
+                        <a asp-controller="App" asp-action="PaperViewer">
+                            <h5 class="paper p-3">
+                                📜&ThickSpace; Paper 1 - Feb/Mar (Zone 1)
+                            </h5>
+                        </a>
+                    </li>
+                }
+            </ul>
         }
-    </div>
 </div>
