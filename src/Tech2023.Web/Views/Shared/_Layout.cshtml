@@ -7,10 +7,9 @@
         <link rel="stylesheet" href="~/css/fonts.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     </head>
-    <body>
-        <div class="h-screen w-screen overscroll-none text-white bg-background">
-            @RenderBody()
-        </div>
+    <body class="h-screen w-screen bg-background text-white overscroll-none">
+
+        @RenderBody()
 
         <footer class="fixed bottom-0 right-0 px-2 pointer-events-none">
             <div class="flex justify-end items-end w-auto text-slate-100 text-sm font-semibold">
