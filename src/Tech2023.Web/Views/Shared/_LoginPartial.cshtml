@@ -12,11 +12,11 @@
             <div id="account-dropdown" class="hidden z-10 absolute w-52 origin-top-right right-0 m-1 bg-background border-2 border-hint rounded-xl animate-slide-down">
                 <div class="flex flex-col p-4 border-b-2 border-hint font-bold">
                     <p class="text-light-hint">Logged in as:</p>
-                    <h4 class="w-full ml-1 overflow-x-clip overflow-ellipsis">@User!.Identity!.Name</h4>
+                    <h5 class="w-full ml-1 overflow-x-clip overflow-ellipsis">@User!.Identity!.Name</h5>
                 </div>
                 <div class="flex flex-col text-left space-y-2 p-2 font-semibold">
                     
-                    <a asp-controller="Settings" asp-action="Index" class="w-full inline-flex hover:bg-hint/80 p-2 rounded-lg">
+                    <a href="@Routes.Settings.Home" class="w-full inline-flex hover:bg-hint/80 p-2 rounded-lg">
                         <span class="material-symbols-rounded-sm mr-3">settings</span>
                         Settings
                     </a>
