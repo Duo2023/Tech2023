@@ -4,6 +4,10 @@
 @tailwind utilities;
 
 @layer base {
+  * {
+    @apply scrollbar-thin scrollbar-thumb-light-hint/90 scrollbar-track-background/80 scrollbar-corner-background/80;
+  }
+
   h1 {
     @apply text-5xl font-bold py-2;
   }
