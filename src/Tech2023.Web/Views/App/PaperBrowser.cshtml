@@ -5,7 +5,8 @@
 @{
     string subjectName = StringHelpers.ToTitleCase(Model.Name);
     string subjectSource = Html.DisplayTextFor(s => s.Source);
-    
+    CurriculumSource source = Model.Source;
+
     ViewData["Title"] = $"Browse {subjectSource} {subjectName}";
 } 
 
@@ -31,4 +32,5 @@
                 }
             </ul>
         }
+  </div>
 </div>

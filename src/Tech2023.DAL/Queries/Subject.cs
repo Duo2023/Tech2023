@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Linq.Expressions;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -31,10 +32,20 @@ public static partial class Queries
 
             name = name.ToUpper();
 
-            return await context.Subjects
-                .Where(s => s.Name == name)
-                .Where(s => s.Source == source)
-                .FirstOrDefaultAsync();
+            return source switch
+            {
+                CurriculumSource.Ncea => await context.Subjects
+                                        .Where(s => s.Name == name)
+                                        .Where(s => s.Source == source)
+                                        .Include(s => s.NceaResource)
+                                        .FirstOrDefaultAsync(),
+                CurriculumSource.Cambridge => await context.Subjects
+                                        .Where(s => s.Name == s.Name)
+                                        .Where(s => s.Source == source)
+                                        .Include(s => s.CambridgeResource)
+                                        .FirstOrDefaultAsync(),
+                _ => await Task.FromResult<Subject?>(null),
+            };
         }
     }
 }
