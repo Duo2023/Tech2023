@@ -1,5 +1,6 @@
 @using Tech2023.Core;
 @using Tech2023.DAL.Models;
+@using Tech2023.Web.ViewComponents;
 @model Subject;
 
 @{
@@ -10,7 +11,12 @@
     ViewData["Title"] = $"Browse {subjectSource} {subjectName}";
 } 
 
-<vc:sidebar></vc:sidebar> @* TODO: Make sidebar have relevant items *@
+    @await Component.InvokeAsync(SidebarViewComponent.Name,
+        new { 
+            selectedSubject = Model
+            }
+        )
+        @* TODO: Make sidebar have relevant items *@
 
 <div id="paper-browser" class="max-h-full overflow-y-scroll">
     <h2 class="m-3 font-bold">Papers for @subjectName (@subjectSource)</h2>
