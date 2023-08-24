@@ -45,9 +45,7 @@ public class HomeController : Controller
     {
         if (_cache.TryGetValue(CacheSlots.PrivacyPolicy, out var data))
         {
-            var policy = (PrivacyPolicy?)data;
-
-            if (policy is null)
+            if (data is not PrivacyPolicy policy || policy is null)
             {
                 _logger.LogError("Cache in privacy policy returned null");
                 return StatusCode(StatusCodes.Status500InternalServerError);

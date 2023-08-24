@@ -65,7 +65,46 @@ internal class Initializer : IDataInitializer
         await CreateSubjectsAsync(context);
         await CreateDebugUserAsync(context);
         await AddUsersToSubjectsAsync(context);
+        await AddResourcesToSubjectsAsync(context);
     }
+
+    internal static async Task AddResourcesToSubjectsAsync(ApplicationDbContext context)
+    {
+        var subjects = await context.Subjects.ToListAsync();
+
+        foreach (var item in subjects)
+        {
+            if (item.Source == CurriculumSource.Ncea)
+            {
+                foreach (var _ in Enumerable.Range(0, Random.Shared.Next(1, 10)))
+                {
+                    item.NceaResource?.Add(GenerateNceaStandard());
+                }
+            }
+            else if (item.Source == CurriculumSource.Cambridge)
+            {
+            }
+        }
+
+        context.UpdateRange(subjects);
+
+        await context.SaveChangesAsync();
+    }
+
+    internal static NceaResource GenerateNceaStandard()
+    {
+        var resource = new NceaResource()
+        {
+            AssessmentType = (NceaAssessmentType)Random.Shared.Next((int)NceaAssessmentType.Unit),
+            AchievementStandard = Random.Shared.Next(1, ushort.MaxValue),
+            Created = DateTimeOffset.UtcNow,
+        };
+
+        resource.Updated = resource.Created;
+
+        return resource;
+    }
+  
 
     internal static async Task AddUsersToSubjectsAsync(ApplicationDbContext context)
     {
