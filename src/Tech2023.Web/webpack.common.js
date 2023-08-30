@@ -3,6 +3,11 @@ const webpack = require("webpack");
 const copyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
+    entry: {
+        interactions: "./scripts/interactions/index.ts",
+        pdf: "./scripts/pdf/index.ts"
+    },
+
     module: {
         rules: [
             {
@@ -17,7 +22,7 @@ module.exports = {
     },
     output: {
         library: {
-            name: "TS",
+            name: "[name]",
             type: "var",
         },
         filename: "[name].min.js",
