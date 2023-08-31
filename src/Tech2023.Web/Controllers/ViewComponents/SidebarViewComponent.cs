@@ -9,7 +9,7 @@ using Tech2023.Web.Extensions;
 
 namespace Tech2023.Web.ViewComponents;
 
-[ViewComponent]
+[ViewComponent(Name = SidebarViewComponent.Name)]
 public class SidebarViewComponent : ViewComponent
 {
     internal readonly UserManager<ApplicationUser> _userManager;
@@ -19,16 +19,21 @@ public class SidebarViewComponent : ViewComponent
         _userManager = userManager;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync(SidebarFilterArgs? filterArgs = null)
+    public const string Name = "Sidebar";
+
+    public async Task<IViewComponentResult> InvokeAsync(Subject? selectedSubject = null, string? filterArgs = null)
     {
         var user = await _userManager.FindByUserAsync(UserClaimsPrincipal);
 
         var sidebarData = new SidebarViewModel
         {
-            FilterArgs = filterArgs,
             Subjects = user.SavedSubjects
         };
 
+        if(selectedSubject is not null) {
+            sidebarData.SelectedSubject = selectedSubject;
+            sidebarData.FilterArgs = filterArgs;
+        }
 
         // Implement filter stuff
 
