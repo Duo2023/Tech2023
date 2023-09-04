@@ -34,12 +34,21 @@ public class Subject
     public string Name { get; set; }
 #nullable restore
 
+    // This cannot be added yet or it will break the database on launch because it is a required field
+
+    ///// <summary>
+    ///// The curriculum source of the subject, this affects paper retrieval and display formatting on the front end.
+    ///// </summary>
+    //[Required]
+    //[JsonPropertyName("curriculumSource")]
+    //public CurriculumSource Source { get; set; }
+
     /// <summary>
-    /// The curriculum source of the subject, this affects paper retrieval and display formatting on the front end.
+    /// The level of curriculum that the subject is. If the subject is NCEA values, the value here will be NCEA Level 1, 2 or 3. If it's Cambridge the value will be IGSCE, AS/A, A2
     /// </summary>
     [Required]
-    [JsonPropertyName("curriculumSource")]
-    public CurriculumSource Source { get; set; }
+    [JsonPropertyName("curriculumLevel")]
+    public CurriculumLevel Level { get; set; }
 
     /// <summary>
     /// Unsigned 4 byte integer used for the preffered display color if it is <see langword="null"/>
