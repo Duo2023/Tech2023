@@ -47,6 +47,7 @@ public sealed class Startup
         services.Configure<RouteOptions>(options =>
         {
             options.LowercaseUrls = true;
+            options.AppendTrailingSlash = true;
         });
 
         services.AddDbContextFactory<ApplicationDbContext>(options =>
