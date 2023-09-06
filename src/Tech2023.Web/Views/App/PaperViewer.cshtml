@@ -16,7 +16,7 @@
         </div>
         <div class="flex flex-row space-x-4">
             <button id="paper-toggle">
-                
+
             </button>
             <div class="flex flex-col">
                 <div class="inline-flex space-x-1 bg-black p-1 rounded-md">
@@ -24,14 +24,15 @@
                         <span class="material-symbols-rounded-sm">download</span>
                         <p>Download</p>
                     </a>
-                    <button class="material-symbols-rounded-sm" onclick="TS.interactions.toggleHiddenElement('paper-download-options');">expand_more</button>
+                    <button class="material-symbols-rounded-sm"
+                        onclick="interactions.element.toggleHiddenElement('paper-download-options');">expand_more</button>
                 </div>
                 <div id="paper-download-options" class="absolute hidden">
-                        <ul class="flex flex-col space-y-1">
-                            <li>
-                                <a href="@paperLink" download>Question Paper</a>
-                            </li>
-                        </ul>
+                    <ul class="flex flex-col space-y-1">
+                        <li>
+                            <a href="@paperLink" download>Question Paper</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -42,6 +43,6 @@
 
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", (event) => {
-        TS.viewer.forms.load("display-canvas", 'https://papers.gceguide.com/A%20Levels/Mathematics%20(9709)/2022/9709_s22_qp_11.pdf');
+        pdf.viewer.load("display-canvas", 'https://papers.gceguide.com/A%20Levels/Mathematics%20(9709)/2022/9709_s22_qp_11.pdf');
     });
 </script>

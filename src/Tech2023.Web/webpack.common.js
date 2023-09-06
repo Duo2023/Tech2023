@@ -1,13 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
-const copyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-    entry: {
-        interactions: "./scripts/interactions/index.ts",
-        pdf: "./scripts/pdf/index.ts"
-    },
-
     module: {
         rules: [
             {
@@ -27,7 +21,6 @@ module.exports = {
         },
         filename: "[name].min.js",
         path: path.resolve(__dirname, "./wwwroot/js"),
-        clean: true,
     },
     optimization: {
         moduleIds: "deterministic",
@@ -42,15 +35,4 @@ module.exports = {
             },
         },
     },
-    plugins: [
-        new copyPlugin({
-            patterns: [
-                {
-                    from: path.resolve(__dirname, "./node_modules/pdfjs-dist/build/pdf.worker.min.js"),
-                    to: path.resolve(__dirname, "./wwwroot/js"),
-                    info: { minimized: true },
-                },
-            ],
-        }),
-    ],
 };
