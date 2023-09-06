@@ -18,8 +18,11 @@
         </footer>
 
         <script type="text/javascript" asp-src-include="~/js/runtime.min.js" asp-append-version="true"></script>
+        <link rel="preload" as="script" type="text/javascript" href="~/js/interactions-vendors.min.js" asp-append-version="true">
         <script type="text/javascript" asp-src-include="~/js/interactions-vendors.min.js" asp-append-version="true"></script>
+        <link rel="preload" as="script" type="text/javascript" href="~/js/interactions.min.js" asp-append-version="true">
         <script type="text/javascript" asp-src-include="~/js/interactions.min.js" asp-append-version="true"></script>
+
         @await RenderSectionAsync("Scripts", required: false)
     </body>
 </html>
