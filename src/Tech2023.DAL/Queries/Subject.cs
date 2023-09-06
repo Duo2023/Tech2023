@@ -15,7 +15,7 @@ public static partial class Queries
         {
             ArgumentNullException.ThrowIfNull(subject);
 
-            if (await context.Subjects.AnyAsync(s => s.Name == subject.Name && s.Source == subject.Source))
+            if (await context.Subjects.AnyAsync(s => s.Name == subject.Name && s.Source == subject.Source && s.Level == subject.Level))
             {
                 Debug.WriteLine("Application tried creating a subject which already exists in all source");
                 return;
@@ -26,7 +26,7 @@ public static partial class Queries
             await context.SaveChangesAsync();
         }
 
-        public static async Task<Subject?> FindSubjectAsync(ApplicationDbContext context, CurriculumSource source, string name)
+        public static async Task<Subject?> FindSubjectAsync(ApplicationDbContext context, CurriculumSource source, CurriculumLevel level, string name)
         {
             Debug.Assert(context != null);
 
@@ -37,11 +37,13 @@ public static partial class Queries
                 CurriculumSource.Ncea => await context.Subjects
                                         .Where(s => s.Name == name)
                                         .Where(s => s.Source == source)
+                                        .Where(s => s.Level == level)
                                         .Include(s => s.NceaResource)
                                         .FirstOrDefaultAsync(),
                 CurriculumSource.Cambridge => await context.Subjects
                                         .Where(s => s.Name == s.Name)
                                         .Where(s => s.Source == source)
+                                        .Where(s => s.Level == level)
                                         .Include(s => s.CambridgeResource)
                                         .FirstOrDefaultAsync(),
                 _ => await Task.FromResult<Subject?>(null),

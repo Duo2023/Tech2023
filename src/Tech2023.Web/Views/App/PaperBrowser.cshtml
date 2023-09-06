@@ -1,14 +1,17 @@
 @using Tech2023.Core;
 @using Tech2023.DAL.Models;
+@using Tech2023.DAL;
 @using Tech2023.Web.ViewComponents;
 @model Subject;
 
 @{
     string subjectName = StringHelpers.ToTitleCase(Model.Name);
     string subjectSource = Html.DisplayTextFor(s => s.Source);
+    string yearLevel = CurriculumLevelHelpers.ToString(Model.Level, Model.Source);
+
     CurriculumSource source = Model.Source;
 
-    ViewData["Title"] = $"Browse {subjectSource} {subjectName}";
+    ViewData["Title"] = $"Browse {yearLevel} {subjectName}";
 } 
 
     @await Component.InvokeAsync(SidebarViewComponent.Name,

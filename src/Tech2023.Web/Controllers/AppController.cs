@@ -40,16 +40,21 @@ public class AppController : Controller
     }
 
     [Route(Routes.Application.PaperBrowser)]
-    public async Task<IActionResult> PaperBrowser(string curriculum, string subject)
+    public async Task<IActionResult> PaperBrowser(string curriculum, string subject, [FromQuery] string level)
     {
         if (!Enum.TryParse<CurriculumSource>(curriculum.AsSpan(), ignoreCase: true, out var source) || subject == null)
         {
             return NotFound();
         }
 
+        if (!CurriculumLevelHelpers.TryParse(level, out var subjectLevel))
+        {
+            return NotFound();
+        }
+
         using var context = await _context.CreateDbContextAsync();
 
-        var selected = await Queries.Subjects.FindSubjectAsync(context, source, subject);
+        var selected = await Queries.Subjects.FindSubjectAsync(context, source, subjectLevel, subject);
 
         if (selected is null)
         {
