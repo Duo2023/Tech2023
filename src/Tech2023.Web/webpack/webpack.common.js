@@ -20,7 +20,7 @@ module.exports = {
             type: "var",
         },
         filename: "[name].min.js",
-        path: path.resolve(__dirname, "./wwwroot/js"),
+        path: path.resolve(__dirname, ".././wwwroot/js"),
     },
     optimization: {
         moduleIds: "deterministic",
