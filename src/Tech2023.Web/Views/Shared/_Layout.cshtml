@@ -1,28 +1,36 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@ViewData["Title"]</title>
-        <link rel="stylesheet" href="~/css/fonts.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    </head>
-    <body class="h-screen w-screen bg-background text-white overscroll-none">
 
-        @RenderBody()
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/fonts.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
-        <footer class="fixed bottom-0 right-0 px-2 pointer-events-none">
-            <div class="flex justify-end items-end w-auto text-slate-100 text-sm font-semibold">
-                &copy; @(DateTime.UtcNow.Year == 2023 ? 2023 : $"2023 - {DateTime.UtcNow.Year}") - Duo2023 - &ThinSpace;<a class="hover:underline pointer-events-auto" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </div>
-        </footer>
+    <link rel="preload" as="script" type="text/javascript" href="~/js/runtime.min.js" asp-append-version="true">
+    <link rel="preload" as="script" type="text/javascript" href="~/js/interactions-vendors.min.js"
+        asp-append-version="true">
+    <link rel="preload" as="script" type="text/javascript" href="~/js/interactions.min.js" asp-append-version="true">
+</head>
 
-        <script type="text/javascript" asp-src-include="~/js/runtime.min.js" asp-append-version="true"></script>
-        <link rel="preload" as="script" type="text/javascript" href="~/js/interactions-vendors.min.js" asp-append-version="true">
-        <script type="text/javascript" asp-src-include="~/js/interactions-vendors.min.js" asp-append-version="true"></script>
-        <link rel="preload" as="script" type="text/javascript" href="~/js/interactions.min.js" asp-append-version="true">
-        <script type="text/javascript" asp-src-include="~/js/interactions.min.js" asp-append-version="true"></script>
+<body class="h-screen w-screen bg-background text-white overscroll-none">
 
-        @await RenderSectionAsync("Scripts", required: false)
-    </body>
+    @RenderBody()
+
+    <footer class="fixed bottom-0 right-0 px-2 pointer-events-none">
+        <div class="flex justify-end items-end w-auto text-slate-100 text-sm font-semibold">
+            &copy; @(DateTime.UtcNow.Year == 2023 ? 2023 : $"2023 - {DateTime.UtcNow.Year}") - Duo2023 - &ThinSpace;<a
+                class="hover:underline pointer-events-auto" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script type="text/javascript" asp-src-include="~/js/runtime.min.js" asp-append-version="true"></script>
+    <script type="text/javascript" asp-src-include="~/js/interactions-vendors.min.js"
+        asp-append-version="true"></script>
+    <script type="text/javascript" asp-src-include="~/js/interactions.min.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
 </html>
