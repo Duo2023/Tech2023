@@ -40,21 +40,18 @@ public class AppController : Controller
     }
 
     [Route(Routes.Application.PaperBrowser)]
-    public async Task<IActionResult> PaperBrowser(string curriculum, string subject, [FromQuery] string level)
+    public async Task<IActionResult> PaperBrowser(string curriculum, string subject)
     {
-        if (!Enum.TryParse<CurriculumSource>(curriculum.AsSpan(), ignoreCase: true, out var source) || subject == null)
-        {
-            return NotFound();
-        }
+        curriculum = curriculum.ToUpper(); // TODO: Better parsing of curriculum level parsing so we don't allocate and call a nullref
 
-        if (!CurriculumLevelHelpers.TryParse(level, out var subjectLevel))
+        if (!CurriculumLevelHelpers.TryParse(curriculum, out var level, out var source) || string.IsNullOrWhiteSpace(subject))
         {
             return NotFound();
         }
 
         using var context = await _context.CreateDbContextAsync();
 
-        var selected = await Queries.Subjects.FindSubjectAsync(context, source, subjectLevel, subject);
+        var selected = await Queries.Subjects.FindSubjectAsync(context, source, level, subject);
 
         if (selected is null)
         {

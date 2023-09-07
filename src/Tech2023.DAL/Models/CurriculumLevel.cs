@@ -18,6 +18,41 @@ public enum CurriculumLevel : byte
 
 public static class CurriculumLevelHelpers
 {
+    public static bool TryParse(ReadOnlySpan<char> input, out CurriculumLevel level, out CurriculumSource source)
+    {
+        switch (input)
+        {
+            case "L1":
+                level = CurriculumLevel.L1;
+                source = CurriculumSource.Ncea;
+                return true;
+            case "IGSCE":
+                level = CurriculumLevel.L1;
+                source = CurriculumSource.Cambridge;
+                return true;
+            case "L2":
+                level = CurriculumLevel.L2;
+                source = CurriculumSource.Ncea;
+                return true;
+            case "AS":
+                level = CurriculumLevel.L2;
+                source = CurriculumSource.Cambridge;
+                return true;
+            case "L3":
+                level = CurriculumLevel.L3;
+                source = CurriculumSource.Ncea;
+                return true;
+            case "A2":
+                level = CurriculumLevel.L3;
+                source = CurriculumSource.Cambridge;
+                return true;
+            default:
+                level = default;
+                source = default;
+                return false;
+        }
+    }
+
     public static bool TryParse(ReadOnlySpan<char> input, out CurriculumLevel level)
     {
         switch (input)
