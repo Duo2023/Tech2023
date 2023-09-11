@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-
+using Tech2023.Core;
 using Tech2023.DAL.Models;
 
 namespace Tech2023.DAL;
@@ -18,29 +18,35 @@ public enum CurriculumLevel : byte
 
 public static class CurriculumLevelHelpers
 {
+    const string NceaSpecifier = "LEVEL";
+
     public static bool TryParse(ReadOnlySpan<char> input, out CurriculumLevel level, out CurriculumSource source)
     {
+        if (input.StartsWith("LEVEL") && input.Length == NceaSpecifier.Length + 1)
+        {
+            var number = (CurriculumLevel)byte.Parse(input[NceaSpecifier.Length..]);
+
+            if (!Enum.IsDefined(number))
+            {
+                level = default;
+                source = default;
+                return false;
+            }
+
+            level = number;
+            source = CurriculumSource.Ncea;
+            return true;
+        }
+
         switch (input)
         {
-            case "L1":
-                level = CurriculumLevel.L1;
-                source = CurriculumSource.Ncea;
-                return true;
             case "IGSCE":
                 level = CurriculumLevel.L1;
                 source = CurriculumSource.Cambridge;
                 return true;
-            case "L2":
-                level = CurriculumLevel.L2;
-                source = CurriculumSource.Ncea;
-                return true;
             case "AS":
                 level = CurriculumLevel.L2;
                 source = CurriculumSource.Cambridge;
-                return true;
-            case "L3":
-                level = CurriculumLevel.L3;
-                source = CurriculumSource.Ncea;
                 return true;
             case "A2":
                 level = CurriculumLevel.L3;
@@ -57,15 +63,15 @@ public static class CurriculumLevelHelpers
     {
         switch (input)
         {
-            case "L1":
+            case "LEVEL1":
             case "IGSCE":
                 level = CurriculumLevel.L1;
                 return true;
-            case "L2":
+            case "LEVEL2":
             case "AS":
                 level = CurriculumLevel.L2;
                 return true;
-            case "L3":
+            case "LEVEL3":
             case "A2":
                 level = CurriculumLevel.L3;
                 return true;
@@ -91,7 +97,7 @@ public static class CurriculumLevelHelpers
         }
         else if (source == CurriculumSource.Ncea)
         {
-            return level.ToString();
+            return $"LEVEL{(byte)level}";
         }
         else return string.Empty;
     }

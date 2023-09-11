@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Tech2023.Core\Tech2023.Core.csproj" />
     <ProjectReference Include="..\Tech2023.Web.Shared\Tech2023.Web.Shared.csproj" />
     <InternalsVisibleTo Include="$(AssemblyName).IntegrationTests" />
   </ItemGroup>
