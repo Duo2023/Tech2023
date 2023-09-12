@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.Contracts;
+
 using Tech2023.Core;
 using Tech2023.DAL.Models;
 
@@ -22,7 +24,7 @@ public static class CurriculumLevelHelpers
 
     public static bool TryParse(ReadOnlySpan<char> input, out CurriculumLevel level, out CurriculumSource source)
     {
-        if (input.StartsWith("LEVEL") && input.Length == NceaSpecifier.Length + 1)
+        if (input.StartsWith(NceaSpecifier) && input.Length == NceaSpecifier.Length + 1)
         {
             var number = (CurriculumLevel)byte.Parse(input[NceaSpecifier.Length..]);
 
@@ -59,31 +61,11 @@ public static class CurriculumLevelHelpers
         }
     }
 
-    public static bool TryParse(ReadOnlySpan<char> input, out CurriculumLevel level)
-    {
-        switch (input)
-        {
-            case "LEVEL1":
-            case "IGSCE":
-                level = CurriculumLevel.L1;
-                return true;
-            case "LEVEL2":
-            case "AS":
-                level = CurriculumLevel.L2;
-                return true;
-            case "LEVEL3":
-            case "A2":
-                level = CurriculumLevel.L3;
-                return true;
-            default:
-                level = default;
-                return false;
-        }
-    }
-
+    [Pure]
     public static string ToString(CurriculumLevel level, CurriculumSource source)
     {
         Debug.Assert(Enum.IsDefined(source));
+        Debug.Assert(Enum.IsDefined(level));
 
         if (source == CurriculumSource.Cambridge)
         {

@@ -47,7 +47,7 @@ internal class Initializer : IDataInitializer
                 Created = DateTimeOffset.Now
             };
 
-            policy.Updated = policy.Created;
+            policy.SyncUpdated();
 
             context.PrivacyPolicies.Add(policy);
 
@@ -100,7 +100,7 @@ internal class Initializer : IDataInitializer
             Created = DateTimeOffset.UtcNow,
         };
 
-        resource.Updated = resource.Created;
+        resource.SyncUpdated();
 
         return resource;
     }
@@ -135,7 +135,7 @@ internal class Initializer : IDataInitializer
             Created = DateTimeOffset.UtcNow
         };
 
-        user.Updated = user.Created;
+        user.SyncUpdated();
 
         var result = await _userManager.CreateAsync(user, "sudoUser555!");
 

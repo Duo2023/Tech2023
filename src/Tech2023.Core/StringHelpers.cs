@@ -24,7 +24,7 @@ public static class StringHelpers
         }
 
         // if the buffer is equal or less than the threshold allocate on the stack else use arraypool version
-        using var result = str.Length <= StackAllocThreshold ? 
+        var result = str.Length <= StackAllocThreshold ? 
             new ValueStringBuilder(stackalloc char[StackAllocThreshold]) 
             : new ValueStringBuilder(str.Length);
 
@@ -52,6 +52,6 @@ public static class StringHelpers
             }
         }
 
-        return result.ToString();
+        return result.ToString(); // ToString() calls dispose for us automatically
     }
 }

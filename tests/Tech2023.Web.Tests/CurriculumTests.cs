@@ -7,6 +7,7 @@ public class CurriculumTests
 {
     [Theory]
     [InlineData("LEVEL3", CurriculumLevel.L3, CurriculumSource.Ncea)]
+    [InlineData("IGSCE", CurriculumLevel.L1, CurriculumSource.Cambridge)]
     public void Assert_TryParseWorks(string input, CurriculumLevel expectedLevel, CurriculumSource curriculumSource)
     {
         bool result = CurriculumLevelHelpers.TryParse(input, out var actualLevel, out var actualSource);
