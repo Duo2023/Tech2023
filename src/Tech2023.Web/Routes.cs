@@ -21,6 +21,8 @@ public sealed class Routes
     [RouteVisibility(Visiblity.Public)]
     public const string Privacy = "/privacy";
 
+    public const string Error = "/error";
+
     public static class Application
     {
         [RouteVisibility(Visiblity.Authenticated)]
