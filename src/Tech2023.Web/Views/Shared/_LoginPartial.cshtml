@@ -8,38 +8,41 @@
     <div class="nav-items-container flex flex-row space-x-8 items-baseline mr-2">
         <button id="more" class="material-symbols-rounded">more_horiz</button>
         <div class="inline-block">
-            <button id="account-circle" class="material-symbols-rounded" onclick="TS.interactions.toggleHiddenElement('account-dropdown');">account_circle</button>
-            <div id="account-dropdown" class="hidden z-10 absolute w-52 origin-top-right right-0 m-1 bg-background border-2 border-hint rounded-xl animate-slide-down">
+            <button id="account-circle" class="material-symbols-rounded"
+                onclick="interactions.element.toggleHiddenElement('account-dropdown');">account_circle</button>
+            <div id="account-dropdown"
+                class="hidden z-10 absolute w-52 origin-top-right right-0 m-1 bg-background border-2 border-hint rounded-xl animate-slide-down">
                 <div class="flex flex-col p-4 border-b-2 border-hint font-bold">
                     <p class="text-light-hint">Logged in as:</p>
                     <h5 class="w-full ml-1 overflow-x-clip overflow-ellipsis">@User!.Identity!.Name</h5>
                 </div>
                 <div class="flex flex-col text-left space-y-2 p-2 font-semibold">
-                    
+
                     <a href="@Routes.Settings.Home" class="w-full inline-flex hover:bg-hint/80 p-2 rounded-lg">
                         <span class="material-symbols-rounded-sm mr-3">settings</span>
                         Settings
                     </a>
-                    
+
                     @if (User.IsInRole(Roles.Administrator))
                     {
-                        
+
                         <a href="@Routes.Admin.Home" class="w-full inline-flex hover:bg-hint/80 p-2 rounded-lg">
                             <span class="material-symbols-rounded-sm mr-3">admin_panel_settings</span>
                             Admin Panel
                         </a>
-                        
+
                     }
                     <div id="logout-button">
-                        <button onclick="TS.interactions.showDialog('logout-modal', true)" class="w-full inline-flex hover:bg-red-600/80 p-2 rounded-lg">
+                        <button onclick="interactions.dialog.showDialog('logout-modal', true)"
+                            class="w-full inline-flex hover:bg-red-600/80 p-2 rounded-lg">
                             <span class="material-symbols-rounded-sm mr-3">logout</span>
                             Logout
                         </button>
 
                         <dialog id="logout-modal" class="font-semibold">
                             <h3>Logout from <strong>@User!.Identity!.Name</strong>?</h3>
-                            <form method="post" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/" 
-                                  class="w-full flex flex-row justify-end mt-4 space-x-4">
+                            <form method="post" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/"
+                                class="w-full flex flex-row justify-end mt-4 space-x-4">
                                 <button formmethod="dialog" type="submit" class="p-2 hover:underline">Go back!</button>
                                 <button class="inline-flex bg-red-600/80 p-2 rounded-lg" type="submit">
                                     Yes, Logout
