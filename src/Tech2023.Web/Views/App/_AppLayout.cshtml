@@ -1,10 +1,13 @@
 @{
-    Layout = "_Layout";
+  Layout = "_Layout";
 }
 
-<div
-  id="app-container"
-  class="grid grid-cols-[auto] md:grid-cols-[min-content_auto] h-full"
->
-    @RenderBody()
+<div id="app-container" class="grid grid-cols-[auto] md:grid-cols-[min-content_auto] h-full">
+  @RenderBody()
 </div>
+
+@section Scripts {
+  <script type="text/javascript" asp-src-include="~/js/pdf.worker.min.js" asp-append-version="true"></script>
+  <script type="text/javascript" asp-src-include="~/js/pdf-vendors.min.js" asp-append-version="true"></script>
+  <script type="text/javascript" asp-src-include="~/js/pdf.min.js" asp-append-version="true"></script>
+}
