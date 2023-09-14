@@ -22,7 +22,7 @@ public enum CurriculumLevel : byte
 public static class CurriculumLevelHelpers
 {
     const string NceaSpecifier = "LEVEL";
-    const string IGSCE = "IGSCE";
+    const string IGCSE = nameof(IGCSE);
 
     // over optimized but was fun
 
@@ -63,7 +63,7 @@ public static class CurriculumLevelHelpers
             source = CurriculumSource.Ncea;
             return true;
         }
-        else if (input.SequenceEqual(IGSCE)) // we cannot use == because it compares T* & int not whether they are equal
+        else if (input.SequenceEqual(IGCSE)) // we cannot use == because it compares T* & int not whether they are equal
         {
             level = CurriculumLevel.L1;
             source = CurriculumSource.Cambridge;
@@ -86,7 +86,7 @@ public static class CurriculumLevelHelpers
         {
             return level switch
             {
-                CurriculumLevel.L1 => IGSCE,
+                CurriculumLevel.L1 => IGCSE,
                 CurriculumLevel.L2 => "AS",
                 CurriculumLevel.L3 => "A2",
                 _ => string.Empty,
