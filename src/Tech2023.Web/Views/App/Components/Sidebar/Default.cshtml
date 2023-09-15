@@ -3,31 +3,33 @@
 @using Tech2023.Web.Models;
 @model SidebarViewModel;
 
-<aside id="sidebar" 
-       class="sidebar z-20 grid grid-rows-[min-content_auto] md:grid-rows-[min-content_min-content_auto] fixed md:relative h-full w-full md:w-min bg-secondary rounded-t-[2.5rem] md:rounded-none
-             translate-y-[calc(100vh_-_5.5rem)] md:translate-y-0 left-0 p-1"> @* TODO: Implement swipe up gesture for mobile devices + layout changes *@
+<aside id="sidebar"
+    class="sidebar z-20 grid grid-rows-[min-content_auto] fixed md:relative h-full w-full md:w-min bg-secondary rounded-t-[2.5rem] md:rounded-none translate-y-[calc(100vh_-_5.5rem)] md:translate-y-0 left-0 p-1">
+    @* TODO: Implement swipe up gesture for
+    mobile devices + layout changes *@
     <div class="flex flex-col items-center w-full px-3 py-2">
         <div class="md:hidden h-1 w-12 mb-2 bg-light-hint rounded-full"></div>
-        <input type="text" name="search" placeholder="🔎 Search" autocomplete="off" id="search-bar" 
-               class="bg-background w-full px-5 py-3 rounded-full outline-none border-2 border-light-hint border-opacity-0 focus:border-opacity-80
-                     transition-colors duration-150 ease-out">
+        <input type="text" name="search" placeholder="🔎 Search" autocomplete="off" id="search-bar"
+            class="bg-background w-full px-5 py-3 rounded-full outline-none border-2 border-light-hint border-opacity-0 focus:border-opacity-80 transition-colors duration-150 ease-out">
     </div>
 
     <div id="sidebar-items" class="flex flex-col justify-between">
         <div id="subject-list" class="flex flex-col">
-            <div id="favourites-section" 
-                 class="section inline-flex justify-start items-center h-6 mx-4 mt-1 text-light-hint transition-all duration-75 ease-out">
+            <div id="favourites-section"
+                class="section inline-flex justify-start items-center h-6 mx-4 mt-1 text-light-hint transition-all duration-75 ease-out">
                 <span class="material-symbols-rounded-sm">expand_more</span>
                 <div>⭐</div>
                 <p class="font-bold"> Favourites</p>
             </div>
-            @foreach(var subject in Model.Subjects)
+            @foreach (var subject in Model.Subjects)
             {
-                <a asp-controller="App" asp-action="PaperBrowser" asp-route-curriculum="@CurriculumLevelHelpers.ToString(subject.Level, subject.Source)" asp-route-subject="@subject.Name"
-                class="subject bg-secondary hover:bg-background py-3 mx-3 my-1 rounded-xl shadow-xl w-full md:w-80 transition-colors duration-50 ease-linear">
+                <a asp-controller="App" asp-action="PaperBrowser"
+                    asp-route-curriculum="@CurriculumLevelHelpers.ToString(subject.Level, subject.Source)"
+                    asp-route-subject="@subject.Name"
+                    class="subject bg-secondary hover:bg-background py-3 mx-3 my-1 rounded-xl shadow-xl w-full md:w-80 transition-colors duration-50 ease-linear">
                     <div class="inline-flex px-4 font-semibold items-center justify-start text-md">
-                        <div class="relative subject-icon text-center w-6 h-6 z-10 rounded-md mr-3" 
-                             style="background-color: @HtmlHexString.GetHtmlHexString(subject.DisplayColor ?? 0);">
+                        <div class="relative subject-icon text-center w-6 h-6 z-10 rounded-md mr-3"
+                            style="background-color: @HtmlHexString.GetHtmlHexString(subject.DisplayColor ?? 0);">
                             <p class="drop-shadow-[0_0_1.5px_rgb(0,0,0,0.6)]">@subject.Name[0]</p>
                         </div>
                         <p>@subject.Name.ToTitleCase() (@CurriculumLevelHelpers.ToString(subject.Level, subject.Source))</p>
@@ -36,8 +38,8 @@
             }
         </div>
         <div id="sidebar-utils" class="flex flex-col my-2">
-            <a asp-controller="Settings" asp-action="Index" 
-            class="bg-secondary hover:bg-background py-3 mx-3 my-1 rounded-xl shadow-xl w-full md:w-80 transition-colors duration-50 ease-linear">
+            <a asp-controller="Settings" asp-action="Index"
+                class="bg-secondary hover:bg-background py-3 mx-3 my-1 rounded-xl shadow-xl w-full md:w-80 transition-colors duration-50 ease-linear">
                 <div class="inline-flex px-4 font-semibold items-center justify-start text-md">
                     <span class="material-symbols-rounded-sm text-md w-6 h-6 rounded-md mr-3">settings</span>
                     <p>Settings</p>
