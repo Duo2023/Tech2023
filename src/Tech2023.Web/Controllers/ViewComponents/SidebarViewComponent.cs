@@ -21,22 +21,17 @@ public class SidebarViewComponent : ViewComponent
 
     public const string Name = "Sidebar";
 
-    public async Task<IViewComponentResult> InvokeAsync(Subject? selectedSubject = null, string? filterArgs = null)
+    public async Task<IViewComponentResult> InvokeAsync(SidebarInputModel? input = null)
     {
         var user = await _userManager.FindByUserAsync(UserClaimsPrincipal);
 
         var sidebarData = new SidebarViewModel
         {
-            Subjects = user.SavedSubjects
+            Subjects = user.SavedSubjects,
+            Input = input
         };
 
-        if(selectedSubject is not null) {
-            sidebarData.SelectedSubject = selectedSubject;
-            sidebarData.FilterArgs = filterArgs;
-        }
-
         // Implement filter stuff
-
         return View(sidebarData);
     }
 
