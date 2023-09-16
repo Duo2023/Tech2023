@@ -38,7 +38,8 @@
         </div>
     </div>
 
-    <div id="paper-viewer" class="overflow-y-scroll" style="height: calc(100vh - var(--navbar-height, 0rem) - var(--paper-navbar-height))">
+    @* TODO: Need to fix horizontal overflow *@
+    <div id="paper-viewer" class="flex flex-col items-center overflow-y-scroll" style="height: calc(100vh - var(--navbar-height, 0rem) - var(--paper-navbar-height))">
         <canvas id="display-canvas"></canvas>
     </div>
 </div>
