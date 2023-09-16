@@ -5,8 +5,8 @@
 
 <vc:sidebar></vc:sidebar> @* TODO: Make sidebar have relevant items *@
 
-<div class="flex flex-col h-full w-full" onload="TS.viewer.forms.load('display-canvas', '@paperLink')">
-    <div id="paper-navbar" class="flex flex-row items-center justify-between h-14 px-3 bg-secondary">
+<div class="flex flex-col h-full w-full" onload="TS.viewer.forms.load('display-canvas', '@paperLink')" style="--paper-navbar-height: 3.5rem">
+    <div id="paper-navbar" class="flex flex-row items-center justify-between px-3 bg-secondary" style="height: var(--paper-navbar-height)">
         <div class="flex flex-row space-x-3">
             <a asp-controller="App" asp-action="Home" class="material-symbols-rounded-sm">west</a>
             <div>
@@ -37,8 +37,10 @@
             </div>
         </div>
     </div>
-    <canvas id="display-canvas">
-    </canvas>
+
+    <div id="paper-viewer" class="overflow-y-scroll" style="height: calc(100vh - var(--navbar-height, 0rem) - var(--paper-navbar-height))">
+        <canvas id="display-canvas"></canvas>
+    </div>
 </div>
 
 <script type="text/javascript">
