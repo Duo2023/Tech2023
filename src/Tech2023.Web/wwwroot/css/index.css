@@ -5,7 +5,7 @@
 
 @layer base {
   * {
-    @apply scrollbar-thin scrollbar-thumb-light-hint/90 scrollbar-track-background/80 scrollbar-corner-background/80;
+    @apply box-border scrollbar-thin scrollbar-thumb-light-hint/90 scrollbar-track-background/80 scrollbar-corner-background/80;
   }
 
   h1 {
