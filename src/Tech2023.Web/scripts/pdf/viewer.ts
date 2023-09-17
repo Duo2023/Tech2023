@@ -1,40 +1,55 @@
-import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
+import { getDocument, GlobalWorkerOptions, PDFDocumentProxy } from "pdfjs-dist";
 
 export module viewer {
-    export function load(canvasId: string, file: string): void {
+    export function init(): void {
         GlobalWorkerOptions.workerSrc = window.location.origin + "/js/pdf.worker.min.js";
-        var loadingTask = getDocument(file);
+    }
+
+    function renderPageToCanvas(pdf: PDFDocumentProxy, pageNumber: number, canvas: HTMLCanvasElement) {
+        pdf.getPage(pageNumber).then(function (page) {
+            console.log("Page loaded");
+
+            let scale = 1.5;
+            let viewport = page.getViewport({ scale: scale });
+
+            // Prepare canvas using PDF page dimensions
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            // Render PDF page into canvas context
+            let context = canvas.getContext("2d");
+            let renderContext = {
+                canvasContext: context,
+                viewport: viewport,
+            };
+            let renderTask = page.render(renderContext);
+            renderTask.promise.then(function () {
+                console.log("Page rendered");
+            });
+        });
+    }
+
+    export function load(pagesContainerId: string, file: string, templateClassesElementId: string): void {
+        init();
+        let pagesContainer = document.getElementById(pagesContainerId);
+        let templateClasses = document.getElementById(templateClassesElementId).className;
+
+        let loadingTask = getDocument(file);
 
         loadingTask.promise.then(
             function (pdf) {
                 console.log("PDF loaded");
 
-                // Fetch the first page
-                var pageNumber = 1;
-                pdf.getPage(pageNumber).then(function (page) {
-                    console.log("Page loaded");
+                for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+                    let canvas = document.createElement("canvas") as HTMLCanvasElement;
+                    canvas.id = `page-${pageNumber}`;
+                    if (templateClasses !== undefined) {
+                        canvas.classList.add(...templateClasses.split(" "));
+                    }
+                    pagesContainer.appendChild(canvas);
 
-                    var scale = 1.5;
-                    var viewport = page.getViewport({ scale: scale });
-
-                    // Prepare canvas using PDF page dimensions
-                    var canvas = document.getElementById(canvasId) as HTMLCanvasElement;
-
-                    var context = canvas.getContext("2d");
-
-                    canvas.height = viewport.height;
-                    canvas.width = viewport.width;
-
-                    // Render PDF page into canvas context
-                    var renderContext = {
-                        canvasContext: context,
-                        viewport: viewport,
-                    };
-                    var renderTask = page.render(renderContext);
-                    renderTask.promise.then(function () {
-                        console.log("Page rendered");
-                    });
-                });
+                    renderPageToCanvas(pdf, pageNumber, canvas);
+                }
             },
             function (reason) {
                 // PDF loading error
