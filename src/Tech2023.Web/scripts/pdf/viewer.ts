@@ -2,8 +2,7 @@ import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
 
 export module viewer {
     export function load(canvasId: string, file: string): void {
-        // TODO: Fix worker src
-        GlobalWorkerOptions.workerSrc = "./pdf.worker.min.js";
+        GlobalWorkerOptions.workerSrc = window.location.origin + "/js/pdf.worker.min.js";
         var loadingTask = getDocument(file);
 
         loadingTask.promise.then(
