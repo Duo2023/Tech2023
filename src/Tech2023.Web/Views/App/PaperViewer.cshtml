@@ -42,9 +42,9 @@
 
     @* TODO: Need to fix horizontal overflow *@
     <div id="paper-viewer"
-        class="flex flex-col items-center w-full md:w-[calc(100vw_-_var(--sidebar-width,_0rem))] overflow-y-scroll overflow-x-auto"
+        class="w-full md:w-[calc(100vw_-_var(--sidebar-width,_0rem))] overflow-y-scroll overflow-x-auto"
         style="height: calc(100vh - var(--navbar-height, 0rem) - var(--paper-navbar-height));">
-        <canvas id="display-canvas"></canvas>
+        <canvas id="display-canvas" class="m-auto"></canvas>
     </div>
 </div>
 
