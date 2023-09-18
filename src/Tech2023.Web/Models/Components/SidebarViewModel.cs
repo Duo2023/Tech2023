@@ -1,8 +1,8 @@
 using Tech2023.DAL.Models;
 
-namespace Tech2023.Web.Models;
+namespace Tech2023.Web.Models.Components;
 public class SidebarViewModel
 {
     public required List<Subject> Subjects { get; set; } = new List<Subject>();
-    public SidebarInputModel? Input { get; set; }
+    public BrowsePapersDataModel? BrowseData { get; set; }
 }
