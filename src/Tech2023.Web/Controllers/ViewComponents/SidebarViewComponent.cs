@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Tech2023.DAL;
 using Tech2023.DAL.Models;
 using Tech2023.Web.Models;
+using Tech2023.Web.Models.Components;
 using Tech2023.Web.Extensions;
 
 namespace Tech2023.Web.ViewComponents;
@@ -21,14 +22,14 @@ public class SidebarViewComponent : ViewComponent
 
     public const string Name = "Sidebar";
 
-    public async Task<IViewComponentResult> InvokeAsync(SidebarInputModel? input = null)
+    public async Task<IViewComponentResult> InvokeAsync(BrowsePapersDataModel? browseData = null)
     {
         var user = await _userManager.FindByUserAsync(UserClaimsPrincipal);
 
         var sidebarData = new SidebarViewModel
         {
             Subjects = user.SavedSubjects,
-            Input = input
+            BrowseData = browseData
         };
 
         // Implement filter stuff
