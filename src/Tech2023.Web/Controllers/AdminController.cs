@@ -20,4 +20,20 @@ public sealed class AdminController : Controller
     {
         return View();
     }
+
+    [HttpGet]
+    [Route(Routes.Admin.Upload)]
+    public async Task<IActionResult> Upload()
+    {
+        await Task.Yield();
+
+        return View();
+    }
+
+    [HttpPost]
+    [Route(Routes.Admin.Upload)]
+    public Task<IActionResult> UploadPaperAsync()
+    {
+        throw new NotImplementedException();
+    }
 }
