@@ -11,8 +11,16 @@ public static partial class Queries
 {
     public static class Subjects
     {
+        /// <summary>
+        /// Creates a subject in the specified DbContext if it doesn't exist already
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="subject"></param>
+        /// <exception cref="ArgumentNullException">If context or subject is <see langword="null"/> </exception>
+        /// <returns></returns>
         public static async Task CreateSubjectAsync(ApplicationDbContext context, Subject subject)
         {
+            ArgumentNullException.ThrowIfNull(context);
             ArgumentNullException.ThrowIfNull(subject);
 
             if (await context.Subjects.AnyAsync(s => s.Name == subject.Name && s.Source == subject.Source && s.Level == subject.Level))
@@ -32,21 +40,18 @@ public static partial class Queries
 
             name = name.ToUpper();
 
+            // match the query so that the source, level and name are matched first
+            var query = context.Subjects
+                .Where(s => s.Name == name)
+                .Where(s => s.Source == source)
+                .Where(s => s.Level == level);
+
+            // build the query based on the level
             return source switch
             {
-                CurriculumSource.Ncea => await context.Subjects
-                                        .Where(s => s.Name == name)
-                                        .Where(s => s.Source == source)
-                                        .Where(s => s.Level == level)
-                                        .Include(s => s.NceaResource)
-                                        .FirstOrDefaultAsync(),
-                CurriculumSource.Cambridge => await context.Subjects
-                                        .Where(s => s.Name == s.Name)
-                                        .Where(s => s.Source == source)
-                                        .Where(s => s.Level == level)
-                                        .Include(s => s.CambridgeResource)
-                                        .FirstOrDefaultAsync(),
-                _ => await Task.FromResult<Subject?>(null),
+                CurriculumSource.Ncea => await query.Include(s => s.NceaResource).FirstOrDefaultAsync(),
+                CurriculumSource.Cambridge => await query.Include(s => s.CambridgeResource).FirstOrDefaultAsync(),
+                _ => null,
             };
         }
     }
