@@ -42,7 +42,7 @@
                             }
                             <div id="logout-button">
                                 <button onclick="interactions.dialog.showDialog('logout-modal', true)"
-                                    class="w-full inline-flex hover:bg-red-600/80 p-2 rounded-lg">
+                                    class="w-full inline-flex hover:bg-red-500/90 p-2 rounded-lg">
                                     <span class="material-symbols-rounded-sm mr-3">logout</span>
                                     Logout
                                 </button>
@@ -52,7 +52,7 @@
                                     <form method="post" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/"
                                         class="w-full flex flex-row justify-end mt-4 space-x-4">
                                         <button formmethod="dialog" type="submit" class="p-2 hover:underline">Go back!</button>
-                                        <button class="inline-flex bg-red-600/80 p-2 rounded-lg" type="submit">
+                                        <button class="inline-flex bg-red-500/90 p-2 rounded-lg" type="submit">
                                             Yes, Logout
                                         </button>
                                     </form>
