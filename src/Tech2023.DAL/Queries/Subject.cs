@@ -20,6 +20,7 @@ public static partial class Queries
         /// <returns></returns>
         public static async Task CreateSubjectAsync(ApplicationDbContext context, Subject subject)
         {
+            // parameters are validated in release and debug builds 
             ArgumentNullException.ThrowIfNull(context);
             ArgumentNullException.ThrowIfNull(subject);
 
@@ -53,6 +54,17 @@ public static partial class Queries
                 CurriculumSource.Cambridge => await query.Include(s => s.CambridgeResource).FirstOrDefaultAsync(),
                 _ => null,
             };
+        }
+
+        public static async Task AddSubjectsAsync(ApplicationDbContext context, ApplicationUser user, IEnumerable<Subject> subjects)
+        {
+            user.SavedSubjects.AddRange(subjects);
+
+            user.SyncLatest();
+
+            context.Users.Update(user);
+
+            await context.SaveChangesAsync();
         }
     }
 }
