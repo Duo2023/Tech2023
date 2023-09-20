@@ -8,12 +8,25 @@ using System.Diagnostics;
 
 namespace Tech2023.Core;
 
+/// <summary>
+/// Internal special case struct used for reducing allocations when building up a string
+/// </summary>
+/// <remarks>
+/// DO NOT PASS THIS STRUCT BY COPY, ALWAYS USE REF PARAMETERS. e.g. void SomeFunc(<see langword="ref"/> <see cref="ValueStringBuilder"/> builder).
+/// </remarks>
 internal ref partial struct ValueStringBuilder
 {
     private char[]? _arrayToReturnToPool;
     private Span<char> _chars;
     private int _pos;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ValueStringBuilder"/> <see langword="struct"/>
+    /// </summary>
+    /// <param name="initialBuffer">The initial backing buffer to be used for storing characters</param>
+    /// <remarks>
+    /// You should use this constructor to create stack allocated buffer
+    /// </remarks>
     public ValueStringBuilder(Span<char> initialBuffer)
     {
         _arrayToReturnToPool = null;
@@ -21,6 +34,13 @@ internal ref partial struct ValueStringBuilder
         _pos = 0;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ValueStringBuilder"/> <see langword="struct"/>
+    /// </summary>
+    /// <param name="initialCapacity">The initial capacity of the buffer to be allocated by the default array pool</param>
+    /// <remarks>
+    /// Use this contructor as a fall back for when there is not enough stack space for the initial creation of your buffer
+    /// </remarks>
     public ValueStringBuilder(int initialCapacity)
     {
         _arrayToReturnToPool = ArrayPool<char>.Shared.Rent(initialCapacity);
@@ -28,6 +48,10 @@ internal ref partial struct ValueStringBuilder
         _pos = 0;
     }
 
+
+    /// <summary>
+    /// The current length of the <see cref="ValueStringBuilder"/>
+    /// </summary>
     public int Length
     {
         readonly get => _pos;
@@ -39,8 +63,16 @@ internal ref partial struct ValueStringBuilder
         }
     }
 
+
+    /// <summary>
+    /// The length of the buffer that can be used to create the string
+    /// </summary>
     public readonly int Capacity => _chars.Length;
 
+    /// <summary>
+    /// Ensures that the capacity is a certain amount for construction, if it not it resizes the buffer internally
+    /// </summary>
+    /// <param name="capacity"></param>
     public void EnsureCapacity(int capacity)
     {
         // This is not expected to be called this with negative capacity
@@ -76,6 +108,11 @@ internal ref partial struct ValueStringBuilder
         return ref MemoryMarshal.GetReference(_chars);
     }
 
+    /// <summary>
+    /// Gets the character at the specified index
+    /// </summary>
+    /// <param name="index">The zero-based index to the builder</param>
+    /// <returns>The character located at the position</returns>
     public ref char this[int index]
     {
         get
@@ -85,6 +122,10 @@ internal ref partial struct ValueStringBuilder
         }
     }
 
+    /// <summary>
+    /// Constructs the string and calls <see cref="Dispose"/> on it after construction
+    /// </summary>
+    /// <returns>The constructed string from the builder</returns>
     public override string ToString()
     {
         string s = _chars[.._pos].ToString();
@@ -109,6 +150,9 @@ internal ref partial struct ValueStringBuilder
         return _chars[.._pos];
     }
 
+    /// <summary>
+    /// Gets the current buffer as span
+    /// </summary>
     public readonly ReadOnlySpan<char> AsSpan() => _chars[.._pos];
     public readonly ReadOnlySpan<char> AsSpan(int start) => _chars[start.._pos];
     public readonly ReadOnlySpan<char> AsSpan(int start, int length) => _chars.Slice(start, length);

@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Linq.Expressions;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +10,9 @@ public static partial class Queries
 {
     public static class Subjects
     {
+        internal static Func<ApplicationDbContext, Subject, Task<bool>> _existsAsync =
+            EF.CompileAsyncQuery((ApplicationDbContext context, Subject subject) => context.Subjects.Any(s => s.Name == subject.Name && s.Source == subject.Source && s.Level == subject.Level));
+
         /// <summary>
         /// Creates a subject in the specified DbContext if it doesn't exist already
         /// </summary>
@@ -24,7 +26,9 @@ public static partial class Queries
             ArgumentNullException.ThrowIfNull(context);
             ArgumentNullException.ThrowIfNull(subject);
 
-            if (await context.Subjects.AnyAsync(s => s.Name == subject.Name && s.Source == subject.Source && s.Level == subject.Level))
+            subject.Name = subject.Name.ToUpper();
+
+            if (await _existsAsync(context, subject))
             {
                 Debug.WriteLine("Application tried creating a subject which already exists in all source");
                 return;
@@ -35,6 +39,14 @@ public static partial class Queries
             await context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Finds the subject in the database context using the name and the source and level of the subject
+        /// </summary>
+        /// <param name="context">The database context to operate on</param>
+        /// <param name="source">The curriculum source</param>
+        /// <param name="level">The curriculum level</param>
+        /// <param name="name">The name of the subject</param>
+        /// <returns>This method returns a <see langword="null"/> if <see cref="Subject"/> is</returns>
         public static async Task<Subject?> FindSubjectAsync(ApplicationDbContext context, CurriculumSource source, CurriculumLevel level, string name)
         {
             Debug.Assert(context != null);
@@ -56,6 +68,13 @@ public static partial class Queries
             };
         }
 
+        /// <summary>
+        /// Adds the specified <see cref="ApplicationUser"/> to the <see cref="Subject"/>'s provided
+        /// </summary>
+        /// <param name="context">The database context</param>
+        /// <param name="user">The database user</param>
+        /// <param name="subjects"></param>
+        /// <returns><see cref="Task"/> to be awaited on</returns>
         public static async Task AddSubjectsAsync(ApplicationDbContext context, ApplicationUser user, IEnumerable<Subject> subjects)
         {
             user.SavedSubjects.AddRange(subjects);

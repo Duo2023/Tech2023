@@ -2,6 +2,9 @@
 
 namespace Tech2023.Core;
 
+/// <summary>
+/// Set of static methods for working and manipulating the <see cref="string"/> type
+/// </summary>
 public static class StringHelpers
 {
     internal const int StackAllocThreshold = 256; // 512 bytes is a reasonable limit

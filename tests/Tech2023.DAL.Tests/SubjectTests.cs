@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Runtime.CompilerServices;
 
 using Microsoft.EntityFrameworkCore;
 using Tech2023.DAL.Models;
@@ -7,12 +8,16 @@ namespace Tech2023.DAL.Tests;
 
 public class SubjectTests
 {
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static ApplicationDbContext CreateStub() => new(new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase("Tests").Options);
 
     [Theory]
     [ClassData(typeof(SubjectCreationSource))]
     public async Task CreateAsync(string subjectName, CurriculumSource source, CurriculumLevel level)
     {
+        Assert.True(Enum.IsDefined(source), TestHelper.GetInvalidMessage(nameof(source)));
+        Assert.True(Enum.IsDefined(level), TestHelper.GetInvalidMessage(nameof(level)));
+
         using var context = CreateStub();
 
         await Queries.Subjects.CreateSubjectAsync(context, new Subject()
@@ -21,6 +26,17 @@ public class SubjectTests
             Source = source,
             Level = level
         });
+
+        var subject = await Queries.Subjects.FindSubjectAsync(context, source, level, subjectName);
+
+        Assert.NotNull(subject);
+
+        Assert.Equal(subjectName, subject.Name, ignoreCase: true);
+
+        Assert.True(Enum.IsDefined(subject.Level), "Level from database is not defined");
+
+        Assert.Equal(source, subject.Source);
+        Assert.Equal(level, subject.Level);
     }
 
     [Fact]
@@ -33,6 +49,7 @@ public class SubjectTests
     }
 }
 
+// file scoped class because we do not need to use this generator anywhere else in this project
 file class SubjectCreationSource : IEnumerable<object[]>
 {
     public IEnumerator<object[]> GetEnumerator()
