@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 using Tech2023.DAL;
 using Tech2023.DAL.Models;
+using Tech2023.Web.Models;
 
 namespace Tech2023.Web;
 
@@ -58,6 +59,11 @@ public class AppController : Controller
             return NotFound();
         }
 
-        return View(selected);
+        var browseData = new BrowsePapersViewModel 
+        {
+            SelectedSubject = selected
+        };
+
+        return View(browseData);
     }
 }
