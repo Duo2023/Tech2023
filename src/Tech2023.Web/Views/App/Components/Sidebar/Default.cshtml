@@ -15,7 +15,7 @@
     }
 
     .sidebar-content {
-        height: calc(100vh - var(--navbar-height, 0rem) - var(--sidebar-search-height, 0rem) - var(--sidebar-utils-height, 0rem) @((Model.BrowseData is not null) ? " - var(--sidebar-filter-height, 0rem) " : "") - 0.5rem)
+        height: calc(100vh - var(--navbar-height, 0rem) - var(--sidebar-search-height, 0rem) - var(--sidebar-utils-height, 0rem) - 0.5rem)
     }
 </style>
 <aside id="sidebar"
@@ -28,45 +28,40 @@
             class="bg-background w-full px-5 py-3 rounded-full outline-none border-2 border-light-hint border-opacity-0 focus:border-opacity-80 transition-colors duration-150 ease-out">
     </div>
 
-    @if (Model.BrowseData is not null)
-    {
-        <div id="paper-filter" class="bg-gradient-to-br from-hint to-hint/40 mx-2 my-2 p-3 rounded-2xl shadow-xl"
-            style="height: var(--sidebar-filter-height, 8rem) max-width: var(--sidebar-width, 21rem)">
-            <h4 class="flex items-center font-bold">
-                <span class="material-symbols-rounded mr-1">filter_alt</span> Filter
-            </h4>
-            <div class="grid grid-rows-2 grid-flow-col pt-2 ml-1 gap-x-2">
-                @for (int i = 0; i < 4; i++)
-                {
-                    <label class="font-semibold text-lg" for="category">Year</label>
-                    <div id="category-@i" class="">
-                        <button class="flex flex-row items-center justify-between rounded-md bg-background"
-                            onclick="interactions.element.toggleHiddenElement('category-@i-options', true)">
-                            <p class="w-10 overflow-hidden whitespace-nowrap overflow-ellipsis">12313132123</p>
-                            <span class="material-symbols-rounded-sm">expand_more</span>
-                        </button>
-                        <div id="category-@i-options"
-                            class="z-40 hidden fixed bg-background px-4 py-3 border-2 border-hint rounded-xl animate-slide-down">
-                            <ul>
-                                @for (int j = 0; j < 6; j++)
-                                {
-                                    <li>
-                                        <input type="checkbox" name="@j" id="option-@i-@j" value="@j"> @j 2084
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
-    }
-
-
     <div id="sidebar-items" class="flex flex-col justify-between h-full">
         @if (Model.BrowseData is not null)
         {
-            <div class="absolute  z-30 bg-secondary overflow-y-auto sidebar-content">
+            <div class="absolute z-30 bg-secondary sidebar-content overflow-y-auto">
+                <div id="paper-filter" class="bg-gradient-to-br from-hint to-hint/40 mx-2 my-2 p-3 rounded-2xl shadow-xl "
+                    style="height: var(--sidebar-filter-height, 8rem) max-width: var(--sidebar-width, 21rem)">
+                    <h4 class="flex items-center font-bold">
+                        <span class="material-symbols-rounded mr-1">filter_alt</span> Filter
+                    </h4>
+                    <div class="grid grid-rows-2 grid-flow-col pt-2 ml-1 gap-x-2">
+                        @for (int i = 0; i < 4; i++)
+                        {
+                            <label class="font-semibold text-lg" for="category">Year</label>
+                            <div id="category-@i" class="">
+                                <button class="flex flex-row items-center justify-between rounded-md bg-background"
+                                    onclick="interactions.element.toggleHiddenElement('category-@i-options', true)">
+                                    <p class="w-10 overflow-hidden whitespace-nowrap overflow-ellipsis">12313132123</p>
+                                    <span class="material-symbols-rounded-sm">expand_more</span>
+                                </button>
+                                <div id="category-@i-options"
+                                    class="z-40 hidden fixed bg-background px-4 py-3 border-2 border-hint rounded-xl animate-slide-down">
+                                    <ul>
+                                        @for (int j = 0; j < 6; j++)
+                                        {
+                                            <li>
+                                                <input type="checkbox" name="@j" id="option-@i-@j" value="@j"> @j 2084
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
                 <div id="sidebar-papers" class="w-full overflow-x-hidden pr-1">
                     @for (int i = 2023; i > 2017; i--)
                     {
