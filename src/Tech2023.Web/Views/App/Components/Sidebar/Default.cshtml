@@ -10,17 +10,52 @@
 </style>
 <aside id="sidebar"
     class="sidebar z-20 grid grid-rows-[min-content_auto] fixed md:relative h-full w-full md:w-[var(--sidebar-width,_21rem)] bg-secondary 
-           rounded-t-[2.5rem] md:rounded-none translate-y-[calc(100vh_-_var(--navbar-height,_0rem)_-_var(--sidebar-search-height))] md:translate-y-0 left-0 p-1"
-    style="--sidebar-search-height: 5.5rem">
+           rounded-t-[2.5rem] md:rounded-none translate-y-[calc(100vh_-_var(--navbar-height,_0rem)_-_var(--sidebar-search-height)_-_0.75rem)] md:translate-y-0 left-0 p-1"
+    style="--sidebar-search-height: 5rem; --sidebar-filter-height: 8rem">
     @* TODO: Implement swipe up gesture for mobile devices + layout changes *@
-    <div class="flex flex-col items-center px-3 py-2" style="height: var(--sidebar-search-height, 5.5rem)">
+    <div class="flex flex-col items-center px-3 pt-2" style="height: var(--sidebar-search-height, 5rem)">
         <div class="md:hidden h-1 w-12 mb-2 bg-light-hint rounded-full"></div>
         <input type="text" name="search" placeholder="🔎 Search" autocomplete="off" id="search-bar"
             class="bg-background w-full px-5 py-3 rounded-full outline-none border-2 border-light-hint border-opacity-0 focus:border-opacity-80 transition-colors duration-150 ease-out">
     </div>
 
+    @if (Model.BrowseData is not null)
+    {
+        <div id="paper-filter" class="bg-gradient-to-br from-hint to-hint/40 mx-2 mb-2 p-3 rounded-2xl shadow-xl"
+            style="height: var(--sidebar-filter-height, 8rem) max-width: var(--sidebar-width, 21rem)">
+            <h4 class="flex items-center font-bold">
+                <span class="material-symbols-rounded mr-1">filter_alt</span> Filter
+            </h4>
+            <div class="grid grid-rows-2 grid-flow-col pt-2 ml-1 gap-x-2">
+                @for (int i = 0; i < 4; i++)
+                {
+                    <label class="font-semibold text-lg" for="category">Year</label>
+                    <div id="category-@i" class="">
+                        <button class="flex flex-row items-center justify-between rounded-md bg-background"
+                            onclick="interactions.element.toggleHiddenElement('category-@i-options', true)">
+                            <p class="w-10 overflow-hidden whitespace-nowrap overflow-ellipsis">12313132123</p>
+                            <span class="material-symbols-rounded-sm">expand_more</span>
+                        </button>
+                        <div id="category-@i-options"
+                            class="z-30 hidden fixed bg-background px-4 py-3 border-2 border-hint rounded-xl animate-slide-down">
+                            <ul>
+                                @for (int j = 0; j < 6; j++)
+                                {
+                                    <li>
+                                        <input type="checkbox" name="@j" id="option-@i-@j" value="@j"> @j 2084
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+
     <div id="sidebar-items" class="flex flex-col justify-between"
-        style="height: calc(100vh - var(--navbar-height, 0rem) - var(--sidebar-search-height, 0rem) - 0.5rem)">
+        style='height: calc(100vh - var(--navbar-height, 0rem) - var(--sidebar-search-height, 0rem) @((Model.BrowseData is not null) ? " - var(--sidebar-filter-height, 0rem) " : "") - 0.5rem)'>
         <div id="favourites-section"
             class="section inline-flex justify-start items-center h-6 mb-1 mx-2 text-light-hint transition-all duration-75 ease-out">
             <span class="material-symbols-rounded-sm">expand_more</span>
