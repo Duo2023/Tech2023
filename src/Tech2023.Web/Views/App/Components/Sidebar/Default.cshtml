@@ -7,43 +7,111 @@
     :root {
         --sidebar-width: 21rem;
     }
+
+    #sidebar {
+        --sidebar-search-height: 5rem;
+        --sidebar-filter-height: 8rem;
+        --sidebar-utils-height: 4rem;
+    }
+
+    .sidebar-content {
+        height: calc(100vh - var(--navbar-height, 0rem) - var(--sidebar-search-height, 0rem) - var(--sidebar-utils-height, 0rem) - 0.5rem)
+    }
 </style>
 <aside id="sidebar"
-    class="sidebar z-20 grid grid-rows-[min-content_auto] fixed md:relative h-full w-full md:w-[var(--sidebar-width,_21rem)] bg-secondary rounded-t-[2.5rem] md:rounded-none translate-y-[calc(100vh_-_5.5rem)] md:translate-y-0 left-0 p-1"
-    style="--sidebar-search-height: 4.5rem">
+    class="sidebar z-20 flex flex-col fixed md:relative h-full w-full md:w-[var(--sidebar-width,_21rem)] bg-secondary 
+           rounded-t-[2.5rem] md:rounded-none translate-y-[calc(100vh_-_var(--navbar-height,_0rem)_-_var(--sidebar-search-height)_-_0.75rem)] md:translate-y-0 left-0 p-1">
     @* TODO: Implement swipe up gesture for mobile devices + layout changes *@
-    <div class="flex flex-col items-center px-3 py-2" style="height: var(--sidebar-search-height, 4.5rem)">
+    <div class="flex flex-col items-center px-3 pt-2" style="height: var(--sidebar-search-height, 5rem)">
         <div class="md:hidden h-1 w-12 mb-2 bg-light-hint rounded-full"></div>
         <input type="text" name="search" placeholder="🔎 Search" autocomplete="off" id="search-bar"
             class="bg-background w-full px-5 py-3 rounded-full outline-none border-2 border-light-hint border-opacity-0 focus:border-opacity-80 transition-colors duration-150 ease-out">
     </div>
 
-    <div id="sidebar-items" class="flex flex-col justify-between"
-        style="height: calc(100vh - var(--navbar-height, 0rem) - var(--sidebar-search-height, 0rem) - 0.5rem)">
-        <div id="favourites-section"
-            class="section inline-flex justify-start items-center h-6 mb-1 mx-2 text-light-hint transition-all duration-75 ease-out">
-            <span class="material-symbols-rounded-sm">expand_more</span>
-            <div>⭐</div>
-            <p class="font-bold"> Favourites</p>
-        </div>
-        <div id="subject-list" class="flex flex-col px-2 h-full space-y-2 overflow-y-auto">
-            @foreach (var subject in Model.Subjects)
-            {
-                <a asp-controller="App" asp-action="PaperBrowser"
-                    asp-route-curriculum="@CurriculumLevelHelpers.ToString(subject.Level, subject.Source)"
-                    asp-route-subject="@subject.Name"
-                    class="subject bg-secondary hover:bg-background py-3 rounded-xl shadow-xl transition-colors duration-50 ease-linear">
-                    <div class="inline-flex px-4 font-semibold items-center justify-start text-md">
-                        <div class="relative subject-icon text-center w-6 h-6 z-10 rounded-md mr-3"
-                            style="background-color: @HtmlHexString.GetHtmlHexString(subject.DisplayColor ?? 0);">
-                            <p class="drop-shadow-[0_0_1.5px_rgb(0,0,0,0.6)]">@subject.Name[0]</p>
-                        </div>
-                        <p>@subject.Name.ToTitleCase() (@CurriculumLevelHelpers.ToString(subject.Level, subject.Source))</p>
+    <div id="sidebar-items" class="flex flex-col justify-between h-full">
+        @if (Model.BrowseData is not null)
+        {
+            <div class="absolute z-30 bg-secondary sidebar-content overflow-y-auto">
+                <div id="paper-filter" class="bg-gradient-to-br from-hint to-hint/40 mx-2 my-2 p-3 rounded-2xl shadow-xl "
+                    style="height: var(--sidebar-filter-height, 8rem) max-width: var(--sidebar-width, 21rem)">
+                    <h4 class="flex items-center font-bold">
+                        <span class="material-symbols-rounded mr-1">filter_alt</span> Filter
+                    </h4>
+                    <div class="grid grid-rows-2 grid-flow-col pt-2 ml-1 gap-x-2">
+                        @for (int i = 0; i < 4; i++)
+                        {
+                            <label class="font-semibold text-lg" for="category">Year</label>
+                            <div id="category-@i" class="">
+                                <button class="flex flex-row items-center justify-between rounded-md bg-background"
+                                    onclick="interactions.element.toggleHiddenElement('category-@i-options', true)">
+                                    <p class="w-10 overflow-hidden whitespace-nowrap overflow-ellipsis">12313132123</p>
+                                    <span class="material-symbols-rounded-sm">expand_more</span>
+                                </button>
+                                <div id="category-@i-options"
+                                    class="z-40 hidden fixed bg-background px-4 py-3 border-2 border-hint rounded-xl animate-slide-down">
+                                    <ul>
+                                        @for (int j = 0; j < 6; j++)
+                                        {
+                                            <li>
+                                                <input type="checkbox" name="@j" id="option-@i-@j" value="@j"> @j 2084
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        }
                     </div>
-                </a>
-            }
+                </div>
+                <div id="sidebar-papers" class="w-full overflow-x-hidden pr-1">
+                    @for (int i = 2023; i > 2017; i--)
+                    {
+                        <h4 class="paper-category inline-block font-semibold h-6 w-full mb-2 px-4">
+                            @i</h4>
+
+                        <div class="px-4">
+                            @for (int j = 0; j < 8; j++)
+                            {
+                                <a asp-controller="App" asp-action="PaperViewer"
+                                    class="subject bg-secondary hover:bg-background py-3 rounded-xl shadow-xl transition-colors duration-50 ease-linear">
+                                    <div class="inline-block w-full my-1 px-1 font-semibold items-center justify-start text-md">
+                                        <p class="paper p-3">
+                                            📜&ThickSpace; Paper 1 - Feb/Mar (Zone 1)
+                                        </p>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        <div>
+            <div id="favourites-section"
+                class="section inline-flex justify-start items-center h-6 mb-1 mx-2 text-light-hint">
+                <span class="material-symbols-rounded-sm">expand_more</span>
+                <div>⭐</div>
+                <p class="font-bold"> Favourites</p>
+            </div>
+            <div id="subject-list" class="flex flex-col px-2 h-full space-y-2 overflow-y-auto">
+                @foreach (var subject in Model.Subjects)
+                {
+                    <a asp-controller="App" asp-action="PaperBrowser"
+                        asp-route-curriculum="@CurriculumLevelHelpers.ToString(subject.Level, subject.Source)"
+                        asp-route-subject="@subject.Name"
+                        class="subject bg-secondary hover:bg-background py-3 rounded-xl shadow-xl transition-colors duration-50 ease-linear">
+                        <div class="inline-flex px-4 font-semibold items-center justify-start text-md">
+                            <div class="relative subject-icon text-center w-6 h-6 z-10 rounded-md mr-3"
+                                style="background-color: @HtmlHexString.GetHtmlHexString(subject.DisplayColor ?? 0);">
+                                <p class="drop-shadow-[0_0_1.5px_rgb(0,0,0,0.6)]">@subject.Name[0]</p>
+                            </div>
+                            <p>@subject.Name.ToTitleCase() (@CurriculumLevelHelpers.ToString(subject.Level, subject.Source))
+                            </p>
+                        </div>
+                    </a>
+                }
+            </div>
         </div>
-        <div id="sidebar-utils" class="flex flex-col my-2">
+        <div id="sidebar-utils" class="flex flex-col my-2 bottom-0" style="height: var(--sidebar-utils-height)">
             <a asp-controller="Settings" asp-action="Index"
                 class="bg-secondary hover:bg-background py-3 mx-3 my-2 rounded-xl shadow-xl transition-colors duration-50 ease-linear">
                 <div class="inline-flex px-4 font-semibold items-center justify-start text-md">

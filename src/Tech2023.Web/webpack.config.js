@@ -1,6 +1,8 @@
 const { merge } = require("webpack-merge");
 const commonConfig = require("./webpack/webpack.common.js");
-const libconfigs = [require("./scripts/interactions/webpack.config.js"), require("./scripts/pdf/webpack.config.js")];
+const libconfigs = [
+    require("./scripts/interactions/webpack.config.js") /*pdf-js-dist: , require("./scripts/pdf/webpack.config.js")*/,
+];
 const prodConfig = require("./webpack/webpack.prod.js");
 const devConfig = require("./webpack/webpack.dev.js");
 

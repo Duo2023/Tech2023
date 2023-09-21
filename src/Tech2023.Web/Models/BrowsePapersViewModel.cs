@@ -8,9 +8,13 @@ public sealed class BrowsePapersViewModel
 
     public string SelectedCategory { get; } = "Year";
 
-    public Dictionary<string, List<Resource>> CategorizedPapers { get; set; } = new();
+    public List<string> Categories { get; set; } = new();
+
+    public List<List<string>> CategoryValues { get; set; } = new();
+
+    public List<List<Resource>> CategorizedPapers { get; set; } = new();
 
     public string? FilterArgs { get; set; }
 
-    public Resource? SelectedPaper {get; set; }
+    public Resource? SelectedPaper { get; set; }
 }
