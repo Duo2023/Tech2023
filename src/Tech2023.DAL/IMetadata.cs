@@ -2,12 +2,25 @@
 
 namespace Tech2023.DAL;
 
+/// <summary>
+/// Represents creation and update data about a record
+/// </summary>
 public interface IMetadata
 {
+    /// <summary>
+    /// The time that the record was created in the database
+    /// </summary>
     DateTimeOffset Created { get; set; }
+
+    /// <summary>
+    /// The last time that the record was updated in the database
+    /// </summary>
     DateTimeOffset Updated { get; set; }
 }
 
+/// <summary>
+/// Provides convience extension methods for a class type that implements <see cref="IMetadata"/>
+/// </summary>
 public static class MetadataExtensions
 {
     /// <summary>

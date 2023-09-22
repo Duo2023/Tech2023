@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Tech2023.Web.Shared;
 
+/// <summary>
+/// Helpers to encode data in URIs more efficiently
+/// </summary>
 internal static class WebEncoderHelpers
 {
     internal const int StackallocThreshold = 128; // 128 bytes is the max amount of bytes before we go to heap basd allocations like ArrayPool

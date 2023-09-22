@@ -9,6 +9,7 @@ using Tech2023.Web.Extensions;
 using Tech2023.Web.Shared;
 using Tech2023.Web.Shared.Authentication;
 using Tech2023.Web.Shared.Email;
+using Tech2023.Web.Shared.Files;
 #if DEBUG
 using Tech2023.Web.Workers;
 #endif
@@ -90,6 +91,8 @@ public sealed class Startup
         services.AddTransient<IEmailClient, EmailClient>();
 
         services.AddTransient<IEmailConfirmationService<ApplicationUser>, EmailConfirmationService>();
+
+        services.AddTransient<IFileSaver, FileSaver>();
 
         services.AddTransient<IDataInitializer, Initializer>();
     }
