@@ -3,6 +3,15 @@
 @using Tech2023.Web.Models.Components;
 @model SidebarViewModel;
 
+@{
+    bool isBrowsing = Model.BrowseData is not null;
+    string currentSubjectName = "";
+    if(Model.BrowseData is not null) {
+        var currentSubject = Model.BrowseData.SelectedSubject;
+        currentSubjectName = $"{StringHelpers.ToTitleCase(currentSubject.Name)} ({@CurriculumLevelHelpers.ToString(currentSubject.Level, currentSubject.Source)})";
+    }
+}
+
 <style>
     :root {
         --sidebar-width: 21rem;
@@ -12,10 +21,11 @@
         --sidebar-search-height: 5.5rem;
         --sidebar-filter-height: 8rem;
         --sidebar-utils-height: 4rem;
+        --sidebar-back-button-height: @(isBrowsing ? "2.25rem" : "0rem");
     }
 
     .sidebar-content {
-        height: calc(100vh - var(--navbar-height, 0rem) - var(--sidebar-search-height, 0rem) - var(--sidebar-utils-height, 0rem) - 0.5rem)
+        height: calc(100vh - var(--navbar-height, 0rem) - var(--sidebar-search-height) - var(--sidebar-utils-height) - var(--sidebar-back-button-height) - 0.5rem)
     }
 </style>
 <aside id="sidebar"
@@ -28,10 +38,22 @@
             class="bg-background w-full px-5 py-3 rounded-full outline-none border-2 border-light-hint border-opacity-0 focus:border-opacity-80 transition-colors duration-150 ease-out">
     </div>
 
+    @if (isBrowsing)
+    {
+        <div class="relative">
+            <button id="back-to-subjects" class="absolute inline-flex items-center space-x-3 pl-4 pb-4 bg-secondary 
+            data-[show=false]:-translate-x-[calc(100%_+_0.5rem)] data-[show=false]:opacity-0 transition-all duration-150 ease-out" data-show="true" 
+            onclick="document.getElementById('sidebar-papers').dataset.show = this.dataset.show ='false';" style="height: var(--sidebar-back-button-height);">
+                <span class="material-symbols-rounded-sm">west</span>
+                <h5 class="font-semibold">@currentSubjectName</h5>
+            </button>
+        </div>
+    }
+
     <div id="sidebar-items" class="flex flex-col justify-between h-full">
-        @if (Model.BrowseData is not null)
+        @if (isBrowsing)
         {
-            <div class="absolute z-30 bg-secondary sidebar-content overflow-y-auto">
+            <div id="sidebar-papers" class="absolute z-30 bg-secondary sidebar-content overflow-y-auto translate-y-[var(--sidebar-back-button-height)] data-[show=false]:-translate-x-[calc(100%_+_0.5rem)] transition-transform duration-150 ease-out" data-show="true">
                 <div id="paper-filter" class="bg-gradient-to-br from-hint to-hint/40 mx-2 my-2 p-3 rounded-2xl shadow-xl "
                     style="height: var(--sidebar-filter-height, 8rem) max-width: var(--sidebar-width, 21rem)">
                     <h4 class="flex items-center font-bold">
