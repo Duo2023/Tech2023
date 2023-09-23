@@ -3,7 +3,6 @@
 @model SubjectListModel
 @{
     ViewData["Title"] = "Subjects";
-    var edits = new SubjectEditModel();
 }
 
 <h1>Edit Subjects</h1>
@@ -14,6 +13,3 @@
 {
     <p>@subject.Name.ToTitleCase() - @CurriculumLevelHelpers.ToString(subject.Level, subject.Source)</p>
 }
-
-<form>
-</form>
