@@ -33,8 +33,9 @@
 
     <footer class="fixed bottom-0 right-0 px-2 pointer-events-none">
         <div class="flex justify-end items-end w-auto text-slate-100 text-sm font-semibold">
-            &copy; @(DateTime.UtcNow.Year == 2023 ? 2023 : $"2023 - {DateTime.UtcNow.Year}") - Grades Up - &ThinSpace;<a
-                class="hover:underline pointer-events-auto" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <a class="underline hover:no-underline pointer-events-auto" asp-controller="Home"
+                asp-action="Privacy">Privacy</a>
+            &ThinSpace;⋅ Grades Up &copy; @(DateTime.UtcNow.Year == 2023 ? 2023 : $"2023 - {DateTime.UtcNow.Year}")
         </div>
     </footer>
 
