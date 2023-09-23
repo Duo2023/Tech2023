@@ -11,7 +11,7 @@ namespace Tech2023.DAL;
 /// <remarks>
 /// In an external database the SQL will show different tables and T-SQL statements
 /// </remarks>
-public abstract class CustomResource
+public abstract class CustomResource : IMetadata
 {
     /// <summary>
     /// The identifier of the NCEA resource, this value is not related to the resource at all and it just provided a unique identifier to use in the database

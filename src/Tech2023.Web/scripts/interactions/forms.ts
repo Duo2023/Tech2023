@@ -1,4 +1,4 @@
-export module user.forms {
+export module forms {
     export function togglePasswordVisibility(fieldIDs: string[]) {
         const showPasswordCheckbox = document.getElementById("show-password-checkbox") as HTMLInputElement;
 

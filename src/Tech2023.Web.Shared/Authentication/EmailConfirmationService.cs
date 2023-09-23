@@ -56,8 +56,6 @@ public class EmailConfirmationService : IEmailConfirmationService<ApplicationUse
             return false;
         }
 
-        await _emailClient.SendEmailAsync(user.Email!, "Confirm Your Email", $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(url)}'>clicking here</a>.");
-
-        return true;
+        return await _emailClient.SendEmailAsync(user.Email!, "Confirm Your Email", $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(url)}'>clicking here</a>.");
     }
 }

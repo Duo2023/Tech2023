@@ -6,4 +6,5 @@
 public enum CacheSlots : byte
 {
     PrivacyPolicy = 1,
+    Subjects = 2
 }

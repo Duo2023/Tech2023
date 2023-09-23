@@ -47,7 +47,7 @@ internal class Initializer : IDataInitializer
                 Created = DateTimeOffset.Now
             };
 
-            policy.Updated = policy.Created;
+            policy.SyncUpdated();
 
             context.PrivacyPolicies.Add(policy);
 
@@ -65,7 +65,46 @@ internal class Initializer : IDataInitializer
         await CreateSubjectsAsync(context);
         await CreateDebugUserAsync(context);
         await AddUsersToSubjectsAsync(context);
+        await AddResourcesToSubjectsAsync(context);
     }
+
+    internal static async Task AddResourcesToSubjectsAsync(ApplicationDbContext context)
+    {
+        var subjects = await context.Subjects.ToListAsync();
+
+        foreach (var item in subjects)
+        {
+            if (item.Source == CurriculumSource.Ncea)
+            {
+                foreach (var _ in Enumerable.Range(0, Random.Shared.Next(1, 10)))
+                {
+                    item.NceaResource?.Add(GenerateNceaStandard());
+                }
+            }
+            else if (item.Source == CurriculumSource.Cambridge)
+            {
+            }
+        }
+
+        context.UpdateRange(subjects);
+
+        await context.SaveChangesAsync();
+    }
+
+    internal static NceaResource GenerateNceaStandard()
+    {
+        var resource = new NceaResource()
+        {
+            AssessmentType = (NceaAssessmentType)Random.Shared.Next((int)NceaAssessmentType.Unit),
+            AchievementStandard = Random.Shared.Next(1, ushort.MaxValue),
+            Created = DateTimeOffset.UtcNow,
+        };
+
+        resource.SyncUpdated();
+
+        return resource;
+    }
+  
 
     internal static async Task AddUsersToSubjectsAsync(ApplicationDbContext context)
     {
@@ -96,7 +135,7 @@ internal class Initializer : IDataInitializer
             Created = DateTimeOffset.UtcNow
         };
 
-        user.Updated = user.Created;
+        user.SyncUpdated();
 
         var result = await _userManager.CreateAsync(user, "sudoUser555!");
 
@@ -107,27 +146,20 @@ internal class Initializer : IDataInitializer
 
     internal static async Task CreateSubjectsAsync(ApplicationDbContext context)
     {
-        await Queries.Subjects.CreateSubjectAsync(context, new Subject()
-        {
-            Source = CurriculumSource.Cambridge,
-            Name = "Maths",
-        });
+        await Queries.Subjects.CreateSubjectAsync(context, CreateSubject("Maths", CurriculumSource.Cambridge, CurriculumLevel.L1));
 
-        await Queries.Subjects.CreateSubjectAsync(context, new Subject()
-        {
-            Source = CurriculumSource.Ncea,
-            Name = "Maths",
-        });
+        await Queries.Subjects.CreateSubjectAsync(context, CreateSubject("Maths", CurriculumSource.Ncea, CurriculumLevel.L3));
 
         await context.SaveChangesAsync();
     }
 
-    internal static Subject CreateSubject(string name, CurriculumSource source)
+    internal static Subject CreateSubject(string name, CurriculumSource source, CurriculumLevel level)
     {
         return new()
         {
-            Name = name,
+            Name = name.ToUpper(),
             Source = source,
+            Level = level,
             DisplayColor = (uint)Random.Shared.Next()
         };
     }

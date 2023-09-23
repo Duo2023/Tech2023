@@ -7,7 +7,12 @@
     <UserSecretsId>5b8d0484-4e8b-43d8-9231-a678a89aca83</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="icon.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="$(MicrosoftPackageVersion)" />
@@ -21,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Tech2023.Core\Tech2023.Core.csproj" />
     <ProjectReference Include="..\Tech2023.Web.Shared\Tech2023.Web.Shared.csproj" />
     <InternalsVisibleTo Include="$(AssemblyName).IntegrationTests" />
   </ItemGroup>
@@ -33,15 +39,16 @@
 
   <Target Name="Client Side Dependencies" BeforeTargets="Build">
     <Exec Command="npm install" />
-    <Exec Command="npm run css:prod" />
   </Target>
 
-  <Target Name="Webpack Bundle" BeforeTargets="Build" DependsOnTargets="Webpack Development;Webpack Production" />
-  <Target Name="Webpack Development" Condition=" '$(Configuration)' == 'Debug' ">
+  <Target Name="Npm Scripts" BeforeTargets="Build" DependsOnTargets="Npm Scripts Development;Npm Scripts Production" />
+  <Target Name="Npm Scripts Development" Condition=" '$(Configuration)' == 'Debug' ">
+      <Exec Command="npm run css:dev" />
       <Exec Command="npm run build:dev" />
   </Target>
 
-  <Target Name="Webpack Production" Condition=" '$(Configuration)' == 'Release' ">
+  <Target Name="Npm Scripts Production" Condition=" '$(Configuration)' == 'Release' ">
+      <Exec Command="npm run css:prod" />
       <Exec Command="npm run build:prod" />
   </Target>
 

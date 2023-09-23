@@ -27,7 +27,7 @@ public sealed class FileSaver : IFileSaver
         string destination = Path.Combine(baseUrl, name);
 
         // if the file already exists 
-        if (File.Exists(destination) && !overrideFile)
+        if (!overrideFile && File.Exists(destination))
         {
             return;
         }

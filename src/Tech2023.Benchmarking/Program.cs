@@ -1,3 +1,5 @@
+﻿using System.Runtime.InteropServices;
+
 namespace Tech2023.Benchmarking;
 
 /* src/Tech2023.Benchmarking/Program.cs */
@@ -7,6 +9,7 @@ public sealed class Program
 {
     public static void Main(string[] args)
     {
+        Console.Title = $"Benchmarking - {RuntimeInformation.OSDescription}";
 #if DEBUG
         Console.ForegroundColor = ConsoleColor.DarkRed;
         Console.WriteLine("The executable cannot be run as it was built using Debug configuration instead of Release configuration. Please rebuild the executable using the Release configuration and try again.");

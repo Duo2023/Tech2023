@@ -1,5 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
+using Tech2023.DAL;
+using Tech2023.DAL.Models;
+using Tech2023.Web.Models;
 
 namespace Tech2023.Web;
 
@@ -10,15 +15,17 @@ namespace Tech2023.Web;
 public class AppController : Controller
 {
     internal readonly ILogger<AppController> _logger;
+    internal readonly IDbContextFactory<ApplicationDbContext> _context;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AppController"/>
     /// </summary>
     /// <param name="logger"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public AppController(ILogger<AppController> logger)
+    public AppController(ILogger<AppController> logger, IDbContextFactory<ApplicationDbContext> context)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _context = context;
     }
 
     [Route(Routes.Application.Home)]
@@ -31,5 +38,32 @@ public class AppController : Controller
     public IActionResult PaperViewer()
     {
         return View();
+    }
+
+    [Route(Routes.Application.PaperBrowser)]
+    public async Task<IActionResult> PaperBrowser(string curriculum, string subject)
+    {
+        curriculum = curriculum.ToUpper(); // TODO: Better parsing of curriculum level parsing so we don't allocate and call a nullref
+
+        if (!CurriculumLevelHelpers.TryParse(curriculum, out var level, out var source) || string.IsNullOrWhiteSpace(subject))
+        {
+            return NotFound();
+        }
+
+        using var context = await _context.CreateDbContextAsync();
+
+        var selected = await Queries.Subjects.FindSubjectAsync(context, source, level, subject);
+
+        if (selected is null)
+        {
+            return NotFound();
+        }
+
+        var browseData = new BrowsePapersViewModel 
+        {
+            SelectedSubject = selected
+        };
+
+        return View(browseData);
     }
 }

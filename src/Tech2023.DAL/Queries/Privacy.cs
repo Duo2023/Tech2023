@@ -23,7 +23,7 @@ public static partial class Queries
         /// <param name="context">The context to retrieve the policy from</param>
         /// <returns>Non-null latest privacy policy</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Task<PrivacyPolicy> GetCurrentPrivacyPolicy(ApplicationDbContext context) => _getCurrentPrivacyPolicy(context);
+        public static Task<PrivacyPolicy> GetPolicyAsync(ApplicationDbContext context) => _getCurrentPrivacyPolicy(context);
 
         /// <summary>
         /// Gets the privacy policy by version if available
@@ -32,6 +32,6 @@ public static partial class Queries
         /// <param name="version">The version of the privacy policy</param>
         /// <returns>A possibly null Privacy Policy if the version doesn't exist</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Task<PrivacyPolicy?> GetPrivacyByVersion(ApplicationDbContext context, int version) => _getByVersion(context, version);
+        public static Task<PrivacyPolicy?> GetByVersionAsync(ApplicationDbContext context, int version) => _getByVersion(context, version);
     }
 }

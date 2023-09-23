@@ -9,6 +9,7 @@ using Tech2023.Web.Extensions;
 using Tech2023.Web.Shared;
 using Tech2023.Web.Shared.Authentication;
 using Tech2023.Web.Shared.Email;
+using Tech2023.Web.Shared.Files;
 #if DEBUG
 using Tech2023.Web.Workers;
 #endif
@@ -47,6 +48,7 @@ public sealed class Startup
         services.Configure<RouteOptions>(options =>
         {
             options.LowercaseUrls = true;
+            options.AppendTrailingSlash = true;
         });
 
         services.AddDbContextFactory<ApplicationDbContext>(options =>
@@ -90,6 +92,8 @@ public sealed class Startup
 
         services.AddTransient<IEmailConfirmationService<ApplicationUser>, EmailConfirmationService>();
 
+        services.AddTransient<IFileSaver, FileSaver>();
+
         services.AddTransient<IDataInitializer, Initializer>();
     }
 
@@ -108,7 +112,7 @@ public sealed class Startup
             app.UseHsts();
         }
 
-        app.UseStatusCodePagesWithReExecute("/Home/HandleError/{0}");
+        app.UseStatusCodePagesWithReExecute(Routes.Error, "?code={0}");
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();

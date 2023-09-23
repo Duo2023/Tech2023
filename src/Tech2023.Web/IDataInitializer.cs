@@ -5,5 +5,8 @@
 /// </summary>
 public interface IDataInitializer
 {
+    /// <summary>
+    /// Initializes the database
+    /// </summary>
     Task InitializeAsync();
 }

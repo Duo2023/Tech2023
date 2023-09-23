@@ -8,7 +8,7 @@ namespace Tech2023.DAL.Models;
 /// <summary>
 /// A resource, this refers to 
 /// </summary>
-public class Resource
+public class Resource : IMetadata
 {
     /// <summary>
     /// The identifier of the resource, this is just used as a unique key for the database
