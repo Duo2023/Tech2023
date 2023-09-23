@@ -9,7 +9,7 @@
     }
 
     #sidebar {
-        --sidebar-search-height: 5rem;
+        --sidebar-search-height: 5.5rem;
         --sidebar-filter-height: 8rem;
         --sidebar-utils-height: 4rem;
     }
@@ -20,9 +20,9 @@
 </style>
 <aside id="sidebar"
     class="sidebar z-20 flex flex-col fixed md:relative h-full w-full md:w-[var(--sidebar-width,_21rem)] bg-secondary 
-           rounded-t-[2.5rem] md:rounded-none translate-y-[calc(100vh_-_var(--navbar-height,_0rem)_-_var(--sidebar-search-height)_-_0.75rem)] md:translate-y-0 left-0 p-1">
+           rounded-t-[2.5rem] md:rounded-none translate-y-[calc(100vh_-_var(--navbar-height,_0rem)_-_var(--sidebar-search-height))] md:translate-y-0 left-0 p-1">
     @* TODO: Implement swipe up gesture for mobile devices + layout changes *@
-    <div class="flex flex-col items-center px-3 pt-2" style="height: var(--sidebar-search-height, 5rem)">
+    <div class="flex flex-col items-center px-3 pt-2" style="height: var(--sidebar-search-height, 5.5rem)">
         <div class="md:hidden h-1 w-12 mb-2 bg-light-hint rounded-full"></div>
         <input type="text" name="search" placeholder="🔎 Search" autocomplete="off" id="search-bar"
             class="bg-background w-full px-5 py-3 rounded-full outline-none border-2 border-light-hint border-opacity-0 focus:border-opacity-80 transition-colors duration-150 ease-out">
