@@ -10,8 +10,9 @@
 
 <nav id="navbar" class="h-full py-3 shadow-xl bg-secondary text-white">
     <div class="flex h-full flex-wrap items-center justify-between mx-4">
-        <a class="p-2 rounded-xl" asp-controller="@(isSignedIn ? "App": "Home")" asp-action="Index">
-            <img class="h-10" src="~/assets/icons/logo-text-main.svg" alt="Grades Up Logo" asp-append-version="true">
+        <a asp-controller="@(isSignedIn ? "App": "Home")" asp-action="Index">
+            <img class="h-10 p-2" src="~/assets/icons/logo-text-main.svg" alt="Grades Up Logo"
+                asp-append-version="true">
             @section PreloadLogo {
                 <link rel="preload" href="~/assets/icons/logo-text-main.svg" as="image" type="image/svg"
                     asp-append-version="true">
