@@ -1,8 +1,19 @@
-﻿@model SubjectListModel
+﻿@using Tech2023.Core;
+@using Tech2023.DAL;
+@model SubjectListModel
 @{
     ViewData["Title"] = "Subjects";
-
-    var subjects = new List<SubjectViewModel>();
+    var edits = new SubjectEditModel();
 }
 
 <h1>Edit Subjects</h1>
+
+<h2>Current Subjects</h2>
+
+@foreach (var subject in Model.Subjects)
+{
+    <p>@subject.Name.ToTitleCase() - @CurriculumLevelHelpers.ToString(subject.Level, subject.Source)</p>
+}
+
+<form>
+</form>

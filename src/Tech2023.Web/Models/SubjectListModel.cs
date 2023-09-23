@@ -1,4 +1,7 @@
-﻿namespace Tech2023.Web.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+
+namespace Tech2023.Web.Models;
 
 #nullable disable
 
@@ -7,11 +10,16 @@
 /// </summary>
 public class SubjectListModel
 {
-    public List<SubjectViewModel> NceaSubjects { get; set; }
+    /// <summary>
+    /// The subjects that the user could join
+    /// </summary>
+    [Required]
+    [JsonPropertyName("subjects")]
+    public List<SubjectViewModel> Subjects { get; set; }
 
-    public List<SubjectViewModel> CambridgeSubjects { get; set; }
-
-    public List<SubjectViewModel> ExistingNceaSubjects { get; set; }
-
-    public List<SubjectViewModel> ExistingCambridgeSubjects { get; set; }
+    /// <summary>
+    /// The existing subjects that the user has
+    /// </summary>
+    [Required]
+    public List<SubjectViewModel> ExistingSubjects { get; set; }
 }
