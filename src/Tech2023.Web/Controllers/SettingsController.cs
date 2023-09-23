@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-/*
- * Like most of the other controllers in this repository it is backed by the web api on the other side, our web controller calls the Web API
- */
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Tech2023.Web.Controllers;
 
 /// <summary>
 /// Settings controller to control the configure client side settings and account wide settings
 /// </summary>
+[Authorize]
 public class SettingsController : Controller
 {
     /// <summary>
