@@ -3,10 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
-
 using System.Diagnostics;
-using System.Text;
 
 using Tech2023.DAL;
 using Tech2023.Web.Shared;
@@ -14,6 +11,9 @@ using Tech2023.Web.Shared.Authentication;
 
 namespace Tech2023.Web.Controllers;
 
+/// <summary>
+/// Controller used for account related actions
+/// </summary>
 public class AccountController : Controller
 {
     internal readonly SignInManager<ApplicationUser> _signInManager;

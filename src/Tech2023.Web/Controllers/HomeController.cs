@@ -10,6 +10,9 @@ using Tech2023.Web.Models;
 
 namespace Tech2023.Web.Controllers;
 
+/// <summary>
+/// The home controller which serves the home route, privacy and error pages
+/// </summary>
 public class HomeController : Controller
 {
     internal readonly ILogger<HomeController> _logger;

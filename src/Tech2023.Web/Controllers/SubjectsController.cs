@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -6,26 +7,31 @@ using Microsoft.Extensions.Caching.Memory;
 using Tech2023.DAL;
 using Tech2023.DAL.Models;
 using Tech2023.Web.API.Caching;
+using Tech2023.Web.Extensions;
 using Tech2023.Web.Models;
 
 namespace Tech2023.Web.Controllers;
 
+/// <summary>
+/// Provides methods to manipulate the users subjects collections
+/// </summary>
 [Authorize]
 public class SubjectsController : Controller
 {
     internal readonly IDbContextFactory<ApplicationDbContext> _factory;
     internal readonly IMemoryCache _cache;
     internal readonly ILogger<SubjectsController> _logger;
+    internal readonly UserManager<ApplicationUser> _userManager;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="SubjectsController"/>
+    /// Initializes a new instance of the <see cref="SubjectsController"/> class
     /// </summary>
-    /// <param name="factory">Factory for creating database contextx</param>
-    public SubjectsController(IDbContextFactory<ApplicationDbContext> factory, IMemoryCache cache, ILogger<SubjectsController> logger)
+    public SubjectsController(IDbContextFactory<ApplicationDbContext> factory, IMemoryCache cache, ILogger<SubjectsController> logger, UserManager<ApplicationUser> userManager)
     {
         _factory = factory;
         _cache = cache;
         _logger = logger;
+        _userManager = userManager;
     }
 
     [Route(Routes.Subjects.Home)]
@@ -57,6 +63,15 @@ public class SubjectsController : Controller
         return View(subjectList);
     }
 
+    [HttpPost]
+    [Route(Routes.Subjects.Edit)]
+    public async Task<IActionResult> EditAsync()
+    {
+        await Task.CompletedTask;
+        throw new NotImplementedException();
+    }
+
+    // This internal method transforms subjects into view models so we don't pass useless state
     internal static async Task<List<SubjectViewModel>> GetSubjectViewModelAsync(ApplicationDbContext context, CurriculumSource source)
         => await context.Subjects.Where(s => s.Source == source).Select(s => new SubjectViewModel()
         {

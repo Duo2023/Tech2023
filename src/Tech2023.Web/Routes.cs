@@ -45,6 +45,8 @@ public sealed class Routes
     {
         //[RouteVisibility(Visiblity.Authenticated)]
         public const string Home = "/subjects";
+
+        public const string Edit = "/subjects/edit";
     }
 
     public static class Admin
