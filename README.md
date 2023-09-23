@@ -1,4 +1,4 @@
-# Tech2023
+# <img src="./assets/img/banner.png"/>
 # NCEA & Cambridge Revision Helper
 ![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/Duo2023/Tech2023/dotnet.yml)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Duo2023/Tech2023)
