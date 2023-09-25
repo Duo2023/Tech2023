@@ -68,10 +68,19 @@ public class SubjectsController : Controller
     }
 
     [HttpPost]
-    [Route(Routes.Subjects.Edit)]
-    public async Task<IActionResult> EditAsync()
+    [Route(Routes.Subjects.Delete)]
+    public async Task<IActionResult> DeleteAsync([FromQuery] Guid id)
     {
-        await Task.CompletedTask;
-        throw new NotImplementedException();
+        var user = await Users.FindByPrincipalAsync(_userManager, User);
+
+        using var context = await _factory.CreateDbContextAsync();
+
+        user.SavedSubjects.RemoveAll(s => s.Id == id); // TODO: Make more efficient less round trips to database
+
+        context.Users.Update(user);
+
+        await context.SaveChangesAsync();
+
+        return Redirect(Routes.Subjects.Home);
     }
 }

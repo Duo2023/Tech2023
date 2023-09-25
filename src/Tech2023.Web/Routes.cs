@@ -43,7 +43,7 @@ public sealed class Routes
         //[RouteVisibility(Visiblity.Authenticated)]
         public const string Home = "/subjects";
 
-        public const string Edit = "/subjects/edit";
+        public const string Delete = "/subjects/delete";
     }
 
     public static class Admin
