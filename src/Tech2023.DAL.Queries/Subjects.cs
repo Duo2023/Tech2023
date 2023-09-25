@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
-using System.Security.Claims;
 
 using Tech2023.DAL.Models;
-using Tech2023.Web.Models;
+using Tech2023.Web.ViewModels;
 
 namespace Tech2023.DAL.Queries;
 

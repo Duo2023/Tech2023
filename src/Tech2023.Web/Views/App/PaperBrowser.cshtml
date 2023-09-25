@@ -8,7 +8,7 @@
 @{
     string subjectName = StringHelpers.ToTitleCase(Model.SelectedSubject.Name);
     string subjectSource = Html.DisplayTextFor(s => s.SelectedSubject.Source);
-    string yearLevel = CurriculumLevelHelpers.ToString(Model.SelectedSubject.Level, Model.SelectedSubject.Source);
+    string yearLevel = Curriculum.ToString(Model.SelectedSubject.Level, Model.SelectedSubject.Source);
 
     CurriculumSource source = Model.SelectedSubject.Source;
 

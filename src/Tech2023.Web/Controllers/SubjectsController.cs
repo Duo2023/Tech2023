@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +7,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Tech2023.DAL;
 using Tech2023.DAL.Queries;
 using Tech2023.Web.API.Caching;
-using Tech2023.Web.Models;
+using Tech2023.Web.ViewModels;
 
 namespace Tech2023.Web.Controllers;
 

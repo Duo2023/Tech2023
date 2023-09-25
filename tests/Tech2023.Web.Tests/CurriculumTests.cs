@@ -14,7 +14,7 @@ public class CurriculumTests
     [InlineData("LEVEL1", CurriculumLevel.L1, CurriculumSource.Ncea)]
     public void Assert_TryParseWorks(string input, CurriculumLevel expectedLevel, CurriculumSource curriculumSource)
     {
-        bool result = CurriculumLevelHelpers.TryParse(input, out var actualLevel, out var actualSource);
+        bool result = Curriculum.TryParse(input, out var actualLevel, out var actualSource);
 
         Assert.True(result); // on fail the parse has failed and both should be default
         Assert.Equal(expectedLevel, actualLevel);
@@ -33,7 +33,7 @@ public class CurriculumTests
     [Fact]
     public void Assert_TryParseFailedCorrectly()
     {
-        var parseResult = CurriculumLevelHelpers.TryParse("asdfjahsdfsadfjsadoifjasdfojasdf", out var level, out var source);
+        var parseResult = Curriculum.TryParse("asdfjahsdfsadfjsadoifjasdfojasdf", out var level, out var source);
 
         Assert.False(parseResult);
         Assert.Equal(default, level);

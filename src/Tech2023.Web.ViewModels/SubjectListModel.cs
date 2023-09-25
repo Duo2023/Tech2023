@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace Tech2023.Web.Models;
+namespace Tech2023.Web.ViewModels;
 
 #nullable disable
 

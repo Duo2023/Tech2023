@@ -8,7 +8,7 @@
     string currentSubjectName = "";
     if(Model.BrowseData is not null) {
         var currentSubject = Model.BrowseData.SelectedSubject;
-        currentSubjectName = $"{StringHelpers.ToTitleCase(currentSubject.Name)} ({@CurriculumLevelHelpers.ToString(currentSubject.Level, currentSubject.Source)})";
+        currentSubjectName = $"{StringHelpers.ToTitleCase(currentSubject.Name)} ({Curriculum.ToString(currentSubject.Level, currentSubject.Source)})";
     }
 }
 
@@ -118,7 +118,7 @@
                 @foreach (var subject in Model.Subjects)
                 {
                     <a asp-controller="App" asp-action="PaperBrowser"
-                        asp-route-curriculum="@CurriculumLevelHelpers.ToString(subject.Level, subject.Source)"
+                        asp-route-curriculum="@Curriculum.ToString(subject.Level, subject.Source)"
                         asp-route-subject="@subject.Name"
                         class="subject bg-secondary hover:bg-background py-3 rounded-xl shadow-xl transition-colors duration-50 ease-linear">
                         <div class="inline-flex px-4 font-semibold items-center justify-start text-md">
@@ -126,7 +126,7 @@
                                 style="background-color: @HtmlHexString.GetHtmlHexString(subject.DisplayColor ?? 0);">
                                 <p class="drop-shadow-[0_0_1.5px_rgb(0,0,0,0.6)]">@subject.Name[0]</p>
                             </div>
-                            <p>@subject.Name.ToTitleCase() (@CurriculumLevelHelpers.ToString(subject.Level, subject.Source))
+                            <p>@subject.Name.ToTitleCase() (@Curriculum.ToString(subject.Level, subject.Source))
                             </p>
                         </div>
                     </a>

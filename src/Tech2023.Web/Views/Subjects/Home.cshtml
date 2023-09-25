@@ -1,5 +1,7 @@
 ﻿@using Tech2023.Core;
 @using Tech2023.DAL;
+@using Tech2023.Web.ViewModels;
+
 @model SubjectListModel
 @{
     ViewData["Title"] = "Subjects";
@@ -15,7 +17,7 @@
             {
                 <li class="flex items-center justify-between bg-secondary hover:bg-hint/50 p-6 rounded-xl">
                     <h4 class="font-semibold">
-                        @subject.Name.ToTitleCase() - @CurriculumLevelHelpers.ToString(subject.Level, subject.Source)
+                        @subject.Name.ToTitleCase() - @Curriculum.ToString(subject.Level, subject.Source)
                     </h4>
                     <button class="hover:bg-hint rounded-xl mr-2">
                         <span class="icon text-red-500 p-2">delete</span>

@@ -54,7 +54,7 @@ public class AppController : Controller
     {
         curriculum = curriculum.ToUpper(); // TODO: Better parsing of curriculum level parsing so we don't allocate and call a nullref
 
-        if (!CurriculumLevelHelpers.TryParse(curriculum, out var level, out var source) || string.IsNullOrWhiteSpace(subject))
+        if (!Curriculum.TryParse(curriculum, out var level, out var source) || string.IsNullOrWhiteSpace(subject))
         {
             return NotFound();
         }
