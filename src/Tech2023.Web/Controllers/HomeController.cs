@@ -27,12 +27,6 @@ public class HomeController : Controller
         _factory = factory;
     }
 
-    [Route(Routes.Home)]
-    public IActionResult Index()
-    {
-        return View();
-    }
-
     [Route(Routes.Error)]
     public IActionResult Error(int code) 
     {

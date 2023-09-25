@@ -16,9 +16,6 @@ public sealed class Routes
     private Routes() { }
 
     [RouteVisibility(Visiblity.Public)]
-    public const string Home = "/";
-
-    [RouteVisibility(Visiblity.Public)]
     public const string Privacy = "/privacy";
 
     public const string Error = "/error";
@@ -26,7 +23,7 @@ public sealed class Routes
     public static class Application
     {
         [RouteVisibility(Visiblity.Authenticated)]
-        public const string Home = "/app";
+        public const string Home = "/";
 
         [RouteVisibility(Visiblity.Authenticated)]
         public const string PaperViewer = "/paper";

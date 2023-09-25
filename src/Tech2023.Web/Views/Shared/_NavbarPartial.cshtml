@@ -10,7 +10,7 @@
 
 <nav id="navbar" class="h-full py-3 shadow-xl bg-secondary text-white">
     <div class="flex h-full flex-wrap items-center justify-between mx-4">
-        <a asp-controller="@(isSignedIn ? "App": "Home")" asp-action="Index">
+        <a href="@Routes.Application.Home">
             <img class="h-10 p-2" src="~/assets/icons/logo-text-main.svg" alt="Grades Up Logo"
                 asp-append-version="true">
             @section PreloadLogo {

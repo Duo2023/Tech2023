@@ -160,7 +160,7 @@ public class AccountController : Controller
 
         if (email is null)
         {
-            return Redirect(Routes.Home);
+            return Redirect(Routes.Application.Home);
         }
 
         var user = await _userManager.FindByNameAsync(email);

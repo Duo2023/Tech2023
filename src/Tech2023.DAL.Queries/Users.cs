@@ -5,6 +5,9 @@ using Tech2023.Web.ViewModels;
 
 namespace Tech2023.DAL.Queries;
 
+/// <summary>
+/// Contains queries used to manipulate data for users
+/// </summary>
 public static class Users
 {
 #nullable disable // The caller of this method will always have a valid claims principal
