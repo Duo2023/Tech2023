@@ -1,12 +1,7 @@
 export module dialog {
-    export function showDialog(id: string, asModal: boolean, inputString: string = ""): void {
+    export function showDialog(id: string, asModal: boolean): void {
         let dialog = document.getElementById(id) as HTMLDialogElement;
         if (asModal) {
-            try {
-                document.getElementById(`${id}-input-target`).innerText = inputString;
-            } catch (e) {
-                console.error(`Input target for dialog ${id} was not found`);
-            }
             dialog.showModal();
         } else {
             dialog.show();
