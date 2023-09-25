@@ -44,7 +44,7 @@
             <button id="back-to-subjects" class="absolute inline-flex items-center space-x-3 pl-4 pb-4 bg-secondary 
             data-[show=false]:-translate-x-[calc(100%_+_0.5rem)] data-[show=false]:opacity-0 transition-all duration-150 ease-out" data-show="true" 
             onclick="document.getElementById('sidebar-papers').dataset.show = this.dataset.show ='false';" style="height: var(--sidebar-back-button-height);">
-                <span class="material-symbols-rounded-sm">west</span>
+                <span class="icon-sm">west</span>
                 <h5 class="font-semibold">@currentSubjectName</h5>
             </button>
         </div>
@@ -57,7 +57,7 @@
                 <div id="paper-filter" class="bg-gradient-to-br from-hint to-hint/40 mx-2 my-2 p-3 rounded-2xl shadow-xl "
                     style="height: var(--sidebar-filter-height, 8rem) max-width: var(--sidebar-width, 21rem)">
                     <h4 class="flex items-center font-bold">
-                        <span class="material-symbols-rounded mr-1">filter_alt</span> Filter
+                        <span class="icon mr-1">filter_alt</span> Filter
                     </h4>
                     <div class="grid grid-rows-2 grid-flow-col pt-2 ml-1 gap-x-2">
                         @for (int i = 0; i < 4; i++)
@@ -67,7 +67,7 @@
                                 <button class="flex flex-row items-center justify-between rounded-md bg-background"
                                     onclick="interactions.element.toggleHiddenElement('category-@i-options', true)">
                                     <p class="w-10 overflow-hidden whitespace-nowrap overflow-ellipsis">12313132123</p>
-                                    <span class="material-symbols-rounded-sm">expand_more</span>
+                                    <span class="icon-sm">expand_more</span>
                                 </button>
                                 <div id="category-@i-options"
                                     class="z-40 hidden fixed bg-background px-4 py-3 border-2 border-hint rounded-xl animate-slide-down">
@@ -110,7 +110,7 @@
         <div>
             <div id="favourites-section"
                 class="section inline-flex justify-start items-center h-6 mb-1 mx-2 text-light-hint">
-                <span class="material-symbols-rounded-sm">expand_more</span>
+                <span class="icon-sm">expand_more</span>
                 <div>⭐</div>
                 <p class="font-bold"> Favourites</p>
             </div>
@@ -137,7 +137,7 @@
             <a asp-controller="Settings" asp-action="Index"
                 class="bg-secondary hover:bg-background py-3 mx-3 my-2 rounded-xl shadow-xl transition-colors duration-50 ease-linear">
                 <div class="inline-flex px-4 font-semibold items-center justify-start text-md">
-                    <span class="material-symbols-rounded-sm text-md w-6 h-6 rounded-md mr-3">settings</span>
+                    <span class="icon-sm text-md w-6 h-6 rounded-md mr-3">settings</span>
                     <p>Settings</p>
                 </div>
             </a>

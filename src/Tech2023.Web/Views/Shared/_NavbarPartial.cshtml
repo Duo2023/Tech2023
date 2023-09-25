@@ -21,9 +21,9 @@
         @if (isSignedIn)
         {
             <div class="nav-items-container flex flex-row space-x-8 items-baseline mr-2">
-                <button id="more" class="material-symbols-rounded">more_horiz</button>
+                <button id="more" class="icon">more_horiz</button>
                 <div class="inline-block">
-                    <button id="account-circle" class="material-symbols-rounded"
+                    <button id="account-circle" class="icon"
                         onclick="interactions.element.toggleHiddenElement('account-dropdown');">account_circle</button>
                     <div id="account-dropdown"
                         class="hidden z-10 absolute w-52 origin-top-right right-0 m-1 bg-background border-2 border-hint rounded-xl animate-slide-down">
@@ -34,7 +34,7 @@
                         <div class="flex flex-col text-left space-y-2 p-2 font-semibold">
 
                             <a href="@Routes.Settings.Home" class="w-full inline-flex hover:bg-hint/80 p-2 rounded-lg">
-                                <span class="material-symbols-rounded-sm mr-3">settings</span>
+                                <span class="icon-sm mr-3">settings</span>
                                 Settings
                             </a>
 
@@ -42,7 +42,7 @@
                             {
 
                                 <a href="@Routes.Admin.Home" class="w-full inline-flex hover:bg-hint/80 p-2 rounded-lg">
-                                    <span class="material-symbols-rounded-sm mr-3">admin_panel_settings</span>
+                                    <span class="icon-sm mr-3">admin_panel_settings</span>
                                     Admin Panel
                                 </a>
 
@@ -50,7 +50,7 @@
                             <div id="logout-button">
                                 <button onclick="interactions.dialog.showDialog('logout-modal', true)"
                                     class="w-full inline-flex hover:bg-red-500/90 p-2 rounded-lg">
-                                    <span class="material-symbols-rounded-sm mr-3">logout</span>
+                                    <span class="icon-sm mr-3">logout</span>
                                     Logout
                                 </button>
 

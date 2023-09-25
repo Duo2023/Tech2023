@@ -5,11 +5,33 @@
     ViewData["Title"] = "Subjects";
 }
 
-<h1>Edit Subjects</h1>
-
-<h2>Current Subjects</h2>
-
-@foreach (var subject in Model.Subjects)
-{
-    <p>@subject.Name.ToTitleCase() - @CurriculumLevelHelpers.ToString(subject.Level, subject.Source)</p>
-}
+<div id="subjects-editor" class="container mx-auto lg:px-10 overflow-y-auto"
+    style="height: calc(100vh - var(--navbar-height, 0rem))">
+    <h1 class="w-full text-center lg:text-left bg-gradient-to-br from-hint/90 to-hint/30 lg:mt-14 p-7 rounded-xl">Edit
+        subjects</h1>
+    <div id="current-subjects" class="">
+        <ul id="current-subjects-list" class="mt-2 space-y-1">
+            @foreach (var subject in Model.Subjects)
+            {
+                <li class="flex items-center justify-between bg-secondary hover:bg-hint/50 p-6 rounded-xl">
+                    <h4 class="font-semibold">
+                        @subject.Name.ToTitleCase() - @CurriculumLevelHelpers.ToString(subject.Level, subject.Source)
+                    </h4>
+                    <button class="hover:bg-hint rounded-xl mr-2">
+                        <span class="icon text-red-500 p-2">delete</span>
+                    </button>
+                </li>
+            }
+            <li class="bg-secondary/60 hover:bg-secondary p-4 rounded-xl">
+                <button class="group flex items-center space-x-3">
+                    <span class="icon bg-hint/40 group-hover:bg-hint/50 p-2 rounded-full">
+                        add
+                    </span>
+                    <h4 class="font-semibold">
+                        Add subject
+                    </h4>
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
