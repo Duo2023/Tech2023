@@ -1,4 +1,5 @@
-using Tech2023.DAL.Models;
+﻿using Tech2023.DAL.Models;
+using Tech2023.Web.ViewModels;
 
 namespace Tech2023.Web.Models.Components;
   

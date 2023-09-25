@@ -5,6 +5,8 @@ using Tech2023.DAL;
 using Tech2023.Web.Models;
 using Tech2023.Web.Models.Components;
 using Tech2023.Web.Extensions;
+using Tech2023.Web.ViewModels;
+using Tech2023.DAL.Queries;
 
 namespace Tech2023.Web.ViewComponents;
 
@@ -32,7 +34,7 @@ public class SidebarViewComponent : ViewComponent
     /// </summary>
     public async Task<IViewComponentResult> InvokeAsync(BrowsePapersViewModel? browseData = null)
     {
-        var user = await _userManager.FindByUserAsync(UserClaimsPrincipal);
+        var user = await _userManager.FindByPrincipalAsync(UserClaimsPrincipal);
 
         var sidebarData = new SidebarViewModel
         {

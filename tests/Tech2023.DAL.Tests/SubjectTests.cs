@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 
 using Microsoft.EntityFrameworkCore;
 using Tech2023.DAL.Models;
+using Tech2023.DAL.Queries;
 
 namespace Tech2023.DAL.Tests;
 
@@ -20,14 +21,14 @@ public class SubjectTests
 
         using var context = CreateStub();
 
-        await Queries.Subjects.CreateSubjectAsync(context, new Subject()
+        await Subjects.CreateSubjectAsync(context, new Subject()
         {
             Name = subjectName,
             Source = source,
             Level = level
         });
 
-        var subject = await Queries.Subjects.FindSubjectAsync(context, source, level, subjectName);
+        var subject = await Subjects.FindSubjectAsync(context, source, level, subjectName);
 
         Assert.NotNull(subject);
 
@@ -44,8 +45,8 @@ public class SubjectTests
     {
         using var stubContext = CreateStub();
 
-        await Assert.ThrowsAsync<ArgumentNullException>(async () => await Queries.Subjects.CreateSubjectAsync(stubContext, null!));
-        await Assert.ThrowsAsync<ArgumentNullException>(async () => await Queries.Subjects.CreateSubjectAsync(null!, null!));
+        await Assert.ThrowsAsync<ArgumentNullException>(async () => await Subjects.CreateSubjectAsync(stubContext, null!));
+        await Assert.ThrowsAsync<ArgumentNullException>(async () => await Subjects.CreateSubjectAsync(null!, null!));
     }
 }
 

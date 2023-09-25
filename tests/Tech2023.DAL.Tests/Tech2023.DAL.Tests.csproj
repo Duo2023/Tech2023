@@ -5,6 +5,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Tech2023.DAL.Queries\Tech2023.DAL.Queries.csproj" />
     <ProjectReference Include="..\..\src\Tech2023.DAL\Tech2023.DAL.csproj" />
   </ItemGroup>
   

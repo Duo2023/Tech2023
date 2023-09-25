@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 
 using Tech2023.DAL;
+using Tech2023.DAL.Queries;
 using Tech2023.Web.API.Caching;
 using Tech2023.Web.Models;
 
@@ -37,7 +38,7 @@ public class SubjectsController : Controller
     [Route(Routes.Subjects.Home)]
     public async Task<IActionResult> HomeAsync()
     {
-        List<SubjectViewModel> savedSubjects = await GetSubjectsAsync(User); // the users saved subjects
+        List<SubjectViewModel> savedSubjects = await Users.GetUserSavedSubjectsAsViewModelsAsync(_userManager, User);
         List<SubjectViewModel> subjects; // the subjects they can select
 
         using var context = await _factory.CreateDbContextAsync();
@@ -55,7 +56,7 @@ public class SubjectsController : Controller
         else // slow path
         {
             _logger.LogInformation("Cache missed in subjects");
-            subjects = await GetSubjectViewModelAsync(context);
+            subjects = await Subjects.GetAllSubjectViewModelsAsync(context);
             _cache.Set(CacheSlots.Subjects, subjects);
         }
 
@@ -75,21 +76,4 @@ public class SubjectsController : Controller
         await Task.CompletedTask;
         throw new NotImplementedException();
     }
-
-#nullable disable
-    internal async Task<List<SubjectViewModel>> GetSubjectsAsync(ClaimsPrincipal principal)
-    {
-        string userName = _userManager.NormalizeEmail(principal.Identity.Name);
-
-        return await _userManager.Users.Where(s => s.NormalizedUserName == userName)
-            .Include(s => s.SavedSubjects)
-            .Select(s => s.SavedSubjects)
-            .SelectMany(list => list)
-            .Select(s => (SubjectViewModel)s)
-            .ToListAsync();
-    }
-
-    // This internal method transforms subjects into view models so we don't pass useless state
-    internal static async Task<List<SubjectViewModel>> GetSubjectViewModelAsync(ApplicationDbContext context)
-        => await context.Subjects.Select(s => (SubjectViewModel)s).ToListAsync();
 }

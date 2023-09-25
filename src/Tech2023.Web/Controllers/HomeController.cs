@@ -5,6 +5,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 using Tech2023.DAL;
 using Tech2023.DAL.Models;
+using Tech2023.DAL.Queries;
 using Tech2023.Web.API.Caching;
 using Tech2023.Web.Models;
 
@@ -58,7 +59,7 @@ public class HomeController : Controller
 
         using var context = _factory.CreateDbContext();
 
-        var privacyPolicy = await Queries.Privacy.GetPolicyAsync(context);
+        var privacyPolicy = await Privacy.GetPolicyAsync(context);
 
         // TODO: Configure time expiry, sliding expiration etc
         _cache.Set(CacheSlots.PrivacyPolicy, privacyPolicy);

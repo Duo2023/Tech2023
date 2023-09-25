@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Tech2023.DAL;
 using Tech2023.DAL.Models;
+using Tech2023.DAL.Queries;
 
 namespace Tech2023.Web;
 
@@ -146,9 +147,9 @@ internal class Initializer : IDataInitializer
 
     internal static async Task CreateSubjectsAsync(ApplicationDbContext context)
     {
-        await Queries.Subjects.CreateSubjectAsync(context, CreateSubject("Maths", CurriculumSource.Cambridge, CurriculumLevel.L1));
+        await Subjects.CreateSubjectAsync(context, CreateSubject("Maths", CurriculumSource.Cambridge, CurriculumLevel.L1));
 
-        await Queries.Subjects.CreateSubjectAsync(context, CreateSubject("Maths", CurriculumSource.Ncea, CurriculumLevel.L3));
+        await Subjects.CreateSubjectAsync(context, CreateSubject("Maths", CurriculumSource.Ncea, CurriculumLevel.L3));
 
         await context.SaveChangesAsync();
     }

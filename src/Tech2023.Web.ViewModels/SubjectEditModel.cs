@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Tech2023.Web.Models;
+﻿namespace Tech2023.Web.ViewModels;
 
 /// <summary>
 /// Data used to for editing subjects
