@@ -36,11 +36,17 @@ public class AppController : Controller
     [Route(Routes.Application.Home)]
     public async Task<IActionResult> HomeAsync()
     {
-        var user = await _userManager.FindByPrincipalAsync(User);
+        var savedSubjects = await Users.GetUserSavedSubjectsAsViewModelsAsync(_userManager, User);
 
+        var model = new SubjectDashboardViewModel()
+        {
+            SavedSubjects = savedSubjects,
+            RecentResources = new() // TODO: Add logic for seeing resources
+        };
 
+        //model.SavedSubjects.Clear();
 
-        return View();
+        return View(model);
     }
 
     [Route(Routes.Application.PaperViewer)]

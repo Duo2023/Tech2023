@@ -1,3 +1,7 @@
+@using Tech2023.Core;
+@using Tech2023.DAL;
+@using Tech2023.Web.ViewModels;
+@model SubjectDashboardViewModel
 @{
     ViewData["Title"] = "Home";
 }
@@ -10,11 +14,19 @@
     <div id="subjects-list">
         <h2 class="font-bold">My Subjects</h2>
         <div class="grid grid-flow-col auto-cols-min gap-8 overflow-x-auto">
-            @for (int i = 0; i < 8; i++)
+            @if (Model.SavedSubjects.Count == 0)
             {
-                <a asp-controller="App" asp-action="PaperViewer" class="subject-item h-44 w-72 my-2 bg-gradient-to-br from-yellow-400 to-orange-600 rounded-3xl">
-                    <h3 class="p-5 font-bold drop-shadow-xl">Maths</h3>
-                </a>
+                <h1>You have no subjects added</h1>
+            }
+            else
+            {
+                foreach (var subject in Model.SavedSubjects)
+                {
+                    <a asp-controller="App" asp-action="PaperBrowser" asp-route-curriculum="@Curriculum.ToString(subject.Level, subject.Source)"
+                        asp-route-subject="@subject.Name" class="subject-item h-44 w-72 my-2 bg-gradient-to-br from-yellow-400 to-orange-600 rounded-3xl">
+                        <h3 class="p-5 font-bold drop-shadow-xl">@subject.Name.ToTitleCase() - @Curriculum.ToString(subject.Level, subject.Source)</h3>
+                    </a>
+                }
             }
         </div>
     </div>
