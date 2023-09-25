@@ -5,6 +5,9 @@ using Tech2023.DAL.Models;
 
 namespace Tech2023.DAL;
 
+/// <summary>
+/// Static methods for parsing and stringifying Curriculum related enumerations
+/// </summary>
 public static class Curriculum
 {
     const string NceaSpecifier = "LEVEL";
@@ -12,6 +15,9 @@ public static class Curriculum
 
     // over optimized but was fun
 
+    /// <summary>
+    /// Tries to parse an input to get the level and curriculum
+    /// </summary>
     public static bool TryParse(ReadOnlySpan<char> input, out CurriculumLevel level, out CurriculumSource source)
     {
         // The lengths of the texts 'AS' and 'A2' are both 2, and since chars are UTF16 they are 2 bytes, (2*2)=sizeof(uint) so we can do a direct uint == uint comparison
@@ -62,6 +68,9 @@ Failed:
         return false;
     }
 
+    /// <summary>
+    /// Converts the level and source into a string, which can be used to call <see cref="TryParse(ReadOnlySpan{char}, out CurriculumLevel, out CurriculumSource)"/>
+    /// </summary>
     [Pure]
     public static string ToString(CurriculumLevel level, CurriculumSource source)
     {

@@ -44,6 +44,8 @@ public sealed class Routes
         public const string Home = "/subjects";
 
         public const string Delete = "/subjects/delete";
+
+        public const string Add = "/subjects/add";
     }
 
     public static class Admin

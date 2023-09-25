@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Diagnostics;
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -71,15 +73,42 @@ public class SubjectsController : Controller
     [Route(Routes.Subjects.Delete)]
     public async Task<IActionResult> DeleteAsync([FromQuery] Guid id)
     {
+        using var context = await _factory.CreateDbContextAsync();
+
+#nullable disable
+        var user = await context.Users
+            .Include(u => u.SavedSubjects)
+            .Where(u => u.NormalizedUserName == _userManager.NormalizeEmail(User.Identity.Name))
+            .FirstAsync();
+
+        var subject = await context.Subjects.FindAsync(id);
+
+        if (subject is not null)
+        {
+            bool result = user.SavedSubjects.Remove(subject);
+
+            await context.SaveChangesAsync();
+        }
+
+        return Redirect(Routes.Subjects.Home);
+    }
+
+    [HttpPost]
+    [Route(Routes.Subjects.Add)]
+    public async Task<IActionResult> AddAsync([FromQuery] Guid id)
+    {
         var user = await Users.FindByPrincipalAsync(_userManager, User);
 
         using var context = await _factory.CreateDbContextAsync();
 
-        user.SavedSubjects.RemoveAll(s => s.Id == id); // TODO: Make more efficient less round trips to database
+        var subject = await context.Subjects.Where(s => s.Id == id).FirstOrDefaultAsync();
 
-        context.Users.Update(user);
+        if (subject is not null)
+        {
+            user.SavedSubjects.Add(subject);
 
-        await context.SaveChangesAsync();
+            context.Users.Update(user);
+        }
 
         return Redirect(Routes.Subjects.Home);
     }

@@ -243,7 +243,7 @@ public class AccountController : Controller
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
-        return RedirectToPage("/Account/Login");
+        return RedirectToPage(Routes.Account.Login);
     }
 
     [Route(Routes.Account.ForgotPassword)]
