@@ -13,20 +13,36 @@
         subjects</h1>
     <div id="current-subjects" class="">
         <ul id="current-subjects-list" class="mt-2 space-y-1">
+            <dialog id="delete-subject-modal" class="font-semibold">
+                <h3>Delete <span id='delete-subject-modal-input-target'></span>?</h3>
+                <form method="post" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/"
+                    class="w-full flex flex-row justify-end mt-4 space-x-4">
+                    <button formmethod="dialog" type="submit" class="p-2 hover:underline">Go
+                        back!</button>
+                    <button class="inline-flex bg-red-500/90 p-2 rounded-lg" type="submit">
+                        Yes, Logout
+                    </button>
+                </form>
+            </dialog>
             @foreach (var subject in Model.Subjects)
             {
-                <li class="flex items-center justify-between bg-secondary hover:bg-hint/50 p-6 rounded-xl">
+                <li
+                    class="group flex items-center justify-between bg-secondary hover:bg-secondary/50 h-20 px-6 rounded-xl transition-colors duration-75 ease-out">
                     <h4 class="font-semibold">
                         @subject.Name.ToTitleCase() - @Curriculum.ToString(subject.Level, subject.Source)
                     </h4>
-                    <button class="hover:bg-hint rounded-xl mr-2">
-                        <span class="icon text-red-500 p-2">delete</span>
+                    <button
+                        onclick="interactions.dialog.showDialog('delete-subject-modal', true, '@subject.Name.ToTitleCase() - @Curriculum.ToString(subject.Level, subject.Source)')"
+                        class="bg-transparent group-hover:bg-hint/30 rounded-xl transition-colors duration-75 ease-out">
+                        <span
+                            class="icon hover:bg-hint/40 rounded-xl text-red-500 p-2 transition-colors duration-75 ease-out">delete</span>
                     </button>
                 </li>
             }
-            <li class="bg-secondary/60 hover:bg-secondary p-4 rounded-xl">
-                <button class="group flex items-center space-x-3">
-                    <span class="icon bg-hint/40 group-hover:bg-hint/50 p-2 rounded-full">
+            <li class="bg-secondary hover:bg-secondary/50 h-20 rounded-xl transition-colors duration-75 ease-out">
+                <button class="group flex h-full w-full items-center px-5 space-x-3">
+                    <span
+                        class="icon bg-hint/50 group-hover:bg-hint/40 p-2 rounded-full transition-colors duration-75 ease-out">
                         add
                     </span>
                     <h4 class="font-semibold">
