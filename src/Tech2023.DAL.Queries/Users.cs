@@ -36,12 +36,5 @@ public static class Users
             .ToListAsync();
     }
 
-    public static async Task RemoveSubjectFromUserAsync(UserManager<ApplicationUser> userManager, ClaimsPrincipal principal, Guid subjectId)
-    {
-        string userName = userManager.NormalizeEmail(principal.Identity.Name);
-
-
-    }
-
 #nullable restore
 }
