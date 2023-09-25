@@ -19,7 +19,8 @@ internal static class UserManagerExtensions
         string userName = userManager.NormalizeEmail(principal.Identity.Name);
 
         return await userManager.Users
+            .Where(u => u.NormalizedUserName == userName)
             .Include(user => user.SavedSubjects)
-            .SingleOrDefaultAsync(u => u.NormalizedUserName == userName);
+            .FirstOrDefaultAsync();
     }
 }
