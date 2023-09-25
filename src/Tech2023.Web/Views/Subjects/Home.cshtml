@@ -1,5 +1,6 @@
 ﻿@using Tech2023.Core;
 @using Tech2023.DAL;
+@using Tech2023.DAL.Models;
 @using Tech2023.Web.ViewModels;
 
 @model SubjectListModel
@@ -42,16 +43,44 @@
                     </dialog>
                 </div>
             }
-            <li class="bg-secondary hover:bg-secondary/50 h-20 rounded-xl transition-colors duration-75 ease-out">
-                <button class="group flex h-full w-full items-center px-5 space-x-3">
-                    <span
-                        class="icon bg-hint/50 group-hover:bg-hint/40 p-2 rounded-full transition-colors duration-75 ease-out">
-                        add
-                    </span>
-                    <h4 class="font-semibold">
-                        Add subject
-                    </h4>
-                </button>
+            <li id="add-subject-item" data-select-subject=false
+                class="group bg-secondary hover:bg-secondary/50 h-20 rounded-xl transition-colors duration-75 ease-out">
+                <div class="relative h-full w-full">
+                    <button
+                        class="z-10 absolute flex group-data-[select-subject=true]:-translate-y-4 h-full w-full items-center px-5 space-x-3 
+                        group-data-[select-subject=true]:opacity-0 group-data-[select-subject=true]:pointer-events-none transition-all duration-100 ease-in"
+                        onclick="document.getElementById('add-subject-item').dataset.selectSubject = true">
+                        <span
+                            class="icon bg-hint/50 group-hover:bg-hint/40 p-2 rounded-full transition-colors duration-75 ease-out">
+                            add
+                        </span>
+                        <h4 class="font-semibold">
+                            Add subject
+                        </h4>
+                    </button>
+                    <div class="absolute flex flex-row h-full w-full items-center px-5 space-x-3 translate-y-4 group-data-[select-subject=true]:translate-y-0 
+                        opacity-0 group-data-[select-subject=true]:opacity-100 transition-all duration-100 ease-in">
+                        <select id="curriculum" name="curriculum">
+                            @foreach (var curriculum in Enum.GetNames<CurriculumSource>())
+                            {
+                                <option value="@curriculum.ToLower()">@curriculum</option>
+                            }
+                        </select>
+                        <select id="curriculum-level" name="curriculum-level">
+                            @foreach (var level in Enum.GetNames<CurriculumLevel>())
+                            {
+                                <option value="@level.ToLower()">@level</option>
+                            }
+                        </select>
+                        @* TODO: Implement subject logic *@
+                        <select id="selected-subject" name="selected-subject">
+                            @foreach (var level in Enum.GetNames<CurriculumLevel>())
+                            {
+                                <option value="@level.ToLower()">@level</option>
+                            }
+                        </select>
+                    </div>
+                </div>
             </li>
         </ul>
     </div>
