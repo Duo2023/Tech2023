@@ -15,11 +15,11 @@ public class SubjectListModel
     /// </summary>
     [Required]
     [JsonPropertyName("subjects")]
-    public List<SubjectViewModel> Subjects { get; set; }
+    public List<SubjectViewModel> AllSubjects { get; set; }
 
     /// <summary>
     /// The existing subjects that the user has
     /// </summary>
     [Required]
-    public List<SubjectViewModel> ExistingSubjects { get; set; }
+    public List<SubjectViewModel> SavedSubjects { get; set; }
 }

@@ -62,8 +62,8 @@ public class SubjectsController : Controller
 
         var subjectsList = new SubjectListModel()
         {
-            Subjects = subjects,
-            ExistingSubjects = savedSubjects
+            AllSubjects = subjects,
+            SavedSubjects = savedSubjects
         };
 
         return View(subjectsList);
