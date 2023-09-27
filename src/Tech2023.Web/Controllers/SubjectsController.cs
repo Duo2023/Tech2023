@@ -74,14 +74,16 @@ public class SubjectsController : Controller
     public async Task<IActionResult> DeleteAsync([FromQuery] Guid id)
     {
         using var context = await _factory.CreateDbContextAsync();
-
+        
+        // TODO: Convert this query into Users.* query assembly class however if we convert this to use the usermanager table the delete does not go through
 #nullable disable
         var user = await context.Users
             .Include(u => u.SavedSubjects)
             .Where(u => u.NormalizedUserName == _userManager.NormalizeEmail(User.Identity.Name))
             .FirstAsync();
 
-        var subject = await context.Subjects.FindAsync(id);
+        // TODO: Do we need to roundtrip the database to check if the subject exists?
+        var subject = await context.Subjects.FindAsync(id); 
 
         if (subject is not null)
         {
