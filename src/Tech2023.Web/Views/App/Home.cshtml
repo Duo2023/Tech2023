@@ -17,7 +17,7 @@
             @foreach (var subject in Model.SavedSubjects)
             {
                 <a asp-controller="App" asp-action="PaperBrowser" asp-route-curriculum="@Curriculum.ToString(subject.Level, subject.Source)"
-                    asp-route-subject="@subject.Name" class="subject-item h-44 w-72 my-2 rounded-3xl" style="background-color: @HtmlHexString.GetHtmlHexString(subject.DisplayColor ?? 0);">
+                    asp-route-subject="@subject.Name" class="subject-item h-44 w-72 my-2 rounded-3xl" style="background-color: @HtmlHexString.GetHtmlHexString(subject.DisplayColor);">
                     <h3 class="p-5 font-bold drop-shadow-xl">@subject.Name.ToTitleCase() - @Curriculum.ToString(subject.Level, subject.Source)</h3>
                 </a>
             }

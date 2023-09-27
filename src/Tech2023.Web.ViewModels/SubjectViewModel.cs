@@ -37,10 +37,10 @@ public sealed class SubjectViewModel
     public CurriculumSource Source { get; set; }
 
     /// <summary>
-    /// Unsigned 4 byte integer used for the preffered display color if it is <see langword="null"/>
+    /// Unsigned 4 byte integer used for the preffered display color
     /// </summary>
     [JsonPropertyName("displayColor")]
-    public uint? DisplayColor { get; set; }
+    public uint DisplayColor { get; set; }
 
     /// <summary>
     /// Explicity casts a subject to a view model of a subject
