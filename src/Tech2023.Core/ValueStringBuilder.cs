@@ -16,9 +16,9 @@ namespace Tech2023.Core;
 /// </remarks>
 internal ref partial struct ValueStringBuilder
 {
-    private char[]? _arrayToReturnToPool;
-    private Span<char> _chars;
-    private int _pos;
+    internal char[]? _arrayToReturnToPool;
+    internal Span<char> _chars;
+    internal int _pos;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ValueStringBuilder"/> <see langword="struct"/>

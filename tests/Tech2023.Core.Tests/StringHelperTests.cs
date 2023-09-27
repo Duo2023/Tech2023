@@ -2,7 +2,7 @@
 
 public class StringHelperTests
 {
-    [Theory]
+    [Theory(DisplayName = "StringHelpers.ToTitleCase Functionality")]
     [ClassData(typeof(SubjectStringSource))]
     public void ToTitleCase_Works(string input, string expected)
     {
@@ -11,7 +11,7 @@ public class StringHelperTests
         Assert.Equal(expected, result);
     }
 
-    [Fact]
+    [Fact(DisplayName = "Null argument should return string.Empty")]
     public void ToTitleOnNull_ReturnsExpected()
     {
         var result = StringHelpers.ToTitleCase(null!); // override annotations
@@ -19,7 +19,7 @@ public class StringHelperTests
         Assert.Equal(string.Empty, result);
     }
 
-    [Fact]
+    [Fact(DisplayName = "StringHelpers.ToTitleCase should not stack overflow")]
     public void CheckLargeInput_ForStackOverflow()
     {
         string str = new string('1', 100_000); // would def cause stack overflow
