@@ -260,8 +260,8 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    [ActionName("Logout")]
-    [Route("logout")]
+    [ActionName(nameof(Routes.Account.Logout))]
+    [Route(Routes.Account.Logout)]
     public async Task<IActionResult> LogoutAsync(string returnUrl)
     {
         await _signInManager.SignOutAsync();

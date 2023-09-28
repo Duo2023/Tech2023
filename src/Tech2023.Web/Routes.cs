@@ -78,5 +78,8 @@ public sealed class Routes
 
         [RouteVisibility(Visiblity.Public)]
         public const string Lockout = "/account/lockout";
+
+        // [RouteVisiblity(Visiblity.Authenticated)] ??
+        public const string Logout = "/account/logout";
     }
 }
