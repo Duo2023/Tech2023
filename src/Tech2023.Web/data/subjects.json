@@ -1,0 +1,251 @@
+[
+  {
+    "name": "Maths",
+    "curriculum": "LEVEL1"
+  },
+  {
+    "name": "Maths",
+    "curriculum": "LEVEL2"
+  },
+  {
+    "name": "Maths",
+    "curriculum": "LEVEL3"
+  },
+  {
+    "name": "Maths",
+    "curriculum": "IGCSE"
+  },
+  {
+    "name": "Maths",
+    "curriculum": "AS"
+  },
+  {
+    "name": "Maths",
+    "curriculum": "A2"
+  },
+
+  {
+    "name": "Physics",
+    "curriculum": "LEVEL1"
+  },
+  {
+    "name": "Physics",
+    "curriculum": "LEVEL2"
+  },
+  {
+    "name": "Physics",
+    "curriculum": "LEVEL3"
+  },
+  {
+    "name": "Physics",
+    "curriculum": "IGCSE"
+  },
+  {
+    "name": "Physics",
+    "curriculum": "AS"
+  },
+  {
+    "name": "Physics",
+    "curriculum": "A2"
+  },
+
+  {
+    "name": "Chemistry",
+    "curriculum": "LEVEL1"
+  },
+  {
+    "name": "Chemistry",
+    "curriculum": "LEVEL2"
+  },
+  {
+    "name": "Chemistry",
+    "curriculum": "LEVEL3"
+  },
+  {
+    "name": "Chemistry",
+    "curriculum": "IGCSE"
+  },
+  {
+    "name": "Chemistry",
+    "curriculum": "AS"
+  },
+  {
+    "name": "Chemistry",
+    "curriculum": "A2"
+  },
+
+  {
+    "name": "Biology",
+    "curriculum": "LEVEL1"
+  },
+  {
+    "name": "Biology",
+    "curriculum": "LEVEL2"
+  },
+  {
+    "name": "Biology",
+    "curriculum": "LEVEL3"
+  },
+  {
+    "name": "Biology",
+    "curriculum": "IGCSE"
+  },
+  {
+    "name": "Biology",
+    "curriculum": "AS"
+  },
+  {
+    "name": "Biology",
+    "curriculum": "A2"
+  },
+
+  {
+    "name": "History",
+    "curriculum": "LEVEL1"
+  },
+  {
+    "name": "History",
+    "curriculum": "LEVEL2"
+  },
+  {
+    "name": "History",
+    "curriculum": "LEVEL3"
+  },
+  {
+    "name": "History",
+    "curriculum": "IGCSE"
+  },
+  {
+    "name": "History",
+    "curriculum": "AS"
+  },
+  {
+    "name": "History",
+    "curriculum": "A2"
+  },
+
+  {
+    "name": "Geography",
+    "curriculum": "LEVEL1"
+  },
+  {
+    "name": "Geography",
+    "curriculum": "LEVEL2"
+  },
+  {
+    "name": "Geography",
+    "curriculum": "LEVEL3"
+  },
+  {
+    "name": "Geography",
+    "curriculum": "IGCSE"
+  },
+  {
+    "name": "Geography",
+    "curriculum": "AS"
+  },
+  {
+    "name": "Geography",
+    "curriculum": "A2"
+  },
+
+  {
+    "name": "English",
+    "curriculum": "LEVEL1"
+  },
+  {
+    "name": "English",
+    "curriculum": "LEVEL2"
+  },
+  {
+    "name": "English",
+    "curriculum": "LEVEL3"
+  },
+  {
+    "name": "English",
+    "curriculum": "IGCSE"
+  },
+  {
+    "name": "English",
+    "curriculum": "AS"
+  },
+  {
+    "name": "English",
+    "curriculum": "A2"
+  },
+
+  {
+    "name": "Economics",
+    "curriculum": "LEVEL1"
+  },
+  {
+    "name": "Economics",
+    "curriculum": "LEVEL2"
+  },
+  {
+    "name": "Economics",
+    "curriculum": "LEVEL3"
+  },
+  {
+    "name": "Economics",
+    "curriculum": "IGCSE"
+  },
+  {
+    "name": "Economics",
+    "curriculum": "AS"
+  },
+  {
+    "name": "Economics",
+    "curriculum": "A2"
+  },
+
+  {
+    "name": "Business",
+    "curriculum": "LEVEL1"
+  },
+  {
+    "name": "Business",
+    "curriculum": "LEVEL2"
+  },
+  {
+    "name": "Business",
+    "curriculum": "LEVEL3"
+  },
+  {
+    "name": "Business",
+    "curriculum": "IGCSE"
+  },
+  {
+    "name": "Business",
+    "curriculum": "AS"
+  },
+  {
+    "name": "Business",
+    "curriculum": "A2"
+  },
+
+  {
+    "name": "Computer Science",
+    "curriculum": "LEVEL1"
+  },
+  {
+    "name": "Computer Science",
+    "curriculum": "LEVEL2"
+  },
+  {
+    "name": "Computer Science",
+    "curriculum": "LEVEL3"
+  },
+  {
+    "name": "Computer Science",
+    "curriculum": "IGCSE"
+  },
+  {
+    "name": "Computer Science",
+    "curriculum": "AS"
+  },
+  {
+    "name": "Computer Science",
+    "curriculum": "A2"
+  }
+]

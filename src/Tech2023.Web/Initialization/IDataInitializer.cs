@@ -1,4 +1,4 @@
-﻿namespace Tech2023.Web;
+﻿namespace Tech2023.Web.Initialization;
 
 /// <summary>
 /// Initializes the data inside a DbContext

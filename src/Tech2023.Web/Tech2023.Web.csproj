@@ -38,6 +38,12 @@
     <UpToDateCheckBuilt Include="tailwind.config.js" Set="Css" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="data\subjects.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
   <Target Name="Client Side Dependencies" BeforeTargets="Build">
     <Exec Command="npm install" />
   </Target>

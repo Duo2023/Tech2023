@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text.Json;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +9,7 @@ using Tech2023.DAL;
 using Tech2023.DAL.Models;
 using Tech2023.DAL.Queries;
 
-namespace Tech2023.Web;
+namespace Tech2023.Web.Initialization;
 
 internal class Initializer : IDataInitializer
 {
@@ -16,6 +17,7 @@ internal class Initializer : IDataInitializer
     internal readonly UserManager<ApplicationUser> _userManager;
     internal readonly ILogger<IDataInitializer> _logger;
     internal readonly IDbContextFactory<ApplicationDbContext> _factory;
+    internal readonly IConfiguration _configuration;
 
     public Initializer(IServiceProvider provider)
     {
@@ -25,6 +27,7 @@ internal class Initializer : IDataInitializer
         _userManager = provider.GetRequiredService<UserManager<ApplicationUser>>();
         _logger = provider.GetRequiredService<ILogger<IDataInitializer>>();
         _factory = provider.GetRequiredService<IDbContextFactory<ApplicationDbContext>>();
+        _configuration = provider.GetRequiredService<IConfiguration>();
     }
 
     public async Task InitializeAsync()
@@ -67,6 +70,44 @@ internal class Initializer : IDataInitializer
         await CreateDebugUserAsync(context);
         await AddUsersToSubjectsAsync(context);
         await AddResourcesToSubjectsAsync(context);
+    }
+
+
+    internal async Task CreateSubjectsAsync(ApplicationDbContext context)
+    {
+        var basePath = _configuration["SeedPath"];
+
+        if (basePath is null)
+        {
+            _logger.LogError("Base Path Not Defined");
+            return;
+        }
+
+        string path = Path.Combine(basePath, "subjects.json");
+
+        if (!File.Exists(path))
+        {
+            _logger.LogError("JSON data path invalid, no file");
+            return;
+        }
+
+        using var stream = File.OpenRead(path);
+
+        SubjectJsonModel[] subjects;
+
+        try
+        {
+            subjects = JsonSerializer.Deserialize(stream, SeedSerializationContext.Default.SubjectJsonModelArray) ?? throw new InvalidOperationException();
+        }
+        catch
+        {
+            _logger.LogError("Debug data failed to be read JSON or file error");
+            return;
+        }
+
+        var values = subjects.Select(s => (Subject)s);
+
+        await Subjects.CreateSubjectsAsync(context, values);
     }
 
     internal static async Task AddResourcesToSubjectsAsync(ApplicationDbContext context)
@@ -115,7 +156,7 @@ internal class Initializer : IDataInitializer
         {
             user.Updated = DateTimeOffset.UtcNow;
 
-            user.SavedSubjects.AddRange(subjects);
+            user.SavedSubjects.AddRange(subjects.OrderBy(s => Random.Shared.Next()).Take(5));
 
             context.Update(user);
         }
@@ -145,24 +186,6 @@ internal class Initializer : IDataInitializer
         await _userManager.AddToRoleAsync(user, Roles.Administrator);
     }
 
-    internal static async Task CreateSubjectsAsync(ApplicationDbContext context)
-    {
-        await Subjects.CreateSubjectAsync(context, CreateSubject("Maths", CurriculumSource.Cambridge, CurriculumLevel.L1));
 
-        await Subjects.CreateSubjectAsync(context, CreateSubject("Maths", CurriculumSource.Ncea, CurriculumLevel.L3));
-
-        await context.SaveChangesAsync();
-    }
-
-    internal static Subject CreateSubject(string name, CurriculumSource source, CurriculumLevel level)
-    {
-        return new()
-        {
-            Name = name.ToUpper(),
-            Source = source,
-            Level = level,
-            DisplayColor = (uint)Random.Shared.Next()
-        };
-    }
 #endif
 }

@@ -37,6 +37,24 @@ public static class Subjects
         await context.SaveChangesAsync();
     }
 
+
+    public static async Task CreateSubjectsAsync(ApplicationDbContext context, IEnumerable<Subject> subjects)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(subjects);
+
+        foreach (var subject in subjects)
+        {
+            subject.Name = subject.Name.ToUpper();
+        }
+
+        subjects = subjects.Distinct();
+
+        await context.Subjects.AddRangeAsync(subjects);
+
+        await context.SaveChangesAsync();
+    }
+
     /// <summary>
     /// Finds the subject in the database context using the name and the source and level of the subject
     /// </summary>
