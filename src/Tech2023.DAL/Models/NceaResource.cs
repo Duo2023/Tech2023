@@ -20,4 +20,13 @@ public sealed class NceaResource : CustomResource
     /// </summary>
     [Required]
     public int AchievementStandard { get; set; }
+
+#nullable disable
+    /// <summary>
+    /// A description of the standard, usually one line
+    /// </summary>
+    [Required]
+    public string Description { get; set; }
+
+    public string DisplayStandard() => $"AS{AchievementStandard}";
 }

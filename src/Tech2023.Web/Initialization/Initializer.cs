@@ -137,8 +137,9 @@ internal class Initializer : IDataInitializer
     {
         var resource = new NceaResource()
         {
-            AssessmentType = (NceaAssessmentType)Random.Shared.Next((int)NceaAssessmentType.Unit),
+            AssessmentType = (NceaAssessmentType)Random.Shared.Next((int)NceaAssessmentType.Internal, (int)NceaAssessmentType.Unit),
             AchievementStandard = Random.Shared.Next(1, ushort.MaxValue),
+            Description = "An achievement standard",
             Created = DateTimeOffset.UtcNow,
         };
 

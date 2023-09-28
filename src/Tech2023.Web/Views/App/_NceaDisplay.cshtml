@@ -1,0 +1,20 @@
+﻿@using Tech2023.DAL;
+@using Tech2023.DAL.Models;
+@model List<NceaResource>;
+
+@foreach (var type in Enum.GetValues<NceaAssessmentType>())
+{
+    <h4 class="paper-category sticky top-0 w-full bg-hint p-3 px-4 font-bold">@Enum.GetName(type) Standards</h4>
+    <u1>
+        @foreach (var standard in Model.Where(s => s.AssessmentType == type))
+        {
+            <li class="bg-secondary even:bg-opacity-30 border-b-2 border-hint">
+                <a asp-controller="App" asp-action="PaperViewer">
+                    <h5 class="paper p-3">
+                        @standard.DisplayStandard() - @standard.Description
+                    </h5>
+                </a>
+            </li>
+        }
+    </u1>
+}
