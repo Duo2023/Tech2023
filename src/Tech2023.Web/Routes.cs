@@ -20,6 +20,8 @@ public sealed class Routes
 
     public const string Error = "/error";
 
+    public const string Search = "/search";
+
     public static class Application
     {
         [RouteVisibility(Visiblity.Authenticated)]
