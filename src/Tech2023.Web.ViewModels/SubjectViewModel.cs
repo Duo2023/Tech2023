@@ -10,7 +10,10 @@ namespace Tech2023.Web.ViewModels;
 /// <summary>
 /// A view model of the subject that is just used to reference models
 /// </summary>
-public sealed class SubjectViewModel
+/// <remarks>
+/// This view model is a record because we want to compare subjects by fields not by reference
+/// </remarks>
+public sealed record SubjectViewModel
 {
     /// <summary>
     /// The identifier of the Id
