@@ -96,17 +96,21 @@ public class SubjectsController : Controller
     [Route(Routes.Subjects.Add)]
     public async Task<IActionResult> AddAsync([FromQuery] Guid id)
     {
-        var user = await Users.FindByPrincipalAsync(_userManager, User);
-
         using var context = await _factory.CreateDbContextAsync();
+        
+#nullable disable
+        var user = await context.Users
+            .Include(u => u.SavedSubjects)
+            .Where(u => u.NormalizedUserName == _userManager.NormalizeEmail(User.Identity.Name))
+            .FirstAsync();
 
-        var subject = await context.Subjects.Where(s => s.Id == id).FirstOrDefaultAsync();
+        var subject = await context.Subjects.FindAsync(id);
 
-        if (subject is not null)
+        if (subject is not null && !user.SavedSubjects.Contains(subject))
         {
             user.SavedSubjects.Add(subject);
 
-            context.Users.Update(user);
+            await context.SaveChangesAsync();
         }
 
         return Redirect(Routes.Subjects.Home);
