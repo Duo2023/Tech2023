@@ -182,7 +182,11 @@ internal class Initializer : IDataInitializer
 
         var result = await _userManager.CreateAsync(user, "sudoUser555!");
 
-        Debug.Assert(result.Succeeded, "Debug user failed to create");
+        if (!result.Succeeded)
+        {
+            _logger.LogError("Sudo user failed to create: does it already exist?");
+            return;
+        }
 
         await _userManager.AddToRoleAsync(user, Roles.Administrator);
     }
