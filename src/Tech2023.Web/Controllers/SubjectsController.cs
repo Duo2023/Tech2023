@@ -92,7 +92,7 @@ public class SubjectsController : Controller
         return Redirect(Routes.Subjects.Home);
     }
 
-    [HttpPost]
+    [HttpGet]
     [Route(Routes.Subjects.Add)]
     public async Task<IActionResult> AddAsync([FromQuery] Guid id)
     {

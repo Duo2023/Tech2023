@@ -58,12 +58,12 @@
                             Add subject
                         </h4>
                     </button>
-                    <form method="post" asp-controller="Subjects" asp-action="Add" class="absolute flex flex-row h-full w-full items-center px-5 space-x-3 translate-y-4 group-data-[select-subject=true]:translate-y-0 
+                    <div class="absolute flex flex-row h-full w-full items-center px-5 space-x-3 translate-y-4 group-data-[select-subject=true]:translate-y-0 
                     opacity-0 group-data-[select-subject=true]:opacity-100 transition-all duration-100 ease-in">
                         <div class="flex flex-col">
-                            <label for="curriculum" class="px-2">Select curriculum</label>
+                            <label for="curriculum" class="px-2">Curriculum</label>
                             <select id="curriculum" name="curriculum" class="">
-                                <option value="none" class="hidden">Curriculum</option>
+                                <option value="none" class="hidden">-</option>
                                 @foreach (var curriculum in Enum.GetValues<CurriculumSource>())
                                 {
                                     @foreach (var level in Enum.GetValues<CurriculumLevel>())
@@ -84,28 +84,32 @@
                                 }
                             </select>
                         </div>
-                        <div class="flex flex-col">
-                            <label for="curriculum" class="px-2">Subject</label>
-                            @* TODO: Implement subject logic *@
-                            <select id="selected-subject" name="id">
-                                @foreach (var subject in Model.AllSubjects)
-                                {
-                                    <option value="@subject.Id" data-curriculum="@subject.Source.ToString().ToLower()"
-                                        data-level="@subject.Level.ToString().ToLower()" data-subject-id="@subject.Id">
-                                        @subject.Name.ToTitleCase()
-                                    </option>
-                                }
-                            </select>
-                        </div>
-                        <div class="flex flex-col">
-                            <label for="add-subject">Add</label>
-                            <button id="add-subject" type="submit"
-                                class="inline-flex items-center bg-background hover:bg-secondary/60 p-2 pr-4 rounded-md">
-                                <span class="icon-sm mr-2">add</span>
-                                <h6 class="font-semibold">Add</h6>
-                            </button>
-                        </div>
-                    </form>
+                        <form method="get" asp-controller="Subjects" asp-action="Add"
+                            class="flex flex-row items-center">
+                            <div class="flex flex-col">
+                                <label for="curriculum" class="px-2">Subject</label>
+                                @* TODO: Implement subject logic *@
+                                <select id="selected-subject" name="id">
+                                    <option value="none" class="hidden">-</option>
+                                    @foreach (var subject in Model.AllSubjects)
+                                    {
+                                        <option value="@subject.Id" data-curriculum="@subject.Source.ToString().ToLower()"
+                                            data-level="@subject.Level.ToString().ToLower()" data-subject-id="@subject.Id">
+                                            @subject.Name.ToTitleCase()
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="add-subject">&ThinSpace;</label>
+                                <button id="add-subject" type="submit" onclick=""
+                                    class="inline-flex items-center bg-background hover:bg-secondary/60 p-2 pr-4 rounded-md">
+                                    <span class="icon-sm mr-2">add</span>
+                                    <h6 class="font-semibold">Add</h6>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </li>
         </ul>
