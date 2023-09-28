@@ -1,10 +1,23 @@
-﻿namespace Tech2023.Web.ViewModels;
+﻿using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
+namespace Tech2023.Web.ViewModels;
 
 #nullable disable
 
-public class SearchResult
+[StructLayout(LayoutKind.Sequential)]
+public readonly struct SearchResult
 {
-    public string Name { get; set; }
+    internal SearchResult(string name, string url)
+    {
+        Name = name;
+        Url = url;
+    }
 
-    public string Url { get; set; }
+    public string Name { get; }
+
+    public string Url { get; }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static SearchResult Create(string name, string url) => new(name, url);
 }

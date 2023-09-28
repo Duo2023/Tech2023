@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 
 using Tech2023.DAL;
+using Tech2023.Web.API.Caching;
 using Tech2023.Web.ViewModels;
 
 namespace Tech2023.Web.Controllers;
@@ -25,11 +26,15 @@ public class SearchController : Controller
     [Route(Routes.Search)]
     public async Task<IActionResult> SearchAsync([FromQuery] string query)
     {
-        List<SearchResult> results = new();
+        SearchResults search = new()
+        {
+            Query = query,
+            Results = new()
+        };
 
         if (string.IsNullOrEmpty(query))
         {
-            return View(results);
+            return View(search);
         }
 
         query = query.ToUpper();
@@ -38,13 +43,22 @@ public class SearchController : Controller
 
         if (query.Contains("PRIVACY"))
         {
-            results.Add(new SearchResult()
-            {
-                Name = "Privacy Policy Page",
-                Url = Routes.Privacy
-            });
+            search.Results.Add(SearchResult.Create("Privacy Policy", Routes.Privacy));
         }
 
-        return View(results);
+        if (_cache.TryGetValue(CacheSlots.Subjects, out var data))
+        {
+            if (data is List<SubjectViewModel> subjects)
+            {
+                foreach (var item in subjects.Where(s => s.Name.Contains(query)))
+                {
+                    var str = Curriculum.ToString(item.Level, item.Source);
+
+                    search.Results.Add(SearchResult.Create($"{item.Name} - {str}", $"/browse/{str}/{item.Name}"));
+                }
+            }
+        }
+
+        return View(search);
     }
 }
