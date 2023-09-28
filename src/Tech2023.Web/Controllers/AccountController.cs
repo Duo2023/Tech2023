@@ -3,16 +3,17 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
-
 using System.Diagnostics;
-using System.Text;
 
 using Tech2023.DAL;
+using Tech2023.Web.Shared;
 using Tech2023.Web.Shared.Authentication;
 
 namespace Tech2023.Web.Controllers;
 
+/// <summary>
+/// Controller used for account related actions
+/// </summary>
 public class AccountController : Controller
 {
     internal readonly SignInManager<ApplicationUser> _signInManager;
@@ -139,6 +140,11 @@ public class AccountController : Controller
             }
             foreach (var error in result.Errors)
             {
+                if (error.Code == "DuplicateUserName") // workaround for https://github.com/Duo2023/Tech2023/issues/33 should not be kept
+                {
+                    continue;
+                }
+
                 ModelState.AddModelError(string.Empty, error.Description);
             }
         }
@@ -154,7 +160,7 @@ public class AccountController : Controller
 
         if (email is null)
         {
-            return Redirect(Routes.Home);
+            return Redirect(Routes.Application.Home);
         }
 
         var user = await _userManager.FindByNameAsync(email);
@@ -189,11 +195,12 @@ public class AccountController : Controller
             goto Exit;
         }
 
-        var url = WebEncoders.Base64UrlDecode(code);
+        if (!WebEncoderHelpers.TryDecodeFromBase64UrlEncoded(code, out string output))
+        {
+            goto Exit;
+        }
 
-        code = Encoding.UTF8.GetString(url);
-
-        var result = await _userManager.ConfirmEmailAsync(user, code);
+        var result = await _userManager.ConfirmEmailAsync(user, output);
 
         if (result.Succeeded)
         {
@@ -236,7 +243,7 @@ public class AccountController : Controller
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
-        return RedirectToPage("/Account/Login");
+        return RedirectToPage(Routes.Account.Login);
     }
 
     [Route(Routes.Account.ForgotPassword)]
@@ -253,8 +260,8 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    [ActionName("Logout")]
-    [Route("logout")]
+    [ActionName(nameof(Routes.Account.Logout))]
+    [Route(Routes.Account.Logout)]
     public async Task<IActionResult> LogoutAsync(string returnUrl)
     {
         await _signInManager.SignOutAsync();

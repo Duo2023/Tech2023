@@ -6,9 +6,12 @@ using Tech2023.DAL.Models;
 namespace Tech2023.DAL;
 
 /// <summary>
-/// 
+/// A custom resource is a class that is meant to be inherited for each source for the common shared properties for less code duplication
 /// </summary>
-public abstract class CustomResource
+/// <remarks>
+/// In an external database the SQL will show different tables and T-SQL statements
+/// </remarks>
+public abstract class CustomResource : IMetadata
 {
     /// <summary>
     /// The identifier of the NCEA resource, this value is not related to the resource at all and it just provided a unique identifier to use in the database
@@ -36,7 +39,10 @@ public abstract class CustomResource
     public DateTimeOffset Created { get; set; }
 
 #nullable disable
+    /// <summary>
+    /// The resource items that belong to this resource
+    /// </summary>
     [Required]
     [JsonPropertyName("resources")]
-    public ICollection<Resource> Resources { get; }
+    public virtual List<Resource> Resources { get; } = new();
 }

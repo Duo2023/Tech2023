@@ -29,28 +29,17 @@ public class EmailClient : IEmailClient
     }
 
     /// <inheritdoc/>
-    public async Task SendEmailAsync(string email, string subject, string htmlMessage)
+    public async Task<bool> SendEmailAsync(string email, string subject, string htmlMessage)
     {
         ArgumentNullException.ThrowIfNull(email);
 
-        var result = await ExceuteAsync(email, subject, htmlMessage);
-
-        /*
-         * TODD: Implement email retry sevice
-         * 
-         * Possible ideas, immediate retry, con of resource intensive,
-         * Queue to background queue, too long a wait time??
-         */
-        if (!result) 
-        {
-            _logger.LogError("Email failed to send to: {address}", email);
-        }
+        return await ExceuteAsync(email, subject, htmlMessage);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal async Task<bool> ExceuteAsync(string targetAddress, string subject, string htmlMessage)
     {
-        var email = new MimeMessage()
+        using var email = new MimeMessage()
         {
             Sender = _senderAddress,
             Subject = subject,

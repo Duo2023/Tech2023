@@ -9,14 +9,14 @@ namespace Tech2023.DAL.Models;
 /// <summary>
 /// Represents the current privacy policy of the application
 /// </summary>
-public class PrivacyPolicy
+public class PrivacyPolicy : IMetadata
 {
     /// <summary>
     /// The version of the privacy policy, this is also the database key
     /// </summary>
     [Key]
     [Required]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [DatabaseGenerated(DatabaseGeneratedOption.None)]
     [JsonPropertyName("version")]
     public int Version { get; set; }
 

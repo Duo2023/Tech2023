@@ -8,40 +8,51 @@
     <div class="bg-secondary rounded-3xl shadow-2xl">
         <div class="w-72 flex flex-col items-center mx-8 my-8">
             <h1 class="font-bold mb-4">Register</h1>
-            <form id="form" class="w-full flex flex-col space-y-1" method="post" asp-action="Register" asp-controller="Account">
+            <form id="form" class="w-full flex flex-col space-y-1" method="post" asp-action="Register"
+                asp-controller="Account">
                 <div id="error-container">
                     <div asp-validation-summary="ModelOnly" class="h-fit w-full flex flex-row items-center rounded-xl bg-red-800/20 py-3
                     text-red-500 font-bold" role="alert">
                         <div class="w-12 h-full mx-2 flex items-center justify-center">
-                            <span class="material-symbols-rounded">error</span>
+                            <span class="icon">error</span>
                         </div>
                     </div>
                 </div>
                 <div id="email-container" class="flex flex-col">
                     <label asp-for="Email" class="ml-2 font-semibold leading-7"></label>
-                    <input asp-for="Email" class="w-full px-4 py-3 rounded-2xl bg-background outline-none
+                    <input asp-for="Email"
+                        class="w-full px-4 py-3 rounded-2xl bg-background outline-none
                     border-light-hint border-2 border-opacity-0 focus:border-opacity-75 transition-all duration-75 ease-out">
-                    <span asp-validation-for="Email" class="mx-2 font-semibold text-red-500 empty:opacity-0 transition-all duration-200"></span>
+                    <span asp-validation-for="Email"
+                        class="mx-2 font-semibold text-red-500 empty:opacity-0 transition-all duration-200"></span>
                 </div>
                 <div id="password-container" class="flex flex-col">
                     <label asp-for="Password" class="ml-2 font-semibold leading-7">Password:</label>
-                    <input asp-for="Password" class="w-full px-4 py-3 rounded-2xl bg-background outline-none
+                    <input asp-for="Password"
+                        class="w-full px-4 py-3 rounded-2xl bg-background outline-none
                     border-light-hint border-2 border-opacity-0 focus:border-opacity-75 transition-all duration-75 ease-out">
-                    <span asp-validation-for="Password" class="mx-2 font-semibold text-red-500 empty:opacity-0 transition-all duration-200"></span>
+                    <span asp-validation-for="Password"
+                        class="mx-2 font-semibold text-red-500 empty:opacity-0 transition-all duration-200"></span>
                 </div>
                 <div id="confirm-password-container" class="flex flex-col">
                     <label asp-for="ConfirmPassword" class="ml-2 font-semibold leading-7">Confirm Password:</label>
-                    <input asp-for="ConfirmPassword" class="w-full px-4 py-3 rounded-2xl bg-background outline-none
+                    <input asp-for="ConfirmPassword"
+                        class="w-full px-4 py-3 rounded-2xl bg-background outline-none
                     border-light-hint border-2 border-opacity-0 focus:border-opacity-75 transition-all duration-75 ease-out">
-                    <span asp-validation-for="ConfirmPassword" class="mx-2 font-semibold text-red-500 empty:opacity-0 transition-all duration-200"></span>
+                    <span asp-validation-for="ConfirmPassword"
+                        class="mx-2 font-semibold text-red-500 empty:opacity-0 transition-all duration-200"></span>
                     <div class="flex flex-row p-2 pt-1">
-                        <input id="show-password-checkbox" type="checkbox" value="false" onclick="TS.user.forms.togglePasswordVisibility(['Password', 'ConfirmPassword'])">
-                        <label for="show-password-checkbox" id="show-password-text" class="ml-2 text-sm">Show passwords</label>
+                        <input id="show-password-checkbox" type="checkbox" value="false"
+                            onclick="interactions.forms.togglePasswordVisibility(['Password', 'ConfirmPassword'])">
+                        <label for="show-password-checkbox" id="show-password-text" class="ml-2 text-sm">Show
+                            passwords</label>
                     </div>
                 </div>
-                <button id="register-button" type="submit" class="bg-primary font-bold px-4 py-3 my-4 rounded-xl">Register</button>
+                <button id="register-button" type="submit"
+                    class="bg-primary font-bold px-4 py-3 my-4 rounded-xl">Register</button>
             </form>
-            <a class="text-sm underline hover:no-underline p-2" href="@Routes.Account.Login">Already have an account?</a>
+            <a class="text-sm underline hover:no-underline p-2" href="@Routes.Account.Login">Already have an
+                account?</a>
         </div>
     </div>
 </div>

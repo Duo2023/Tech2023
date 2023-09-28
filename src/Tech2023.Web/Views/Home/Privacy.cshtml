@@ -13,7 +13,7 @@
 @* This is to guard against when the privacy policy has not been fetched because the version is 0 when it is returned from an error as 0 is the default value of Int32 *@
 @if (Model.Version != 0)
 {
-    <footer class="text-muted text-center" id="privacy-footer">
+    <footer class="absolute h-14 bottom-5 left-0 right-0 text-center">
         <p>Last Updated: @Model.Updated</p>
         <p>Version: @Model.Version</p>
     </footer>

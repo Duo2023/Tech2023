@@ -1,49 +1,158 @@
 @using Tech2023.Core;
-@using Tech2023.DAL.Models;
-@model IEnumerable<Subject>
+@using Tech2023.DAL;
+@using Tech2023.Web.Models.Components;
+@model SidebarViewModel;
 
 @{
-    var topBarHeight = "3.5rem";
+    bool isBrowsing = Model.BrowseData is not null;
+    string currentSubjectName = "";
+    if(Model.BrowseData is not null) {
+        var currentSubject = Model.BrowseData.SelectedSubject;
+        currentSubjectName = $"{StringHelpers.ToTitleCase(currentSubject.Name)} ({Curriculum.ToString(currentSubject.Level, currentSubject.Source)})";
+    }
 }
 
-<aside id="sidebar" class="group sidebar z-20 fixed md:relative left-0 p-1 h-full bg-secondary" data-expanded="true" aria-expanded="true">
-    <div id="top-bar" class="inline-flex justify-between items-center w-full mt-2 px-2" style="height: @topBarHeight;">
-        <div id="search-bar" class="bg-background w-11/12 group-data-[expanded=false]:w-0 opacity-100 group-data-[expanded=false]:opacity-0 
-                rounded-full py-3 my-auto transition-all duration-150 ease-out">
-            <input type="text" name="search" placeholder="🔎 Search" autocomplete="off" id="search-bar" class="bg-background ml-4 mr-2 active: outline-none w-10/12 group-data-[expanded=false]:w-0 ">
+<style>
+    :root {
+        --sidebar-width: 21rem;
+    }
+
+    #sidebar {
+        --sidebar-search-height: 5.5rem;
+        --sidebar-filter-height: 8rem;
+        --sidebar-utils-height: 4rem;
+        --sidebar-back-button-height: @(isBrowsing ? "2.25rem" : "0rem");
+    }
+
+    .sidebar-content {
+        height: calc(100vh - var(--navbar-height, 0rem) - var(--sidebar-search-height) - var(--sidebar-utils-height) - var(--sidebar-back-button-height) - 0.5rem)
+    }
+</style>
+<aside id="sidebar"
+    class="sidebar z-20 flex flex-col fixed md:relative h-full w-full md:w-[var(--sidebar-width,_21rem)] bg-secondary 
+           rounded-t-[2.5rem] md:rounded-none translate-y-[calc(100vh_-_var(--navbar-height,_0rem)_-_var(--sidebar-search-height))] md:translate-y-0 left-0 p-1">
+    @* TODO: Implement swipe up gesture for mobile devices + layout changes *@
+    <form id="search" method="get" asp-controller="Search" asp-action="Search" class="flex flex-col items-center px-3 pt-2" style="height: var(--sidebar-search-height, 5.5rem)">
+        <div class="md:hidden h-1 w-12 mb-2 bg-light-hint rounded-full"></div>
+        <input type="text" name="query" placeholder="🔎 Search" autocomplete="off" id="search-bar"
+            class="bg-background w-full px-5 py-3 rounded-full outline-none border-2 border-light-hint border-opacity-0 focus:border-opacity-80 transition-colors duration-150 ease-out">
+        <script>
+            let searchbar = document.getElementById('search-bar')
+            searchbar.addEventListener('onkeydown', (e) => {
+                if(document.activeElement != searchbar) {
+                    return;
+                }
+
+                if(e.keyCode == 13) {
+                    document.getElementById('search').submit();
+                }
+            })
+        </script>
+    </form>
+
+    @if (isBrowsing)
+    {
+        <div class="relative">
+            <button id="back-to-subjects" class="absolute inline-flex items-center space-x-3 pl-4 pb-4 bg-secondary 
+            data-[show=false]:-translate-x-[calc(100%_+_0.5rem)] data-[show=false]:opacity-0 transition-all duration-150 ease-out" data-show="true" 
+            onclick="document.getElementById('sidebar-papers').dataset.show = this.dataset.show ='false';" style="height: var(--sidebar-back-button-height);">
+                <span class="icon-sm">west</span>
+                <h5 class="font-semibold">@currentSubjectName</h5>
+            </button>
         </div>
-        <button id="sidebar-toggle-btn" class="material-symbols-rounded relative w-auto navbar-toggler p-2 hover:bg-background hover:rounded-full transition-all duration-200 ease-out" 
-                type="button" onclick="TS.core.sidebar.toggleSidebar()" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
-            left_panel_close
-        </button>
-    </div>
-    <div id="sidebar-items" class="flex flex-col justify-between" style="height: calc(100% - calc(@topBarHeight + 0.5rem))">
-        <div id="subject-list" class="flex flex-col">
-            <div id="favourites-section" class="section inline-flex justify-start items-center h-6 mx-4 mt-1 text-light-hint group-data-[expanded=false]:invisible
-                    group-data-[expanded=false]:h-0 group-data-[expanded=false]:opacity-0 text-clip whitespace-nowrap overflow-hidden transition-all duration-75 ease-out">
-                <span class="material-symbols-rounded-sm">expand_more</span>
+    }
+
+    <div id="sidebar-items" class="flex flex-col justify-between h-full">
+        @if (isBrowsing)
+        {
+            <div id="sidebar-papers" class="absolute z-30 bg-secondary sidebar-content overflow-y-auto translate-y-[var(--sidebar-back-button-height)] data-[show=false]:-translate-x-[calc(100%_+_0.5rem)] transition-transform duration-150 ease-out" data-show="true">
+                <div id="paper-filter" class="bg-gradient-to-br from-hint to-hint/40 mx-2 my-2 p-3 rounded-2xl shadow-xl "
+                    style="height: var(--sidebar-filter-height, 8rem) max-width: var(--sidebar-width, 21rem)">
+                    <h4 class="flex items-center font-bold">
+                        <span class="icon mr-1">filter_alt</span> Filter
+                    </h4>
+                    <div class="grid grid-rows-2 grid-flow-col pt-2 ml-1 gap-x-2">
+                        @for (int i = 0; i < 4; i++)
+                        {
+                            <label class="font-semibold text-lg" for="category">Year</label>
+                            <div id="category-@i" class="">
+                                <button class="flex flex-row items-center justify-between rounded-md bg-background"
+                                    onclick="interactions.element.toggleHiddenElement('category-@i-options', true)">
+                                    <p class="w-10 overflow-hidden whitespace-nowrap overflow-ellipsis">12313132123</p>
+                                    <span class="icon-sm">expand_more</span>
+                                </button>
+                                <div id="category-@i-options"
+                                    class="z-40 hidden fixed bg-background px-4 py-3 border-2 border-hint rounded-xl animate-slide-down">
+                                    <ul>
+                                        @for (int j = 0; j < 6; j++)
+                                        {
+                                            <li>
+                                                <input type="checkbox" name="@j" id="option-@i-@j" value="@j"> @j 2084
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div id="sidebar-papers" class="w-full overflow-x-hidden pr-1">
+                    @for (int i = 2023; i > 2017; i--)
+                    {
+                        <h4 class="paper-category inline-block font-semibold h-6 w-full mb-2 px-4">
+                            @i</h4>
+
+                        <div class="px-4">
+                            @for (int j = 0; j < 8; j++)
+                            {
+                                <a asp-controller="App" asp-action="PaperViewer"
+                                    class="subject bg-secondary hover:bg-background py-3 rounded-xl shadow-xl transition-colors duration-50 ease-linear">
+                                    <div class="inline-block w-full my-1 px-1 font-semibold items-center justify-start text-md">
+                                        <p class="paper p-3">
+                                            📜&ThickSpace; Paper 1 - Feb/Mar (Zone 1)
+                                        </p>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        <div>
+            <div id="favourites-section"
+                class="section inline-flex justify-start items-center h-6 mb-1 mx-2 text-light-hint">
+                <span class="icon-sm">expand_more</span>
                 <div>⭐</div>
                 <p class="font-bold"> Favourites</p>
             </div>
-            @foreach(var subject in Model)
-            {
-                <div class="subjects bg-secondary hover:bg-background py-3 mx-3 group-data-[expanded=false]:mx-0 my-1 rounded-xl shadow-xl w-auto transition-colors duration-50 ease-linear">
-                    <div class="inline-flex px-4 max-h-6 h-6 font-semibold items-center justify-start text-md">
-                        <div class="relative subject-icon text-center w-6 h-6 z-10 rounded-md mr-3" style="background-color: @HtmlHexString.GetHtmlHexString(subject.DisplayColor ?? 0);"> @* Implement random color *@
-                            <p class="drop-shadow-[0_0_1.5px_rgb(0,0,0,0.6)]">@subject.Name[0]</p>
+            <div id="subject-list" class="flex flex-col px-2 h-full space-y-2 overflow-y-auto">
+                @foreach (var subject in Model.Subjects)
+                {
+                    <a asp-controller="App" asp-action="PaperBrowser"
+                        asp-route-curriculum="@Curriculum.ToString(subject.Level, subject.Source)"
+                        asp-route-subject="@subject.Name"
+                        class="subject bg-secondary hover:bg-background py-3 rounded-xl shadow-xl transition-colors duration-50 ease-linear">
+                        <div class="inline-flex px-4 font-semibold items-center justify-start text-md">
+                            <div class="relative subject-icon text-center w-6 h-6 z-10 rounded-md mr-3"
+                                style="background-color: @HtmlHexString.GetHtmlHexString(subject.DisplayColor);">
+                                <p class="drop-shadow-[0_0_1.5px_rgb(0,0,0,0.6)]">@subject.Name[0]</p>
+                            </div>
+                            <p>@subject.Name.ToTitleCase() (@Curriculum.ToString(subject.Level, subject.Source))
+                            </p>
                         </div>
-                        <p class="group-data-[expanded=false]:invisible text-clip whitespace-nowrap overflow-hidden">@subject.Name (@Html.DisplayTextFor(s => subject.Source))</p>
-                    </div>
-                </div>
-            }
-        </div>
-        <div id="util-list" class="flex flex-col my-2">
-            <div class="bg-secondary hover:bg-background py-3 mx-3 group-data-[expanded=false]:mx-0 my-1 rounded-xl shadow-xl w-auto transition-colors duration-50 ease-linear">
-                <a class="inline-flex px-4 font-semibold items-center justify-start text-md" asp-action="Index" asp-controller="Settings">
-                    <span class="material-symbols-rounded-sm text-md w-6 h-6 rounded-md mr-3">settings</span>
-                    <p class="group-data-[expanded=false]:hidden text-clip whitespace-nowrap overflow-hidden">Settings</p>
-                </a>
+                    </a>
+                }
             </div>
+        </div>
+        <div id="sidebar-utils" class="flex flex-col my-2 bottom-0" style="height: var(--sidebar-utils-height)">
+            <a asp-controller="Settings" asp-action="Index"
+                class="bg-secondary hover:bg-background py-3 mx-3 my-2 rounded-xl shadow-xl transition-colors duration-50 ease-linear">
+                <div class="inline-flex px-4 font-semibold items-center justify-start text-md">
+                    <span class="icon-sm text-md w-6 h-6 rounded-md mr-3">settings</span>
+                    <p>Settings</p>
+                </div>
+            </a>
         </div>
     </div>
 </aside>

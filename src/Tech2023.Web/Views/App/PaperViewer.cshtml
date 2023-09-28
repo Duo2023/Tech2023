@@ -1,45 +1,28 @@
 @{
     ViewData["Title"] = "Paper Viewer";
-    var paperLink = "https://papers.gceguide.com/A%20Levels/Mathematics%20(9709)/2022/9709_s22_qp_11.pdf";
+    var paperLink = "../assets/dev/dev_test_pdf.pdf";
 }
 
-<div class="flex flex-col h-full" onload="TS.viewer.forms.load('display-canvas', '@paperLink')">
-    <div id="paper-navbar" class="flex flex-row items-center justify-between h-14 px-3 bg-secondary">
-        <div class="flex flex-row space-x-3">
-            <a asp-controller="App" asp-action="Home" class="material-symbols-rounded-sm">west</a>
-            <div>
-                <p class="text-xs font-bold text-light-hint leading-[0.5rem]">Mathematics</p>
-                <h3 class="leading-5">Paper 1 - May/June 2022 - Variant 1</h3>
-            </div>
-        </div>
-        <div class="flex flex-row space-x-4">
-            <button id="paper-toggle">
-                
-            </button>
-            <div class="flex flex-col">
-                <div class="inline-flex space-x-1 bg-black p-1 rounded-md">
-                    <a href="@paperLink" download class="inline-flex">
-                        <span class="material-symbols-rounded-sm">download</span>
-                        <p>Download</p>
-                    </a>
-                    <button class="material-symbols-rounded-sm" onclick="TS.interactions.toggleHiddenElement('paper-download-options');">expand_more</button>
-                </div>
-                <div id="paper-download-options" class="absolute hidden">
-                        <ul class="flex flex-col space-y-1">
-                            <li>
-                                <a href="@paperLink" download>Question Paper</a>
-                            </li>
-                        </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <canvas id="display-canvas">
-    </canvas>
+<vc:sidebar></vc:sidebar>
+
+<div class="h-full w-full">
+    <iframe id="paper-viewer" src="@paperLink"
+        class="w-full md:w-[calc(100vw_-_var(--sidebar-width,_0rem))] overflow-clip"
+        style="height: calc(100vh - var(--navbar-height, 0rem));">
+    </iframe>
+</div>
+
+@*
+<div id="paper-viewer"
+class="w-full md:w-[calc(100vw_-_var(--sidebar-width,_0rem))] space-y-2 overflow-y-scroll overflow-x-auto"
+style="height: calc(100vh - var(--navbar-height, 0rem) - var(--paper-navbar-height));">
+<canvas id="page-template" class="m-auto" hidden></canvas>
+</div>
 </div>
 
 <script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", (event) => {
-        TS.viewer.forms.load("display-canvas", 'https://papers.gceguide.com/A%20Levels/Mathematics%20(9709)/2022/9709_s22_qp_11.pdf');
-    });
+document.addEventListener("DOMContentLoaded", (event) => {
+pdf.viewer.load("paper-viewer", '../assets/dev/dev_test_pdf.pdf', "page-template");
+});
 </script>
+*@

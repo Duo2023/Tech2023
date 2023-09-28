@@ -12,7 +12,7 @@ module.exports = {
             colors: {
                 primary: "#3C38FA",
                 secondary: "#191A1F",
-                background: "#131418",
+                background: "#070711",
                 hint: "#3E3E42",
                 "light-hint": "#ACADAE",
             },
@@ -38,5 +38,5 @@ module.exports = {
             },
         },
     },
-    plugins: [],
+    plugins: [require("tailwind-scrollbar")],
 };

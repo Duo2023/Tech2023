@@ -41,15 +41,24 @@ public class Subject
     [JsonPropertyName("curriculumSource")]
     public CurriculumSource Source { get; set; }
 
+    // This cannot be added yet or it will break the database on launch because it is a required field
+
     /// <summary>
-    /// Unsigned 4 byte integer used for the preffered display color if it is <see langword="null"/>
+    /// The level of curriculum that the subject is. If the subject is NCEA values, the value here will be NCEA Level 1, 2 or 3. If it's Cambridge the value will be IGSCE, AS/A, A2
+    /// </summary>
+    [Required]
+    [JsonPropertyName("curriculumLevel")]
+    public CurriculumLevel Level { get; set; }
+
+    /// <summary>
+    /// Unsigned 4 byte integer used for the preffered display color
     /// </summary>
     [JsonPropertyName("displayColor")]
-    public uint? DisplayColor { get; set; }
+    public uint DisplayColor { get; set; }
 #if DEBUG
     = HtmlHexString.NextColor();
 #endif
 
-    public ICollection<NceaResource>? NceaResource { get; }
-    public ICollection<NceaResource>? CambridgeResource { get; }
+    public virtual List<NceaResource>? NceaResource { get; } = new();
+    public virtual List<CambridgeResource>? CambridgeResource { get; } = new();
  }

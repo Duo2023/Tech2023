@@ -1,0 +1,49 @@
+@using Tech2023.Core;
+@using Tech2023.DAL.Models;
+@using Tech2023.DAL;
+@using Tech2023.Web.ViewComponents;
+@using Tech2023.Web.ViewModels;
+@model BrowsePapersViewModel;
+
+@{
+    string subjectName = StringHelpers.ToTitleCase(Model.SelectedSubject.Name);
+    string subjectSource = Html.DisplayTextFor(s => s.SelectedSubject.Source);
+    string yearLevel = Curriculum.ToString(Model.SelectedSubject.Level, Model.SelectedSubject.Source);
+
+    CurriculumSource source = Model.SelectedSubject.Source;
+
+    ViewData["Title"] = $"Browse {yearLevel} {subjectName}";
+}
+
+@await Component.InvokeAsync(SidebarViewComponent.Name, Model)
+@* TODO: Make sidebar have relevant items *@
+
+<div id="paper-browser" class="max-h-full overflow-y-scroll">
+    <h2 class="m-3 font-bold">Papers for @subjectName (@subjectSource)</h2>
+
+    <div id="papers" class="w-full overflow-x-hidden pr-1">
+        @if (source == CurriculumSource.Ncea)
+        {
+            <partial name="_NceaDisplay" model="Model.SelectedSubject.NceaResource!"/>
+        }
+        else if (source == CurriculumSource.Cambridge)
+        {
+            @for (int i = 2023; i > 2017; i--)
+            {
+                <h4 class="paper-category sticky top-0 w-full bg-hint p-3 px-4 font-bold">@i</h4>
+                <ul>
+                    @for (int j = 0; j < 8; j++)
+                    {
+                        <li class="bg-secondary even:bg-opacity-30 border-b-2 border-hint">
+                            <a asp-controller="App" asp-action="PaperViewer">
+                                <h5 class="paper p-3">
+                                    📜&ThickSpace; Paper 1 - Feb/Mar (Zone 1)
+                                </h5>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            }
+        }
+    </div>
+</div>

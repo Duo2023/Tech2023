@@ -1,0 +1,117 @@
+﻿@using Tech2023.Core;
+@using Tech2023.DAL;
+@using Tech2023.DAL.Models;
+@using Tech2023.Web.ViewModels;
+
+@model SubjectListModel
+@{
+    ViewData["Title"] = "Subjects";
+}
+
+<div id="subjects-editor" class="container mx-auto lg:px-10 overflow-y-auto"
+    style="height: calc(100vh - var(--navbar-height, 0rem))">
+    <h1 class="w-full text-center lg:text-left bg-gradient-to-br from-hint/90 to-hint/30 lg:mt-14 p-7 rounded-xl">Edit
+        subjects</h1>
+    <div id="current-subjects" class="">
+        <ul id="current-subjects-list" class="mt-2 space-y-1">
+            @foreach (var subject in Model.SavedSubjects)
+            {
+                <li data-subject-id="@subject.Id"
+                    class="group flex items-center justify-between bg-secondary hover:bg-secondary/50 h-20 px-6 rounded-xl transition-colors duration-75 ease-out">
+                    <h4 class="font-semibold">
+                        @subject.Name.ToTitleCase() - @Curriculum.ToString(subject.Level, subject.Source)
+                    </h4>
+                    <button
+                        onclick="interactions.dialog.showDialog('delete-@(@subject.Name.ToLower() + '-' + @Curriculum.ToString(subject.Level, subject.Source).ToLower())-modal', true)"
+                        class="bg-transparent group-hover:bg-hint/30 rounded-xl transition-colors duration-75 ease-out">
+                        <span
+                            class="icon hover:bg-hint/40 rounded-xl text-red-500 p-2 transition-colors duration-75 ease-out">delete</span>
+                    </button>
+                </li>
+                <div class="h-full">
+                    <dialog
+                        id="delete-@(@subject.Name.ToLower() + '-' + @Curriculum.ToString(subject.Level, subject.Source).ToLower())-modal"
+                        class="font-semibold">
+                        <h3>Delete @subject.Name.ToTitleCase() - @Curriculum.ToString(subject.Level, subject.Source)?</h3>
+                        <form method="post" asp-controller="Subjects" asp-action="Delete" asp-route-id="@subject.Id"
+                            class="w-full flex flex-row justify-end mt-4 space-x-4">
+                            <button formmethod="dialog" type="submit" class="p-2 hover:underline">Go back!</button>
+                            <button class="inline-flex bg-red-500/90 p-2 rounded-lg" type="submit">
+                                Yes, Delete
+                            </button>
+                        </form>
+                    </dialog>
+                </div>
+            }
+            <li id="add-subject-item" data-select-subject="false"
+                class="group bg-secondary hover:bg-secondary/50 h-20 rounded-xl transition-colors duration-75 ease-out">
+                <div class="relative h-full w-full">
+                    <button
+                        class="z-10 absolute flex group-data-[select-subject=true]:-translate-y-4 h-full w-full items-center px-5 space-x-3 
+                        group-data-[select-subject=true]:opacity-0 group-data-[select-subject=true]:pointer-events-none transition-all duration-100 ease-in"
+                        onclick="document.getElementById('add-subject-item').dataset.selectSubject = true">
+                        <span
+                            class="icon bg-hint/50 group-hover:bg-hint/40 p-2 rounded-full transition-colors duration-75 ease-out">
+                            add
+                        </span>
+                        <h4 class="font-semibold">
+                            Add subject
+                        </h4>
+                    </button>
+                    <div class="absolute flex flex-row h-full w-full items-center px-5 space-x-3 translate-y-4 group-data-[select-subject=true]:translate-y-0 
+                    opacity-0 group-data-[select-subject=true]:opacity-100 transition-all duration-100 ease-in">
+                        <div class="flex flex-col">
+                            <label for="curriculum" class="px-2">Curriculum</label>
+                            <select id="curriculum" name="curriculum">
+                                <option value="none" class="hidden">-</option>
+                                @foreach (var curriculum in Enum.GetValues<CurriculumSource>())
+                                {
+                                    if (curriculum is CurriculumSource.Ncea)
+                                    {
+                                        <option data-curriculum="@curriculum.ToString().ToLower()">
+                                            NCEA
+                                        </option>
+                                    }
+                                    if (curriculum is CurriculumSource.Cambridge)
+                                    {
+                                        <option data-curriculum="@curriculum.ToString().ToLower()">
+                                            CAIE
+                                        </option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <form method="get" asp-controller="Subjects" asp-action="Add"
+                            class="flex flex-row items-center">
+                            <div class="flex flex-col">
+                                <label for="curriculum" class="px-2">Subject</label>
+                                @* TODO: Implement subject logic *@
+                                <select id="selected-subject" name="id">
+                                    <option value="none" class="hidden">-</option>
+                                    @foreach (var subject in Model.AllSubjects)
+                                    {
+                                        if (!Model.SavedSubjects.Contains(subject))
+                                        {
+                                            <option value="@subject.Id">
+                                                @subject.Name.ToTitleCase() (@Curriculum.ToString(subject.Level,
+                                        subject.Source))
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="add-subject">&ThinSpace;</label>
+                                <button id="add-subject" type="submit"
+                                    class="inline-flex items-center bg-background hover:bg-secondary/60 p-2 pr-4 rounded-md">
+                                    <span class="icon-sm mr-2">add</span>
+                                    <h6 class="font-semibold">Add</h6>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

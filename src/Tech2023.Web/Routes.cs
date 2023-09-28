@@ -16,18 +16,22 @@ public sealed class Routes
     private Routes() { }
 
     [RouteVisibility(Visiblity.Public)]
-    public const string Home = "/";
-
-    [RouteVisibility(Visiblity.Public)]
     public const string Privacy = "/privacy";
+
+    public const string Error = "/error";
+
+    public const string Search = "/search";
 
     public static class Application
     {
         [RouteVisibility(Visiblity.Authenticated)]
-        public const string Home = "/app";
+        public const string Home = "/";
 
         [RouteVisibility(Visiblity.Authenticated)]
         public const string PaperViewer = "/paper";
+        
+        // [RouteVisibility(Visiblity.Authenticated)]
+        public const string PaperBrowser = "/browse/{curriculum}/{subject}";
     }
 
     public static class Settings
@@ -36,10 +40,22 @@ public sealed class Routes
         public const string Home = "/settings";
     }
 
+    public static class Subjects
+    {
+        //[RouteVisibility(Visiblity.Authenticated)]
+        public const string Home = "/subjects";
+
+        public const string Delete = "/subjects/delete";
+
+        public const string Add = "/subjects/add";
+    }
+
     public static class Admin
     {
         [RouteVisibility(Visiblity.Adminstrator)]
         public const string Home = "/admin";
+
+        public const string Upload = "/admin/upload";
     }
 
     public static class Account
@@ -64,5 +80,8 @@ public sealed class Routes
 
         [RouteVisibility(Visiblity.Public)]
         public const string Lockout = "/account/lockout";
+
+        // [RouteVisiblity(Visiblity.Authenticated)] ??
+        public const string Logout = "/account/logout";
     }
 }

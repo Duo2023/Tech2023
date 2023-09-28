@@ -5,12 +5,15 @@ using Microsoft.Extensions.Caching.Memory;
 
 using Tech2023.DAL;
 using Tech2023.DAL.Models;
+using Tech2023.DAL.Queries;
 using Tech2023.Web.API.Caching;
 using Tech2023.Web.Models;
-using Tech2023.Web.Shared;
 
 namespace Tech2023.Web.Controllers;
 
+/// <summary>
+/// The home controller which serves the home route, privacy and error pages
+/// </summary>
 public class HomeController : Controller
 {
     internal readonly ILogger<HomeController> _logger;
@@ -24,14 +27,8 @@ public class HomeController : Controller
         _factory = factory;
     }
 
-    [Route(Routes.Home)]
-    public IActionResult Index()
-    {
-        return View();
-    }
-
-    [Route("/Home/HandleError/{code:int}")]
-    public IActionResult HandleError(int code)
+    [Route(Routes.Error)]
+    public IActionResult Error(int code) 
     {
         return code switch
         {
@@ -45,9 +42,7 @@ public class HomeController : Controller
     {
         if (_cache.TryGetValue(CacheSlots.PrivacyPolicy, out var data))
         {
-            var policy = (PrivacyPolicy?)data;
-
-            if (policy is null)
+            if (data is not PrivacyPolicy policy) // this does a null check as well
             {
                 _logger.LogError("Cache in privacy policy returned null");
                 return StatusCode(StatusCodes.Status500InternalServerError);
@@ -58,7 +53,7 @@ public class HomeController : Controller
 
         using var context = _factory.CreateDbContext();
 
-        var privacyPolicy = await Queries.Privacy.GetCurrentPrivacyPolicy(context);
+        var privacyPolicy = await Privacy.GetPolicyAsync(context);
 
         // TODO: Configure time expiry, sliding expiration etc
         _cache.Set(CacheSlots.PrivacyPolicy, privacyPolicy);
