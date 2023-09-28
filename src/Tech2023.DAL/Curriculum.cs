@@ -40,9 +40,8 @@ public static class Curriculum
                 return true;
             }
         }
-
         // first check the length so that we dont have to pay the cost for IGSCE where it does a memcmp
-        if (input.Length == NceaSpecifier.Length + 1 && input.StartsWith(NceaSpecifier))
+        else if (input.Length == NceaSpecifier.Length + 1 && input.StartsWith(NceaSpecifier))
         {
             var result = (CurriculumLevel)(byte)(input[NceaSpecifier.Length] - '0'); // fast than using byte.Parse because we are only using one character
 

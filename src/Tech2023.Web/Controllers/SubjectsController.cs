@@ -82,15 +82,12 @@ public class SubjectsController : Controller
             .Where(u => u.NormalizedUserName == _userManager.NormalizeEmail(User.Identity.Name))
             .FirstAsync();
 
-        // TODO: Do we need to roundtrip the database to check if the subject exists?
-        var subject = await context.Subjects.FindAsync(id); 
+        int count = user.SavedSubjects.RemoveAll(s => s.Id == id);
 
-        if (subject is not null)
+        if (count > 0)
         {
-            bool result = user.SavedSubjects.Remove(subject);
-
             await context.SaveChangesAsync();
-        }
+        } 
 
         return Redirect(Routes.Subjects.Home);
     }
