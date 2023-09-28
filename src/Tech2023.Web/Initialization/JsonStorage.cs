@@ -23,7 +23,7 @@ public class SubjectJsonModel
     {
         return new()
         {
-            Name = model.Name,
+            Name = model.Name.ToUpper(), // Make sure to keep this
             Source = model.Curriculum.Source,
             Level = model.Curriculum.Level,
             DisplayColor = (uint)Random.Shared.Next()
