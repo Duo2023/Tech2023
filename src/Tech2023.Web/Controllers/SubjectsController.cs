@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Net;
+using System.Diagnostics;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -10,6 +11,7 @@ using Tech2023.DAL;
 using Tech2023.DAL.Queries;
 using Tech2023.Web.API.Caching;
 using Tech2023.Web.ViewModels;
+using Azure.Core;
 
 namespace Tech2023.Web.Controllers;
 
@@ -89,7 +91,7 @@ public class SubjectsController : Controller
             await context.SaveChangesAsync();
         } 
 
-        return Redirect(Routes.Subjects.Home);
+        return Redirect(Request.Headers["Referer"].ToString() ?? Routes.Application.Home);
     }
 
     [HttpGet]
@@ -113,6 +115,6 @@ public class SubjectsController : Controller
             await context.SaveChangesAsync();
         }
 
-        return Redirect(Routes.Subjects.Home);
+        return Redirect(Request.Headers["Referer"].ToString() ?? Routes.Application.Home);
     }
 }
