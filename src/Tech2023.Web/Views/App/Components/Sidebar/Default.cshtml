@@ -122,21 +122,20 @@
         }
         <div id="sidebar-subjects">
             <div id="favourites-section"
-                class="section inline-flex justify-start items-center h-6 mb-1 mx-2 text-light-hint">
-                <span class="icon-sm">expand_more</span>
-                <div>⭐</div>
-                <p class="font-bold"> Favourites</p>
+                class="inline-flex justify-start items-baseline h-6 mb-1 mx-3 text-light-hint space-x-1">
+                <div>📕</div>
+                <p class="font-bold">My Subjects</p>
             </div>
             <div id="subject-list" class="flex flex-col px-2 h-full space-y-2 overflow-y-auto">
                 @foreach (var subject in Model.SavedSubjects)
                 {
-                    <div class="group flex flex-row bg-secondary hover:bg-background py-2 rounded-xl shadow-xl transition-colors duration-50 ease-linear">
+                    <div class="group flex flex-row bg-secondary hover:bg-background py-2 rounded-xl shadow-2xl transition-colors duration-50 ease-linear">
                         <a asp-controller="App" asp-action="PaperBrowser"
                             asp-route-curriculum="@Curriculum.ToString(subject.Level, subject.Source)"
                             asp-route-subject="@subject.Name"
                             class="subject w-full my-auto">
                             <div class="inline-flex px-4 font-semibold items-center justify-start text-md">
-                                <div class="relative subject-icon text-center w-6 h-6 z-10 rounded-md mr-3"
+                                <div class="subject-icon text-center w-6 h-6 rounded-md mr-3"
                                     style="background-color: @HtmlHexString.GetHtmlHexString(subject.DisplayColor);">
                                     <p class="drop-shadow-[0_0_1.5px_rgb(0,0,0,0.6)]">@subject.Name[0]</p>
                                 </div>
