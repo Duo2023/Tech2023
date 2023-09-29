@@ -56,9 +56,9 @@ public class AppController : Controller
     }
 
     [Route(Routes.Application.PaperBrowser)]
-    public async Task<IActionResult> PaperBrowser(string curriculum, string subject)
+    public async Task<IActionResult> PaperBrowser(string? curriculum, string subject)
     {
-        curriculum = curriculum.ToUpper(); // TODO: Better parsing of curriculum level parsing so we don't allocate and call a nullref
+        curriculum = curriculum?.ToUpper(); // TODO: Better parsing of curriculum level parsing so we don't allocate and call a nullref
 
         if (!Curriculum.TryParse(curriculum, out var level, out var source) || string.IsNullOrWhiteSpace(subject))
         {
