@@ -125,6 +125,10 @@ internal class Initializer : IDataInitializer
             }
             else if (item.Source == CurriculumSource.Cambridge)
             {
+                foreach (var _ in Enumerable.Range(0, Random.Shared.Next(1, 10)))
+                {
+                    item.CambridgeResource?.Add(GenerateCambridgeResource());
+                }
             }
         }
 
@@ -140,6 +144,20 @@ internal class Initializer : IDataInitializer
             AssessmentType = (NceaAssessmentType)Random.Shared.Next((int)NceaAssessmentType.Internal, (int)NceaAssessmentType.Unit),
             AchievementStandard = Random.Shared.Next(1, ushort.MaxValue),
             Description = "An achievement standard",
+            Created = DateTimeOffset.UtcNow,
+        };
+
+        resource.SyncUpdated();
+
+        return resource;
+    }
+
+    internal static CambridgeResource GenerateCambridgeResource()
+    {
+        var resource = new CambridgeResource()
+        {
+            Season = (Season)Random.Shared.Next((int)Season.Spring, (int)Season.Winter),
+            Variant = (Variant)Random.Shared.Next((int)Variant.One, (int)Variant.Three),
             Created = DateTimeOffset.UtcNow,
         };
 
