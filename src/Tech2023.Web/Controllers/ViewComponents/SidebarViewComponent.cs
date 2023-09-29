@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 using Tech2023.DAL;
-using Tech2023.Web.Models;
 using Tech2023.Web.Models.Components;
-using Tech2023.Web.Extensions;
 using Tech2023.Web.ViewModels;
 using Tech2023.DAL.Queries;
 
@@ -32,13 +30,13 @@ public class SidebarViewComponent : ViewComponent
     /// <summary>
     /// Invokes the view component using the specified state provided
     /// </summary>
-    public async Task<IViewComponentResult> InvokeAsync(BrowsePapersViewModel? browseData = null)
+    public async Task<IViewComponentResult> InvokeAsync(BrowsePapersViewModel? browseData = null, List<SubjectViewModel>? subjects = null)
     {
-        var user = await _userManager.FindByPrincipalAsync(UserClaimsPrincipal);
+        subjects ??= await Users.GetUserSavedSubjectsAsViewModelsAsync(_userManager, UserClaimsPrincipal);
 
         var sidebarData = new SidebarViewModel
         {
-            Subjects = user.SavedSubjects,
+            Subjects = subjects,
             BrowseData = browseData
         };
 

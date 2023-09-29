@@ -1,13 +1,13 @@
 @using Tech2023.Core;
 @using Tech2023.DAL;
+@using Tech2023.Web.ViewComponents;
 @using Tech2023.Web.ViewModels;
 @model SubjectDashboardViewModel
 @{
     ViewData["Title"] = "Home";
 }
 
-<vc:sidebar></vc:sidebar>
-
+<vc:sidebar subjects="@Model.SavedSubjects"></vc:sidebar>
 
 <div id="dashboard" class="h-full ml-3 space-y-1 overflow-y-scroll">
     <h1 class="ml-0">Dashboard</h1>
