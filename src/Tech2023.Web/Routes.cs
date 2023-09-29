@@ -42,9 +42,6 @@ public sealed class Routes
 
     public static class Subjects
     {
-        //[RouteVisibility(Visiblity.Authenticated)]
-        public const string Home = "/subjects";
-
         public const string Delete = "/subjects/delete";
 
         public const string Add = "/subjects/add";

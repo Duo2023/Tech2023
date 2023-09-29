@@ -6,7 +6,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Tech2023.DAL;
 using Tech2023.DAL.Models;
 using Tech2023.DAL.Queries;
-using Tech2023.Web.API.Caching;
+using Tech2023.Web.Caching;
 using Tech2023.Web.Models;
 
 namespace Tech2023.Web.Controllers;

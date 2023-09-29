@@ -9,7 +9,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 using Tech2023.DAL;
 using Tech2023.DAL.Queries;
-using Tech2023.Web.API.Caching;
+using Tech2023.Web.Caching;
 using Tech2023.Web.ViewModels;
 using Azure.Core;
 
@@ -22,53 +22,17 @@ namespace Tech2023.Web.Controllers;
 public class SubjectsController : Controller
 {
     internal readonly IDbContextFactory<ApplicationDbContext> _factory;
-    internal readonly IMemoryCache _cache;
     internal readonly ILogger<SubjectsController> _logger;
     internal readonly UserManager<ApplicationUser> _userManager;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SubjectsController"/> class
     /// </summary>
-    public SubjectsController(IDbContextFactory<ApplicationDbContext> factory, IMemoryCache cache, ILogger<SubjectsController> logger, UserManager<ApplicationUser> userManager)
+    public SubjectsController(IDbContextFactory<ApplicationDbContext> factory,  ILogger<SubjectsController> logger, UserManager<ApplicationUser> userManager)
     {
         _factory = factory;
-        _cache = cache;
         _logger = logger;
         _userManager = userManager;
-    }
-
-    [Route(Routes.Subjects.Home)]
-    public async Task<IActionResult> HomeAsync()
-    {
-        List<SubjectViewModel> savedSubjects = await Users.GetUserSavedSubjectsAsViewModelsAsync(_userManager, User);
-        List<SubjectViewModel> subjects; // the subjects they can select
-
-        using var context = await _factory.CreateDbContextAsync();
-
-        if (_cache.TryGetValue(CacheSlots.Subjects, out var data)) // fast path
-        {
-            if (data is not List<SubjectViewModel> list)
-            {
-                _logger.LogError("Cache error in subjects - model returned null");
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-
-            subjects = list;
-        }
-        else // slow path
-        {
-            _logger.LogInformation("Cache missed in subjects");
-            subjects = await Subjects.GetAllSubjectViewModelsAsync(context);
-            _cache.Set(CacheSlots.Subjects, subjects);
-        }
-
-        var subjectsList = new SubjectListModel()
-        {
-            AllSubjects = subjects,
-            SavedSubjects = savedSubjects
-        };
-
-        return View(subjectsList);
     }
 
     [HttpPost]

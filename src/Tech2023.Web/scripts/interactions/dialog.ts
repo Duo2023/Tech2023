@@ -10,6 +10,12 @@ export module dialog {
         // To auto hide the dialog if the user clicks outside the dialog element:
         dialog.addEventListener("click", (e) => {
             const dialogDimensions = dialog.getBoundingClientRect();
+
+            // To avoid hiding the dialog when user clicks on a select element:
+            if (e.clientX == 0 && e.clientY == 0) {
+                return;
+            }
+
             if (
                 e.clientX < dialogDimensions.left ||
                 e.clientX > dialogDimensions.right ||

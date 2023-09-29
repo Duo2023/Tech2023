@@ -1,4 +1,4 @@
-﻿namespace Tech2023.Web.API.Caching;
+﻿namespace Tech2023.Web.Caching;
 
 /// <summary>
 /// Cache slots for in memory storage

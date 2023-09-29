@@ -5,7 +5,8 @@ namespace Tech2023.Web.Models.Components;
   
 public sealed class SidebarViewModel
 {
-    public required List<SubjectViewModel> Subjects { get; set; } = new List<SubjectViewModel>();
+    public required List<SubjectViewModel> SavedSubjects { get; set; }
+    public required List<SubjectViewModel> AllSubjects { get; set; }
 
     public BrowsePapersViewModel? BrowseData { get; set; }
 }

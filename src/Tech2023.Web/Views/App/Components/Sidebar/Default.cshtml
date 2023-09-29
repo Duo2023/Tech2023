@@ -1,5 +1,6 @@
 @using Tech2023.Core;
 @using Tech2023.DAL;
+@using Tech2023.DAL.Models;
 @using Tech2023.Web.Models.Components;
 @model SidebarViewModel;
 
@@ -127,7 +128,7 @@
                 <p class="font-bold"> Favourites</p>
             </div>
             <div id="subject-list" class="flex flex-col px-2 h-full space-y-2 overflow-y-auto">
-                @foreach (var subject in Model.Subjects)
+                @foreach (var subject in Model.SavedSubjects)
                 {
                     <div class="group flex flex-row bg-secondary hover:bg-background py-2 rounded-xl shadow-xl transition-colors duration-50 ease-linear">
                         <a asp-controller="App" asp-action="PaperBrowser"
@@ -165,6 +166,78 @@
                         </dialog>
                     </div>
                 }
+                <button onclick="interactions.dialog.showDialog('add-subject', true)" 
+                    class="group bg-secondary hover:bg-background py-2 rounded-xl shadow-xl transition-colors duration-50 ease-linear">
+                    <div class="flex flex-row items-center justify-start px-4 font-semibold text-md">
+                            <div class="rounded-md mr-3 mt-1 my-auto">
+                                <span class="icon-sm bg-hint/80 rounded-md">add</span>
+                            </div>
+                            <p class="my-auto">Add Subject</p>
+                    </div>
+                </button>
+
+                <div class="absolute h-full">
+                    <dialog id="add-subject" class="bg-secondary/70 font-semibold">
+                        <h3 class="mb-2">Add Subject</h3>
+                        <div class="flex flex-col">
+                            <label for="selected-curriculum">Select Curriculum</label>
+                            <select id="selected-curriculum"
+                                onchange="interactions.forms.addSubjects.updateOptionsBasedOnCurriculum('selected-subject', 'selected-curriculum')">
+                                <option value="none" class="hidden">-</option>
+                                @foreach (var curriculum in Enum.GetValues<CurriculumSource>())
+                                {
+                                    switch (curriculum)
+                                    {
+                                        case CurriculumSource.Ncea:
+                                            <option data-curriculum="@curriculum.ToString().ToLower()">
+                                                NCEA
+                                            </option>
+                                            break;
+                                        case CurriculumSource.Cambridge:
+                                            <option data-curriculum="@curriculum.ToString().ToLower()">
+                                                CAIE
+                                            </option>
+                                            break;
+                                        default:
+                                            <option data-curriculum="@curriculum.ToString().ToLower()">
+                                                @curriculum.ToString()
+                                            </option>
+                                            break;
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <form id="add-subject-form" method="get" asp-controller="Subjects" asp-action="Add"
+                            class="flex flex-row items-center">
+                            <div class="flex flex-col">
+                                <label for="curriculum">Select Subject</label>
+                                @* TODO: Implement subject logic *@
+                                <select id="selected-subject" name="id">
+                                    <option value="none" class="hidden">-</option>
+                                    @foreach (var subject in Model.AllSubjects)
+                                    {
+                                        if (!Model.SavedSubjects.Contains(subject))
+                                        {
+                                            <option value="@subject.Id" class="hidden"
+                                                data-curriculum="@subject.Source.ToString().ToLower()">
+                                                @subject.Name.ToTitleCase() (@Curriculum.ToString(subject.Level,
+                                        subject.Source))
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </form>
+                        <div class="flex flex-row w-full items-center justify-end pt-2 space-x-2">
+                            <button onclick="interactions.dialog.closeDialog('add-subject')" class="p-2 hover:underline">Go back!</button>
+                            <button id="add-subject" onclick="document.getElementById('add-subject-form').submit()"
+                                class="inline-flex items-center bg-background hover:bg-secondary/60 p-2 pr-4 rounded-md">
+                                <span class="icon-sm mr-2">add</span>
+                                <h6 class="font-semibold">Add</h6>
+                            </button>
+                        </div>
+                    </dialog>
+                </div>
             </div>
         </div>
         <div id="sidebar-utils" class="flex flex-col my-2 bottom-0" style="height: var(--sidebar-utils-height)">
