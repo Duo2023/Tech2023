@@ -132,9 +132,9 @@ public class AppController : Controller
                 return NotFound();
             }
 
-            var cambrigeResource = await context.CambridgeResource.FirstOrDefaultAsync();
+            var cambridgeResource = await context.CambridgeResource.FirstOrDefaultAsync();
 
-            if (cambrigeResource == null || !selected.CambridgeResource.Any(r => r.Id == cambrigeResource.Id))
+            if (cambridgeResource == null || !selected.CambridgeResource.Any(r => r.Id == cambridgeResource.Id))
             {
                 return NotFound();
             }
@@ -142,7 +142,7 @@ public class AppController : Controller
             return View("CambridgeResource", new CambridgeAssessmentViewModel()
             {
                 Subject = (SubjectViewModel)selected,
-                Resource = cambrigeResource
+                Resource = cambridgeResource
             });
         }
 
