@@ -11,12 +11,16 @@ namespace Tech2023.DAL;
 /// </summary>
 public class ApplicationUser : IdentityUser<Guid>, IMetadata
 {
+    /// <inheritdoc/>
     [JsonPropertyName("created")]
     public DateTimeOffset Created { get; set; }
 
+    /// <inheritdoc/>
     [JsonPropertyName("updated")]
     public DateTimeOffset Updated { get; set; }
 
-#nullable disable
+    /// <summary>
+    /// A list of the users saved subjects, this is a one-to-many relationship with subjects
+    /// </summary>
     public virtual List<Subject> SavedSubjects { get; set; } = new();
 }

@@ -11,7 +11,7 @@
                 <li class="bg-secondary even:bg-opacity-30 border-b-2 border-hint rounded-md">
                     <a asp-controller="App" asp-action="Assessment"
                         asp-route-curriculum="@Curriculum.ToString(Model.Level, Model.Source)" asp-route-subject="@Model.Name"
-                        asp-route-standard="@Cambridge.GetString(paper.Number, paper.Season, paper.Variant)">
+                        asp-route-standard="@Cambridge.GetString(paper)">
                         <h5 class="paper p-3">
                             📜&ThickSpace;Paper @paper.Number - Variant @((byte)paper.Variant)
                         </h5>

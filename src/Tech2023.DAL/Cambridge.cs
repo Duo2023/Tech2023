@@ -5,9 +5,26 @@
 /// </summary>
 public static class Cambridge
 {
+    /// <summary>
+    /// Formats the Cambridge resource items as a string to be passed between routes and so on
+    /// </summary>
+    /// <param name="paperNumber">The paper number of the resource</param>
+    /// <param name="season">The season of the resource</param>
+    /// <param name="variant">The variant of the resource</param>
     public static string GetString(int paperNumber, Season season, Variant variant)
     {
         return $"{paperNumber}_{Enum.GetName(season)}_{Enum.GetName(variant)}";
+    }
+
+    /// <summary>
+    /// Formats the <see cref="CambridgeResource"/> as a string to be passed between routes
+    /// </summary>
+    /// <remarks>
+    /// Convenience method
+    /// </remarks>
+    public static string GetString(CambridgeResource resource)
+    {
+        return GetString(resource.Number, resource.Season, resource.Variant);
     }
 
     [SkipLocalsInit]
