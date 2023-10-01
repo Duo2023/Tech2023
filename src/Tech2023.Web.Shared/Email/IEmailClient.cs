@@ -12,5 +12,5 @@ public interface IEmailClient
     /// <param name="subject">The subject of the email</param>
     /// <param name="htmlMessage">The html message of the email</param>
     /// <exception cref="ArgumentNullException">If the email is null</exception>
-    public Task<bool> SendEmailAsync(string email, string subject, string htmlMessage);
+    Task<bool> SendEmailAsync(string email, string subject, string htmlMessage);
 }

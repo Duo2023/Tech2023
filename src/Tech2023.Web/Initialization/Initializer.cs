@@ -1,9 +1,7 @@
-﻿using System.Diagnostics;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 using Tech2023.DAL;
 using Tech2023.DAL.Identity;
@@ -12,6 +10,9 @@ using Tech2023.DAL.Queries;
 
 namespace Tech2023.Web.Initialization;
 
+/// <summary>
+/// Initializes the database in the application
+/// </summary>
 internal class Initializer : IDataInitializer
 {
     internal readonly RoleManager<ApplicationRole> _roleManager;
@@ -20,6 +21,10 @@ internal class Initializer : IDataInitializer
     internal readonly IDbContextFactory<ApplicationDbContext> _factory;
     internal readonly IConfiguration _configuration;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Initializer"/> class
+    /// </summary>
+    /// <param name="provider">Provider used to initialize services for the initializer</param>
     public Initializer(IServiceProvider provider)
     {
         ArgumentNullException.ThrowIfNull(provider);
@@ -31,6 +36,7 @@ internal class Initializer : IDataInitializer
         _configuration = provider.GetRequiredService<IConfiguration>();
     }
 
+    /// <inheritdoc/>
     public async Task InitializeAsync()
     {
         foreach (string role in Roles.All())
@@ -68,7 +74,7 @@ internal class Initializer : IDataInitializer
     internal async Task CreateDebuggingDataAsync(ApplicationDbContext context)
     {
         await CreateSubjectsAsync(context);
-        await CreateDebugUserAsync(context);
+        await CreateDebugUserAsync();
         await AddUsersToSubjectsAsync(context);
         await AddResourcesToSubjectsAsync(context);
         await AddNceaItemsToResourcesAsync(context);
@@ -233,7 +239,7 @@ internal class Initializer : IDataInitializer
         await context.SaveChangesAsync();
     }
 
-    internal async Task CreateDebugUserAsync(ApplicationDbContext context)
+    internal async Task CreateDebugUserAsync()
     {
         const string Username = "sudo@sudo.com";
 
@@ -258,7 +264,5 @@ internal class Initializer : IDataInitializer
 
         await _userManager.AddToRoleAsync(user, Roles.Administrator);
     }
-
-
 #endif
 }

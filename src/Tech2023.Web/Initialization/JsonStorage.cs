@@ -9,10 +9,10 @@ namespace Tech2023.Web.Initialization;
 
 [JsonSerializable(typeof(SubjectJsonModel[]))]
 [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
-public partial class SeedSerializationContext : JsonSerializerContext { };
+internal partial class SeedSerializationContext : JsonSerializerContext { };
 
 #nullable disable
-public class SubjectJsonModel
+internal class SubjectJsonModel
 {
     public string Name { get; set; }
 
@@ -31,7 +31,7 @@ public class SubjectJsonModel
     }
 }
 
-public class LevelConverter : JsonConverter<(CurriculumLevel Level, CurriculumSource Source)>
+internal class LevelConverter : JsonConverter<(CurriculumLevel Level, CurriculumSource Source)>
 {
     public override (CurriculumLevel Level, CurriculumSource Source) Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
