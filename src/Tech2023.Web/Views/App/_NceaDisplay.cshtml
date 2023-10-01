@@ -6,13 +6,14 @@
 {
     @if (Model.NceaResource.Any(s => s.AssessmentType == type)) @* Ling queries will prove expensive *@
     {
-        <h4 class="paper-category sticky top-0 w-full bg-hint p-3 px-4 font-bold">@Enum.GetName(type) Standards</h4>
+        <h3 class="paper-category w-full bg-hint p-3 px-4 font-bold rounded-md">@Enum.GetName(type) Standards</h3>
         <u1 class="list-none">
             @foreach (var standard in Model.NceaResource.Where(s => s.AssessmentType == type))
             {
-                <li class="bg-secondary even:bg-opacity-30 border-b-2 border-hint">
-                    <a asp-controller="App" asp-action="Assessment" asp-route-curriculum="@Curriculum.ToString(Model.Level, Model.Source)"
-                        asp-route-subject="@Model.Name" asp-route-standard="@standard.AchievementStandard">
+                <li class="bg-secondary even:bg-opacity-30 border-b-2 border-hint rounded-md">
+                    <a asp-controller="App" asp-action="Assessment"
+                        asp-route-curriculum="@Curriculum.ToString(Model.Level, Model.Source)" asp-route-subject="@Model.Name"
+                        asp-route-standard="@standard.AchievementStandard">
                         <h5 class="paper p-3">
                             📜&ThickSpace;@standard.DisplayStandard() - @standard.Description
                         </h5>
