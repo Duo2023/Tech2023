@@ -132,7 +132,7 @@ public class AppController : Controller
                 return NotFound();
             }
 
-            var cambridgeResource = await context.CambridgeResource.FirstOrDefaultAsync();
+            var cambridgeResource = await Resources.FindCambridgeResourceByIdentifersAsync(context, number, season, variant);
 
             if (cambridgeResource == null || !selected.CambridgeResource.Any(r => r.Id == cambridgeResource.Id))
             {
