@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Diagnostics;
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using Tech2023.DAL;
+using Tech2023.DAL.Models;
 using Tech2023.DAL.Queries;
 using Tech2023.Web.Extensions;
 using Tech2023.Web.Models;
@@ -74,11 +77,70 @@ public class AppController : Controller
             return NotFound();
         }
 
-        var browseData = new BrowsePapersViewModel 
+        var browseData = new BrowsePapersViewModel
         {
             SelectedSubject = selected
         };
 
         return View(browseData);
+    }
+
+    [Route(Routes.Application.Assessment)]
+    [ActionName(nameof(Routes.Application.Assessment))]
+    public async Task<IActionResult> BrowseAssessmentAsync(string? curriculum, string subject, string standard)
+    {
+        curriculum = curriculum?.ToUpper(); // keep in sync with AppController browse action
+
+        if (!Curriculum.TryParse(curriculum, out var level, out var source) || string.IsNullOrWhiteSpace(subject))
+        {
+            return NotFound();
+        }
+
+        using var context = await _context.CreateDbContextAsync();
+
+        var selected = await Subjects.FindSubjectAsync(context, source, level, subject);
+
+        if (selected == null)
+        {
+            return NotFound();
+        }
+
+        if (source == CurriculumSource.Ncea)
+        {
+            if (!int.TryParse(standard.AsSpan(), out int achievementStandard))
+            {
+                return NotFound();
+            }
+
+            var nceaResource = await Resources.FindNceaResourceByAchievementStandardAsync(context, achievementStandard);
+
+            if (nceaResource == null || !selected.NceaResource.Any(r => r.Id == nceaResource.Id))
+            {
+                return NotFound();
+            }
+
+            return View("NceaResource", new NceaAssessmentViewModel()
+            {
+                Subject = (SubjectViewModel)selected,
+                Resource = nceaResource
+            });
+        }
+        else if (source == CurriculumSource.Cambridge)
+        {
+            var cambrigeResource = await context.CambridgeResource.FirstOrDefaultAsync();
+
+            if (cambrigeResource == null || !selected.CambridgeResource.Any(r => r.Id == cambrigeResource.Id))
+            {
+                return NotFound();
+            }
+
+            return View("CambrigeResource", new CambridgeAssessmentViewModel()
+            {
+                Subject = (SubjectViewModel)selected,
+                Resource = cambrigeResource
+            });
+        }
+
+        throw new UnreachableException();
     }
 }

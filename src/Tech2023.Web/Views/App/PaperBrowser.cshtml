@@ -24,26 +24,11 @@
     <div id="papers" class="w-full overflow-x-hidden pr-1">
         @if (source == CurriculumSource.Ncea)
         {
-            <partial name="_NceaDisplay" model="Model.SelectedSubject.NceaResource!"/>
+            <partial name="_NceaDisplay" model="Model.SelectedSubject"/>
         }
         else if (source == CurriculumSource.Cambridge)
         {
-            @for (int i = 2023; i > 2017; i--)
-            {
-                <h4 class="paper-category sticky top-0 w-full bg-hint p-3 px-4 font-bold">@i</h4>
-                <ul>
-                    @for (int j = 0; j < 8; j++)
-                    {
-                        <li class="bg-secondary even:bg-opacity-30 border-b-2 border-hint">
-                            <a asp-controller="App" asp-action="PaperViewer">
-                                <h5 class="paper p-3">
-                                    📜&ThickSpace; Paper 1 - Feb/Mar (Zone 1)
-                                </h5>
-                            </a>
-                        </li>
-                    }
-                </ul>
-            }
+            <partial name="_CambridgeDisplay" model="Model.SelectedSubject"/>
         }
     </div>
 </div>

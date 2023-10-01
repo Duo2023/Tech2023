@@ -72,7 +72,6 @@ internal class Initializer : IDataInitializer
         await AddResourcesToSubjectsAsync(context);
     }
 
-
     internal async Task CreateSubjectsAsync(ApplicationDbContext context)
     {
         var basePath = _configuration["SeedPath"];
@@ -158,6 +157,7 @@ internal class Initializer : IDataInitializer
         {
             Season = (Season)Random.Shared.Next((int)Season.Spring, (int)Season.Winter),
             Variant = (Variant)Random.Shared.Next((int)Variant.One, (int)Variant.Three),
+            Number = Random.Shared.Next(1, 6),
             Created = DateTimeOffset.UtcNow,
         };
 

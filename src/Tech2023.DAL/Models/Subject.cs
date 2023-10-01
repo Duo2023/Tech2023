@@ -59,6 +59,6 @@ public class Subject
     = HtmlHexString.NextColor();
 #endif
 
-    public virtual List<NceaResource>? NceaResource { get; } = new();
-    public virtual List<CambridgeResource>? CambridgeResource { get; } = new();
+    public virtual List<NceaResource> NceaResource { get; } = new();
+    public virtual List<CambridgeResource> CambridgeResource { get; } = new();
  }

@@ -8,6 +8,12 @@ namespace Tech2023.DAL;
 public sealed class CambridgeResource : CustomResource
 {
     /// <summary>
+    /// What number the paper number
+    /// </summary>
+    [Required]
+    public int Number { get; set; }
+
+    /// <summary>
     /// This represents what season the <see cref="CambridgeResource"/> belongs to
     /// </summary>
     [Required]

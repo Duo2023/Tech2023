@@ -1,0 +1,12 @@
+﻿@using Tech2023.Web.ViewModels;
+@using Tech2023.Core;
+@model NceaAssessmentViewModel
+@{
+    var standardName = Model.Resource.DisplayStandard();
+    var subjectName = Model.Subject.Name.ToTitleCase();
+}
+
+<h1>@subjectName</h1>
+<h2>@standardName</h2>
+
+<h2>@Model.Resource.Description</h2>

@@ -16,7 +16,7 @@ public abstract class CustomResource : IMetadata
     /// <summary>
     /// The identifier of the NCEA resource, this value is not related to the resource at all and it just provided a unique identifier to use in the database
     /// that can be created at random with a 2^128-1 amount of values to be generated from for uniqueness
-    /// </summary>
+    /// </summary>                  
     [Key]
     [JsonPropertyName("id")] //
     public Guid Id { get; set; }
