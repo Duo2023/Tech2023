@@ -20,7 +20,13 @@ public class CambridgeAssessmentViewModel : AssessmentViewModel<CambridgeResourc
 /// <typeparam name="TResource">The assessment resource to use</typeparam>
 public abstract class AssessmentViewModel<TResource> where TResource : CustomResource
 {
+    /// <summary>
+    /// The subject that the assessment resource belongs to
+    /// </summary>
     public SubjectViewModel Subject { get; set; }
 
+    /// <summary>
+    /// The assessment itself
+    /// </summary>
     public TResource Resource { get; set; }
 }
