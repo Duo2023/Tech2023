@@ -12,9 +12,6 @@ public static class Privacy
     internal static readonly Func<ApplicationDbContext, Task<PrivacyPolicy>> _getCurrentPrivacyPolicy
         = EF.CompileAsyncQuery((ApplicationDbContext context) => context.PrivacyPolicies.OrderByDescending(p => p.Version).First());
 
-    internal static readonly Func<ApplicationDbContext, int, Task<PrivacyPolicy?>> _getByVersion
-        = EF.CompileAsyncQuery((ApplicationDbContext context, int version) => context.PrivacyPolicies.FirstOrDefault(p => p.Version == version));
-
     /// <summary>
     /// Gets the latest privacy policy
     /// </summary>
@@ -22,6 +19,9 @@ public static class Privacy
     /// <returns>Non-null latest privacy policy</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Task<PrivacyPolicy> GetPolicyAsync(ApplicationDbContext context) => _getCurrentPrivacyPolicy(context);
+
+    internal static readonly Func<ApplicationDbContext, int, Task<PrivacyPolicy?>> _getByVersion
+        = EF.CompileAsyncQuery((ApplicationDbContext context, int version) => context.PrivacyPolicies.FirstOrDefault(p => p.Version == version));
 
     /// <summary>
     /// Gets the privacy policy by version if available

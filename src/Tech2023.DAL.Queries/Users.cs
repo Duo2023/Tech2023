@@ -25,6 +25,9 @@ public static class Users
             .FirstOrDefaultAsync();
     }
 
+    /// <summary>
+    /// Gets the users saved subjects as <see cref="SubjectViewModel"/> from a <see cref="ClaimsPrincipal"/>
+    /// </summary>
     public static async Task<List<SubjectViewModel>> GetUserSavedSubjectsAsViewModelsAsync(UserManager<ApplicationUser> userManager, ClaimsPrincipal principal)
     {
         string userName = userManager.NormalizeEmail(principal.Identity.Name);

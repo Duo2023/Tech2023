@@ -37,7 +37,11 @@ public static class Subjects
         await context.SaveChangesAsync();
     }
 
-
+    /// <summary>
+    /// Adds a group of subjects to the context
+    /// </summary>
+    /// <param name="context">The context to operate on</param>
+    /// <param name="subjects">The subjects to add</param>
     public static async Task CreateSubjectsAsync(ApplicationDbContext context, IEnumerable<Subject> subjects)
     {
         ArgumentNullException.ThrowIfNull(context);
@@ -102,5 +106,8 @@ public static class Subjects
         await context.SaveChangesAsync();
     }
 
+    /// <summary>
+    /// Gets all of the available subjects as <see cref="SubjectViewModel"/>
+    /// </summary>
     public static async Task<List<SubjectViewModel>> GetAllSubjectViewModelsAsync(ApplicationDbContext context) => await context.Subjects.Select(s => (SubjectViewModel)s).ToListAsync();
 }
