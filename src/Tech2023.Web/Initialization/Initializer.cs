@@ -70,6 +70,7 @@ internal class Initializer : IDataInitializer
         await CreateDebugUserAsync(context);
         await AddUsersToSubjectsAsync(context);
         await AddResourcesToSubjectsAsync(context);
+        await AddNceaItemsToResourcesAsync(context);
     }
 
     internal async Task CreateSubjectsAsync(ApplicationDbContext context)
@@ -119,19 +120,53 @@ internal class Initializer : IDataInitializer
             {
                 foreach (var _ in Enumerable.Range(0, Random.Shared.Next(1, 10)))
                 {
-                    item.NceaResource?.Add(GenerateNceaStandard());
+                    item.NceaResource.Add(GenerateNceaStandard());
                 }
             }
             else if (item.Source == CurriculumSource.Cambridge)
             {
                 foreach (var _ in Enumerable.Range(0, Random.Shared.Next(1, 10)))
                 {
-                    item.CambridgeResource?.Add(GenerateCambridgeResource());
+                    item.CambridgeResource.Add(GenerateCambridgeResource());
                 }
             }
         }
 
         context.UpdateRange(subjects);
+
+        await context.SaveChangesAsync();
+    }
+
+    internal static async Task AddNceaItemsToResourcesAsync(ApplicationDbContext context)
+    {
+        var resources = await context.NceaResources.ToListAsync();
+
+        foreach (var resource in resources)
+        {
+            foreach (var _ in Enumerable.Range(0, Random.Shared.Next(1, 10)))
+            {
+                resource.Items.Add(GenerateResource());
+            }
+        }
+
+        context.NceaResources.UpdateRange(resources);
+
+        await context.SaveChangesAsync();
+    }
+
+    internal static async Task AddCambridgeItemsToResourcesAsync(ApplicationDbContext context)
+    {
+        var resources = await context.CambridgeResource.ToListAsync();
+
+        foreach (var resource in resources)
+        {
+            foreach (var _ in Enumerable.Range(0, Random.Shared.Next(1, 10)))
+            {
+                resource.Items.Add(GenerateResource());
+            }
+        }
+
+        context.CambridgeResource.UpdateRange(resources);
 
         await context.SaveChangesAsync();
     }
@@ -164,6 +199,20 @@ internal class Initializer : IDataInitializer
         resource.SyncUpdated();
 
         return resource;
+    }
+
+    internal static Item GenerateResource()
+    {
+        var item = new Item()
+        {
+            Source = "/assets/fake",
+            Year = Random.Shared.Next(2012, DateTime.Now.Year),
+            Created = DateTimeOffset.UtcNow
+        };
+
+        item.SyncUpdated();
+
+        return item;
     }
   
 

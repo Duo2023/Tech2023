@@ -43,6 +43,6 @@ public abstract class CustomResource : IMetadata
     /// The resource items that belong to this resource
     /// </summary>
     [Required]
-    [JsonPropertyName("resources")]
-    public virtual List<Resource> Resources { get; } = new();
+    [JsonPropertyName("items")]
+    public virtual List<Item> Items { get; } = new();
 }

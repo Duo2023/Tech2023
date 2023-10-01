@@ -14,3 +14,7 @@
         <h3 class=" w-full bg-hint p-3 px-4 font-bold rounded-md">@standardName - @Model.Resource.Description</h3>
     </div>
 </div>
+
+@foreach (var paper in Model.Resource.Items) {
+    <p>@paper.Year</p>
+}

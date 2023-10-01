@@ -6,9 +6,9 @@ namespace Tech2023.DAL.Models;
 #nullable disable
 
 /// <summary>
-/// A resource, this refers to 
+/// An item in a resource
 /// </summary>
-public class Resource : IMetadata
+public class Item : IMetadata
 {
     /// <summary>
     /// The identifier of the resource, this is just used as a unique key for the database

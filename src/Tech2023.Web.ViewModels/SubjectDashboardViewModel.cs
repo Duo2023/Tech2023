@@ -17,5 +17,5 @@ public class SubjectDashboardViewModel
     /// <summary>
     /// The recent resources the user has accessed
     /// </summary>
-    public List<Resource> RecentResources { get; set; }
+    public List<Item> RecentResources { get; set; }
 }

@@ -12,9 +12,9 @@ public sealed class BrowsePapersViewModel
 
     public List<List<string>> CategoryValues { get; set; } = new();
 
-    public List<List<Resource>> CategorizedPapers { get; set; } = new();
+    public List<List<Item>> CategorizedPapers { get; set; } = new();
 
     public string? FilterArgs { get; set; }
 
-    public Resource? SelectedPaper { get; set; }
+    public Item? SelectedPaper { get; set; }
 }
