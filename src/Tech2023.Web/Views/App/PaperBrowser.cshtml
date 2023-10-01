@@ -1,10 +1,4 @@
-@using Tech2023.Core;
-@using Tech2023.DAL.Models;
-@using Tech2023.DAL;
-@using Tech2023.Web.ViewComponents;
-@using Tech2023.Web.ViewModels;
 @model BrowsePapersViewModel;
-
 @{
     string subjectName = StringHelpers.ToTitleCase(Model.SelectedSubject.Name);
     string subjectSource = Html.DisplayTextFor(s => s.SelectedSubject.Source);

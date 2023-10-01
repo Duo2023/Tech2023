@@ -1,7 +1,4 @@
-﻿@using Tech2023.Web.ViewModels;
-@using Tech2023.Core;
-@using Tech2023.DAL;
-@model NceaAssessmentViewModel
+﻿@model NceaAssessmentViewModel
 @{
     var standardName = Model.Resource.DisplayStandard();
     var subjectName = $"{Model.Subject.Name.ToTitleCase()} ({Curriculum.ToString(Model.Subject.Level, Model.Subject.Source)})";
