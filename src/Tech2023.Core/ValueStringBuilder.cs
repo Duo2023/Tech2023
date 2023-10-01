@@ -226,6 +226,28 @@ internal ref partial struct ValueStringBuilder
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Append(uint value)
+    {
+        int pos = _pos;
+
+        Span<char> chars = _chars;
+
+        int length = StringHelpers.CountDigits(value);
+
+        if (pos > (uint)chars.Length - length)
+        {
+            Grow(length);
+        }
+
+        bool result = value.TryFormat(_chars[pos..], out int written);
+
+        Debug.Assert(result);
+        Debug.Assert(written == length);
+
+        _pos += length;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Append(string? s)
     {
         if (s == null)

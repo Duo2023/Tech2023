@@ -1,7 +1,12 @@
-﻿@model SearchResults
+﻿@using Tech2023.Web.ViewComponents;
+@model SearchResults
 @{
     ViewData["Title"] = $"Results for {Model.Query}";
 }
+
+@*
+    Need to add sidebar here
+*@
 
 @if (Model.Results.Count == 0) {
     <h1>No Results Found for <b>@Model.Query</b></h1>

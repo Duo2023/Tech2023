@@ -1,20 +1,15 @@
-﻿namespace Tech2023.DAL;
+﻿using Tech2023.Core;
+
+namespace Tech2023.DAL;
 
 /// <summary>
 /// Provides methods for parsing cambridge resource and formatting
 /// </summary>
 public static class Cambridge
 {
-    /// <summary>
-    /// Formats the Cambridge resource items as a string to be passed between routes and so on
-    /// </summary>
-    /// <param name="paperNumber">The paper number of the resource</param>
-    /// <param name="season">The season of the resource</param>
-    /// <param name="variant">The variant of the resource</param>
-    public static string GetString(int paperNumber, Season season, Variant variant)
-    {
-        return $"{paperNumber}_{Enum.GetName(season)}_{Enum.GetName(variant)}";
-    }
+    internal const string PaperIdentifier = "paper";
+    internal const char Seperator = '_';
+    internal const char Version = 'v';
 
     /// <summary>
     /// Formats the <see cref="CambridgeResource"/> as a string to be passed between routes
@@ -27,99 +22,134 @@ public static class Cambridge
         return GetString(resource.Number, resource.Season, resource.Variant);
     }
 
-    [SkipLocalsInit]
-    public static bool TryParseResource(ReadOnlySpan<char> str, out int paperNumber, out Season season, out Variant variant)
+    /// <summary>
+    /// Formats the Cambridge resource items as a string to be passed between routes and so on
+    /// </summary>
+    /// <param name="number">The paper number of the resource</param>
+    /// <param name="season">The season of the resource</param>
+    /// <param name="variant">The variant of the resource</param>
+    public static string GetString(int number, Season season, Variant variant)
     {
-        Unsafe.SkipInit(out paperNumber);
-        Unsafe.SkipInit(out season);
-        Unsafe.SkipInit(out variant);
+        var builder = new ValueStringBuilder(stackalloc char[32]);
 
-        int i = 0;
+        builder.Append(PaperIdentifier); // paper
 
-        foreach (var item in str.Split("_"))
+        builder.Append((uint)number); // 0-9
+
+        builder.Append(Seperator);  // _
+
+        builder.Append(GetStringForSeason(season)); // spring/winter/summer
+
+        builder.Append(Seperator); // _
+
+        builder.Append(Version); // v
+
+        builder.Append((uint)variant); // 0-9
+
+        return builder.ToString();
+    }
+
+    internal const int ExpectedLength = 16; // paper1_summer_v1
+
+    // summer, spring, and winter all have 6 characters. (number and variant are always >=0 & <= 9
+
+    /// <summary>
+    /// Tries to parse a string into resource identifiers
+    /// </summary>
+    [SkipLocalsInit]
+    public static bool TryParseResource(ReadOnlySpan<char> str, out int number, out Season season, out Variant variant)
+    {
+        // we know that the length is always the same because the variant and number should always be one digit 
+        // and the season regardless of which one has the same amount of characters
+        if (str.Length != ExpectedLength)
         {
-            switch (i)
-            {
-                case 0:
-                    if (!int.TryParse(item, out paperNumber))
-                    {
-                        goto default;
-                    }
-                    break;
-                case 1:
-                    if (!Enum.TryParse(item, ignoreCase: true, out season))
-                    {
-                        goto default;
-                    }
-                    break;
-                case 2:
-                    if (!Enum.TryParse(item, ignoreCase: true, out variant))
-                    {
-                        goto default;
-                    }
-                    break;
-                default:
-                    paperNumber = default;
-                    season = default;
-                    variant = default;
+            goto Failed;
+        }
 
-                    return false;
-            }
+        // if it doesn't start with 'paper' the string is automatically not valid
+        if (!str.StartsWith(PaperIdentifier))
+        {
+            goto Failed;
+        }
 
-            i++;
+        // The paper number is located right after 'paper', quick convert the char to a number
+        number = (byte)(str[PaperIdentifier.Length] - '0');
+
+        // validate that the number is a single digit
+        if (int.IsNegative(number) || number > 9)
+        {
+            goto Failed;
+        }
+
+        // the seperator should be located right after paper{digit}_ <-
+        if (str[PaperIdentifier.Length + 1] != Seperator)
+        {
+            goto Failed;
+        }
+
+        // the season is always 6 characters so take a span and slice it to 6 characters
+        if (!TryGetSeasonFromString(str.Slice(PaperIdentifier.Length + 2, 6), out season)) 
+        {
+            goto Failed;
+        }
+
+        // the seperator is located right after the season
+        if (str[PaperIdentifier.Length + 8] != Seperator)
+        {
+            goto Failed;
+        }
+
+        // 'v' is located after the seperator
+        if (str[PaperIdentifier.Length + 9] != Version)
+        {
+            goto Failed;
+        }
+
+        // do the same number trick as we did above
+        variant = (Variant)(byte)(str[PaperIdentifier.Length + 10] - '0');
+
+        if (!Enum.IsDefined(variant))
+        {
+            goto Failed;
         }
 
         return true;
+
+Failed:
+        number = default;
+        season = default;
+        variant = default;
+        return false;
     }
 
-    /// <summary>
-    /// Splits the span by the given sentinel, removing empty segments.
-    /// </summary>
-    /// <param name="span">The span to split</param>
-    /// <param name="sentinel">The sentinel to split the span on.</param>
-    /// <returns>An enumerator over the span segments.</returns>
-    public static StringSplitEnumerator Split(this ReadOnlySpan<char> span, ReadOnlySpan<char> sentinel) => new(span, sentinel);
 
-    public ref struct StringSplitEnumerator
+    internal static string GetStringForSeason(Season season)
     {
-        private readonly ReadOnlySpan<char> _sentinel;
-        private ReadOnlySpan<char> _span;
-
-        public StringSplitEnumerator(ReadOnlySpan<char> span, ReadOnlySpan<char> sentinel)
+        return season switch
         {
-            _span = span;
-            _sentinel = sentinel;
+            Season.Summer => "summer",
+            Season.Spring => "spring",
+            Season.Winter => "winter",
+            _ => throw new InvalidOperationException(),
+        };
+    }
+
+    internal static bool TryGetSeasonFromString(ReadOnlySpan<char> input, out Season season)
+    {
+        switch (input)
+        {
+            case "summer":
+                season = Season.Summer;
+                return true;
+            case "spring":
+                season = Season.Spring;
+                return true;
+            case "winter":
+                season = Season.Winter;
+                return true;
         }
 
-        public bool MoveNext()
-        {
-            if (_span.Length == 0)
-            {
-                return false;
-            }
-
-            var index = _span.IndexOf(_sentinel, StringComparison.Ordinal);
-            if (index < 0)
-            {
-                Current = _span;
-                _span = default;
-            }
-            else
-            {
-                Current = _span[..index];
-                _span = _span[(index + 1)..];
-            }
-
-            if (Current.Length == 0)
-            {
-                return MoveNext();
-            }
-
-            return true;
-        }
-
-        public ReadOnlySpan<char> Current { readonly get; private set; }
-
-        public readonly StringSplitEnumerator GetEnumerator() => this;
+        season = default;
+        return false;
     }
 }
