@@ -2,8 +2,7 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-using Tech2023.DAL;
+using Tech2023.DAL.Identity;
 
 namespace Tech2023.Web.Controllers;
 

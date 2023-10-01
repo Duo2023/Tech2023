@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-
-using Tech2023.DAL;
+using Tech2023.DAL.Identity;
 using Tech2023.Web.Shared;
 using Tech2023.Web.Shared.Authentication;
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Tech2023.DAL.Models;
 
 namespace Tech2023.DAL.Queries;
 

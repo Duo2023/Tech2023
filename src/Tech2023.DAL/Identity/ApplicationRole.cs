@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Tech2023.DAL;
+namespace Tech2023.DAL.Identity;
 
 /// <summary>
 /// Represents a role in the application, this dictates

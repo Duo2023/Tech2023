@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Tech2023.DAL;
+namespace Tech2023.DAL.Models;
 
 /// <summary>
 /// Represents a Cambridge resource, this is used to represent Cambridge exam papers

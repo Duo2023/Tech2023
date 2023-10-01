@@ -7,9 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 using Tech2023.DAL;
 using Tech2023.DAL.Models;
+using Tech2023.DAL.Identity;
 using Tech2023.DAL.Queries;
-using Tech2023.Web.Extensions;
-using Tech2023.Web.Models;
 using Tech2023.Web.ViewModels;
 
 namespace Tech2023.Web;

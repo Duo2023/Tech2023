@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics.Contracts;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Tech2023.DAL.Models;
 
 namespace Tech2023.DAL;
 

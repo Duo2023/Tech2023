@@ -8,6 +8,7 @@ using Tech2023.Web.Models.Components;
 using Tech2023.Web.Caching;
 using Tech2023.Web.ViewModels;
 using Tech2023.DAL.Queries;
+using Tech2023.DAL.Identity;
 
 namespace Tech2023.Web.ViewComponents;
 

@@ -2,8 +2,7 @@
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-
-using Tech2023.DAL;
+using Tech2023.DAL.Identity;
 using Tech2023.Web.Shared.Email;
 
 namespace Tech2023.Web.Shared.Authentication;

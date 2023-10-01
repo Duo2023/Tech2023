@@ -1,8 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-using Tech2023.DAL.Models;
-
-namespace Tech2023.DAL;
+namespace Tech2023.DAL.Models;
 
 /// <summary>
 /// Represents an NCEA resource, this is used for external standards and internal standards as well as unit standards

@@ -1,10 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-using Microsoft.AspNetCore.Identity;
-
-using Tech2023.DAL.Models;
-
-namespace Tech2023.DAL;
+﻿namespace Tech2023.DAL.Identity;
 
 /// <summary>
 /// Represents a user in the application, this used with <see cref="ApplicationDbContext"/> and during account creations.

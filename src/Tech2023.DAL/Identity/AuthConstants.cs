@@ -1,4 +1,4 @@
-﻿namespace Tech2023.DAL;
+﻿namespace Tech2023.DAL.Identity;
 
 /// <summary>
 /// Authentication constants used for validation

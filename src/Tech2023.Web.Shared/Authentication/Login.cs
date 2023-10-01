@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-
-using Tech2023.DAL;
+using Tech2023.DAL.Identity;
 
 #nullable disable
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
-using Tech2023.DAL.Models;
+using Tech2023.DAL.Identity;
 
 namespace Tech2023.DAL;
 

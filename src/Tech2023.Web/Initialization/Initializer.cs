@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 using Tech2023.DAL;
+using Tech2023.DAL.Identity;
 using Tech2023.DAL.Models;
 using Tech2023.DAL.Queries;
 

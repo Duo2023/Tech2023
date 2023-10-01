@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-using Tech2023.DAL.Models;
-
-namespace Tech2023.DAL;
+namespace Tech2023.DAL.Models;
 
 /// <summary>
 /// A custom resource is a class that is meant to be inherited for each source for the common shared properties for less code duplication

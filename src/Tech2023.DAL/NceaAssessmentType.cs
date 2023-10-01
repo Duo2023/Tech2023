@@ -1,4 +1,4 @@
-﻿namespace Tech2023.DAL.Models;
+﻿namespace Tech2023.DAL;
 
 /// <summary>
 /// The type of ncea assesment that the ncea resource belongs to
