@@ -24,6 +24,7 @@ public class ConfigurationException : Exception
     /// <param name="inner">The inner exception of the <see cref="ConfigurationException"/></param>
     public ConfigurationException(string message, Exception inner) : base(message, inner) { }
 
+    /// <inheritdoc/>
     protected ConfigurationException(
       System.Runtime.Serialization.SerializationInfo info,
       System.Runtime.Serialization.StreamingContext context) : base(info, context) { }

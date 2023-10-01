@@ -198,6 +198,7 @@ internal static class WebEncoderHelpers
     /// Encodes <paramref name="input"/> using base64url encoding.
     /// </summary>
     /// <param name="input">The binary input to encode.</param>
+    /// <param name="output">The result of the encode</param>
     /// <returns>The base64url-encoded form of <paramref name="input"/>.</returns>
     [SkipLocalsInit]
     internal static bool TryEncodeInternal(ReadOnlySpan<byte> input, [NotNullWhen(true)] out string? output)
