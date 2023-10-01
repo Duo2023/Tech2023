@@ -49,6 +49,34 @@ public class ValueStringBuilderTests
         Assert.True(result.All(c => c == '*'));
         Assert.Equal(Capacity + 1, result.Length);
     }
+
+    [Fact(DisplayName = "uint append should be valid")]
+    public void Append_UIntValid()
+    {
+        var builder = new ValueStringBuilder(stackalloc char[32]);
+
+        builder.Append(1024);
+
+        Assert.Null(builder._arrayToReturnToPool);
+
+        var result = builder.ToString();
+
+        Assert.Equal("1024", result);
+    }
+
+    [Fact(DisplayName = "uint append should be valid on grow")]
+    public void Append_UIntValid_ForGrow()
+    {
+        var builder = new ValueStringBuilder(stackalloc char[4]);
+
+        uint value = 10245;
+
+        builder.Append(value);
+
+        Assert.NotNull(builder._arrayToReturnToPool);
+
+        Assert.Equal("10245", builder.ToString());
+    }
 }
 
 
