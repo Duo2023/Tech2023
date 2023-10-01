@@ -59,7 +59,9 @@ public static class StringHelpers
         return result.ToString(); // ToString() calls dispose for us automatically
     }
 
-    // from dotnet runtime formatting
+    /// <summary>
+    /// Counts the number of digits in a number
+    /// </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int CountDigits(uint value)
     {
