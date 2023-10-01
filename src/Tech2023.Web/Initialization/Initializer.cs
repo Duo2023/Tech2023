@@ -205,7 +205,7 @@ internal class Initializer : IDataInitializer
     {
         var item = new Item()
         {
-            Source = "/assets/fake",
+            Source = "/assets/dev/dev_test_pdf.pdf",
             Year = Random.Shared.Next(2012, DateTime.Now.Year),
             Created = DateTimeOffset.UtcNow
         };

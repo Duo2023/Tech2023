@@ -16,7 +16,8 @@
         <h3 class="w-full bg-hint p-3 px-4 font-bold rounded-md">@standardName - @Model.Resource.Description</h3>
         @foreach (var item in Model.Resource.Items.OrderByDescending(i => i.Year))
         {
-            <a class="w-full" asp-controller="App" asp-action="PaperViewer">        
+            <a class="w-full" asp-controller="App" asp-action="PaperViewer" asp-route-curriculum="@Curriculum.ToString(Model.Subject.Level, Model.Subject.Source)" asp-route-subject="@Model.Subject.Name"
+                        asp-route-standard="@Model.Resource.AchievementStandard" asp-route-year="@item.Year">        
                 <h3 class="bg-secondary/70 hover:bg-secondary p-4 m-2 hover:underline rounded-xl transition-colors ease-out">
                     @item.Year
                 </h3>

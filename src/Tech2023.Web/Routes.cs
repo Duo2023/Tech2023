@@ -27,13 +27,12 @@ public sealed class Routes
         [RouteVisibility(Visiblity.Authenticated)]
         public const string Home = "/";
 
-        [RouteVisibility(Visiblity.Authenticated)]
-        public const string PaperViewer = "/paper";
-        
         // [RouteVisibility(Visiblity.Authenticated)]
         public const string PaperBrowser = "/browse/{curriculum}/{subject}";
 
         public const string Assessment = "/browse/{curriculum}/{subject}/{standard}";
+
+        public const string PaperViewer = "/browse/{curriculum}/{subject}/{standard}/{year}";
     }
 
     public static class Settings
