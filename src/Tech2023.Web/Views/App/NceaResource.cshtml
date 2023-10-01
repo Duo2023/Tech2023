@@ -6,7 +6,11 @@
     var subjectName = Model.Subject.Name.ToTitleCase();
 }
 
-<h1>@subjectName</h1>
-<h2>@standardName</h2>
+<vc:sidebar></vc:sidebar>
 
-<h2>@Model.Resource.Description</h2>
+<div>
+    <h1 class="m-2 mx-3">@subjectName</h1>
+    <div class="w-full overflow-x-hidden pr-1">
+        <h3 class=" w-full bg-hint p-3 px-4 font-bold rounded-md">@standardName - @Model.Resource.Description</h3>
+    </div>
+</div>

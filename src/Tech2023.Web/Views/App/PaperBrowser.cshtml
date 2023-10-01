@@ -19,16 +19,16 @@
 @* TODO: Make sidebar have relevant items *@
 
 <div id="paper-browser" class="max-h-full overflow-y-scroll">
-    <h2 class="m-3 font-bold">Papers for @subjectName (@subjectSource)</h2>
+    <h1 class="m-2 mx-3">Papers for @subjectName (@subjectSource)</h1>
 
     <div id="papers" class="w-full overflow-x-hidden pr-1">
         @if (source == CurriculumSource.Ncea)
         {
-            <partial name="_NceaDisplay" model="Model.SelectedSubject"/>
+            <partial name="_NceaDisplay" model="Model.SelectedSubject" />
         }
         else if (source == CurriculumSource.Cambridge)
         {
-            <partial name="_CambridgeDisplay" model="Model.SelectedSubject"/>
+            <partial name="_CambridgeDisplay" model="Model.SelectedSubject" />
         }
     </div>
 </div>
