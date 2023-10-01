@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 
 using Tech2023.DAL;
-using Tech2023.Web.Models.Components;
 using Tech2023.Web.Caching;
 using Tech2023.Web.ViewModels;
 using Tech2023.DAL.Queries;
