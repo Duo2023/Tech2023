@@ -27,8 +27,8 @@ public static class StringHelpers
         }
 
         // if the buffer is equal or less than the threshold allocate on the stack else use arraypool version
-        var result = str.Length <= StackAllocThreshold ? 
-            new ValueStringBuilder(stackalloc char[StackAllocThreshold]) 
+        var result = str.Length <= StackAllocThreshold ?
+            new ValueStringBuilder(stackalloc char[StackAllocThreshold])
             : new ValueStringBuilder(str.Length);
 
         bool capitalize = true;

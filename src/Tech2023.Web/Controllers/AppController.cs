@@ -127,6 +127,11 @@ public class AppController : Controller
         }
         else if (source == CurriculumSource.Cambridge)
         {
+            if (!Cambridge.TryParseResource(standard, out var number, out var season, out var variant)) 
+            {
+                return NotFound();
+            }
+
             var cambrigeResource = await context.CambridgeResource.FirstOrDefaultAsync();
 
             if (cambrigeResource == null || !selected.CambridgeResource.Any(r => r.Id == cambrigeResource.Id))
