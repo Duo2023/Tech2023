@@ -125,9 +125,10 @@ public class AppController : Controller
                 return NotFound();
             }
 
+            // TODO: the variant, number, and season can be the same across subject so we need to change this 
             var cambridgeResource = await Resources.FindCambridgeResourceByIdentifersAsync(context, number, season, variant);
 
-            if (cambridgeResource == null || !selected.CambridgeResource.Any(r => r.Id == cambridgeResource.Id))
+            if (cambridgeResource == null)
             {
                 return NotFound();
             }
