@@ -139,7 +139,7 @@ public class AppController : Controller
                 return NotFound();
             }
 
-            return View("CambrigeResource", new CambridgeAssessmentViewModel()
+            return View("CambridgeResource", new CambridgeAssessmentViewModel()
             {
                 Subject = (SubjectViewModel)selected,
                 Resource = cambrigeResource
