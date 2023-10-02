@@ -9,6 +9,12 @@ module.exports = {
             fontFamily: {
                 sans: ["Manrope", ...defaultTheme.fontFamily.sans],
             },
+            height: {
+                screen: "100dvh",
+            },
+            weight: {
+                screen: "100dvw",
+            },
             colors: {
                 primary: "#3C38FA",
                 secondary: "#191A1F",
