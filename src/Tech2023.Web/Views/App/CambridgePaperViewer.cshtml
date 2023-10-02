@@ -1,1 +1,9 @@
-﻿
+﻿@model CambridgeItemViewModel
+@{
+    ViewData["Title"] = "Paper Viewer";
+}
+<vc:sidebar></vc:sidebar>
+
+<div class="h-full w-full">
+    <partial name="_PDFViewer" model="@Model.Item.Source">
+</div>
