@@ -1,5 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Comment CommentText="Top Of Hierachy">
+    <Position X="8.639" Y="2.014" Height="0.306" Width="1.367" />
+  </Comment>
+  <Comment CommentText="Enumerations">
+    <Position X="12.486" Y="4.222" Height="0.389" Width="1.381" />
+  </Comment>
   <Class Name="Tech2023.DAL.Identity.ApplicationRole">
     <Position X="13.5" Y="2.75" Width="2" />
     <TypeIdentifier>
