@@ -198,10 +198,11 @@ public class AppController : Controller
                 return NotFound();
             }
 
-            return View("CambridgePaperViwer", new CambridgeAssessmentViewModel()
+            return View("CambridgePaperViewer", new CambridgeItemViewModel()
             {
-                Subject = (SubjectViewModel)selected,
-                Resource = cambridgeResource
+                Item = cambridgeResource.Items.First(i => i.Year == yearValue),
+                Resource = cambridgeResource,
+                Subject = (SubjectViewModel)selected
             });
         }
 
