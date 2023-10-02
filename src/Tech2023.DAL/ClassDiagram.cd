@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Tech2023.DAL.Identity.ApplicationRole">
+    <Position X="13.5" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Identity\ApplicationRole.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tech2023.DAL.Identity.ApplicationUser" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAAAAQAQAAAAAAAAAA=</HashCode>
+      <FileName>Identity\ApplicationUser.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Tech2023.DAL.Identity.Roles">
+    <Position X="13.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Identity\Roles.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tech2023.DAL.Models.CambridgeResource">
+    <Position X="4.75" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAEAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\CambridgeResource.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tech2023.DAL.Models.CustomResource">
+    <Position X="4.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAACAAAAAAAAAAAAAAAAAQAQAAAAAAAAAA=</HashCode>
+      <FileName>Models\CustomResource.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Tech2023.DAL.Models.Item" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAABgAAAAAAAAAAAAAAAAAAAAQAQAAAAAAAAAA=</HashCode>
+      <FileName>Models\Item.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.1" />
+  </Class>
+  <Class Name="Tech2023.DAL.Models.NceaResource">
+    <Position X="1.5" Y="3" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgEAgAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Models\NceaResource.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tech2023.DAL.Models.PrivacyPolicy" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAgAAAAAAAAAAAAAAAAAAAAQAQAAAAAAAAAA=</HashCode>
+      <FileName>Models\PrivacyPolicy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Tech2023.DAL.Models.Subject">
+    <Position X="7" Y="5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAgAAAAAAAAAAAAQAAAABQAABAAAAIAAAAAA=</HashCode>
+      <FileName>Models\Subject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tech2023.DAL.ApplicationDbContext">
+    <Position X="7" Y="2" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAECAAAAACAAAAAAAAAAAEAAAQAEAAAAAAAAAAAA=</HashCode>
+      <FileName>ApplicationDbContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Tech2023.DAL.IMetadata">
+    <Position X="7.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAQAAAAAAAAAA=</HashCode>
+      <FileName>IMetadata.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Tech2023.DAL.CurriculumLevel">
+    <Position X="10.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAABAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>CurriculumLevel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Tech2023.DAL.CurriculumSource">
+    <Position X="12.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAACAABAAAAAAAAAAA=</HashCode>
+      <FileName>CurriculumSource.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Tech2023.DAL.NceaAssessmentType">
+    <Position X="14.25" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIIAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>NceaAssessmentType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Tech2023.DAL.Season">
+    <Position X="10.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAgAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Season.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Tech2023.DAL.Variant">
+    <Position X="12.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAgAAAEAAIA=</HashCode>
+      <FileName>Variant.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
