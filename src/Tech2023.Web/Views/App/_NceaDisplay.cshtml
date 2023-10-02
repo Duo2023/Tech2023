@@ -4,7 +4,8 @@
 {
     @if (Model.NceaResource.Any(s => s.AssessmentType == type)) @* Ling queries will prove expensive *@
     {
-        <h3 class="paper-category w-full bg-hint p-3 px-4 font-bold rounded-md">@Enum.GetName(type) Standards</h3>
+        <h3 class="paper-category w-full bg-hint p-4 font-bold rounded-md">
+            @Enum.GetName(type) Standards</h3>
         <u1 class="list-none">
             @foreach (var standard in Model.NceaResource.Where(s => s.AssessmentType == type))
             {
