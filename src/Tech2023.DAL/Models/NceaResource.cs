@@ -26,5 +26,8 @@ public sealed class NceaResource : CustomResource
     [Required]
     public string Description { get; set; }
 
+    /// <summary>
+    /// Displays the NCEA standard in typical format AS[number]
+    /// </summary>
     public string DisplayStandard() => $"AS{AchievementStandard}";
 }

@@ -59,6 +59,13 @@ public class Subject
     = HtmlHexString.NextColor();
 #endif
 
+    /// <summary>
+    /// A list (one-to-many in EF) of NCEA resources. Check <see cref="Source"/> before using this property
+    /// </summary>
     public virtual List<NceaResource> NceaResource { get; } = new();
+
+    /// <summary>
+    /// A list (one-to-many in EF) of Cambridge resources. Check <see cref="Source"/> before using this property
+    /// </summary>
     public virtual List<CambridgeResource> CambridgeResource { get; } = new();
  }

@@ -7,11 +7,16 @@ using Tech2023.DAL.Models;
 
 namespace Tech2023.Web.Initialization;
 
+// this file supports the Initialzer by loading objects from JSON and converting them into the desired object
+
 [JsonSerializable(typeof(SubjectJsonModel[]))]
 [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
 internal partial class SeedSerializationContext : JsonSerializerContext { };
 
 #nullable disable
+
+// this type is a smaller version of Subject and only supports reads from JSON and not writes
+
 internal class SubjectJsonModel
 {
     public string Name { get; set; }
@@ -30,6 +35,8 @@ internal class SubjectJsonModel
         };
     }
 }
+
+// converts level and curriculum in one converter
 
 internal class LevelConverter : JsonConverter<(CurriculumLevel Level, CurriculumSource Source)>
 {
@@ -50,6 +57,6 @@ internal class LevelConverter : JsonConverter<(CurriculumLevel Level, Curriculum
     [DoesNotReturn]
     public override void Write(Utf8JsonWriter writer, (CurriculumLevel Level, CurriculumSource Source) value, JsonSerializerOptions options)
     {
-        throw new NotImplementedException("This type supports writes but not reads");
+        throw new NotImplementedException("This type supports reading but not writing from");
     }
 }

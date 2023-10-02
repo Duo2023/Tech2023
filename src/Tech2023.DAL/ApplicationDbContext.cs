@@ -52,9 +52,18 @@ public sealed class ApplicationDbContext : IdentityDbContext<ApplicationUser, Ap
     /// </summary>
     public DbSet<Subject> Subjects => Set<Subject>();
 
+    /// <summary>
+    /// All of the available NCEA resources in the database
+    /// </summary>
     public DbSet<NceaResource> NceaResources => Set<NceaResource>();
 
+    /// <summary>
+    /// All of the available Cambridge resources in the database
+    /// </summary>
     public DbSet<CambridgeResource> CambridgeResource => Set<CambridgeResource>();
 
+    /// <summary>
+    /// All of the available items belonging to the respective Resources tables
+    /// </summary>
     public DbSet<Item> Items => Set<Item>();
 }
