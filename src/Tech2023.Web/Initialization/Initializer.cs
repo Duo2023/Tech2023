@@ -78,6 +78,7 @@ internal class Initializer : IDataInitializer
         await AddUsersToSubjectsAsync(context);
         await AddResourcesToSubjectsAsync(context);
         await AddNceaItemsToResourcesAsync(context);
+        await AddCambridgeItemsToResourcesAsync(context);
     }
 
     internal async Task CreateSubjectsAsync(ApplicationDbContext context)
