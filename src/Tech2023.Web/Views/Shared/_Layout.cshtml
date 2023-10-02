@@ -16,8 +16,8 @@
     </style>
 
     <link rel="preload" as="script" type="text/javascript" href="~/js/runtime.min.js" asp-append-version="true">
-    @* <link rel="preload" as="script" type="text/javascript" href="~/js/interactions-vendors.min.js"
-    asp-append-version="true"> *@
+    <link rel="preload" as="script" type="text/javascript" href="~/js/interactions-vendors.min.js"
+        asp-append-version="true">
     <link rel="preload" as="script" type="text/javascript" href="~/js/interactions.min.js" asp-append-version="true">
 </head>
 
@@ -41,8 +41,8 @@
     </footer>
 
     <script type="text/javascript" asp-src-include="~/js/runtime.min.js" asp-append-version="true"></script>
-    @* <script type="text/javascript" asp-src-include="~/js/interactions-vendors.min.js"
-    asp-append-version="true"></script> *@
+    <script type="text/javascript" asp-src-include="~/js/interactions-vendors.min.js"
+        asp-append-version="true"></script>
     <script type="text/javascript" asp-src-include="~/js/interactions.min.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)

@@ -6,6 +6,13 @@
   @RenderBody()
 </div>
 
+@section Scripts {
+  @await RenderSectionAsync("Scripts", required: false)
+  <script>
+    interactions.sidebar.mobileSidebarSwipeUpInit("sidebar", "--sidebar-collapsed-height");
+  </script>
+}
+
 @* Commented out to not ship pdfjs-dist
 @section Scripts {
 <script type="text/javascript" asp-src-include="~/js/pdf-vendors.min.js" asp-append-version="true"></script>

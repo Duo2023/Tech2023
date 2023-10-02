@@ -28,7 +28,8 @@
 </style>
 <aside id="sidebar"
     class="sidebar z-20 flex flex-col fixed md:relative h-full w-full md:w-[var(--sidebar-width,_21rem)] bg-secondary 
-           rounded-t-[2.5rem] md:rounded-none translate-y-[var(--sidebar-collapsed-height)] md:translate-y-0 left-0 p-1">
+           rounded-t-[2.5rem] md:rounded-none translate-y-[var(--sidebar-collapsed-height)] md:translate-y-0 left-0 p-1
+           transition-transform duration-200 ease-out">
     @* TODO: Implement swipe up gesture for mobile devices + layout changes *@
     <form id="search" method="get" asp-controller="Search" asp-action="Search" class="flex flex-col items-center px-3 pt-2" 
     style="height: var(--sidebar-search-height, 5.5rem)">

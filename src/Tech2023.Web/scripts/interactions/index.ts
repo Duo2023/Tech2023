@@ -1,3 +1,4 @@
 export * from "./element";
 export * from "./dialog";
 export * from "./forms";
+export * from "./sidebar";
