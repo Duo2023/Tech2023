@@ -12,10 +12,11 @@
 <style>
     :root {
         --sidebar-width: 21rem;
+        --sidebar-search-height: 5.2rem;
+        --sidebar-collapsed-height: calc(100dvh - var(--navbar-height, 0rem) - var(--sidebar-search-height));
     }
 
     #sidebar {
-        --sidebar-search-height: 5.5rem;
         --sidebar-filter-height: 8rem;
         --sidebar-utils-height: 4rem;
         --sidebar-back-button-height: @(isBrowsing ? "2.25rem" : "0rem");
@@ -27,12 +28,14 @@
 </style>
 <aside id="sidebar"
     class="sidebar z-20 flex flex-col fixed md:relative h-full w-full md:w-[var(--sidebar-width,_21rem)] bg-secondary 
-           rounded-t-[2.5rem] md:rounded-none translate-y-[calc(100dvh_-_var(--navbar-height,_0rem)_-_var(--sidebar-search-height))] md:translate-y-0 left-0 p-1">
+           rounded-t-[2.5rem] md:rounded-none translate-y-[var(--sidebar-collapsed-height)] md:translate-y-0 left-0 p-1">
     @* TODO: Implement swipe up gesture for mobile devices + layout changes *@
-    <form id="search" method="get" asp-controller="Search" asp-action="Search" class="flex flex-col items-center px-3 pt-2" style="height: var(--sidebar-search-height, 5.5rem)">
+    <form id="search" method="get" asp-controller="Search" asp-action="Search" class="flex flex-col items-center px-3 pt-2" 
+    style="height: var(--sidebar-search-height, 5.5rem)">
         <div class="md:hidden h-1 w-12 mb-2 bg-light-hint rounded-full"></div>
         <input type="text" name="query" placeholder="🔎 Search" autocomplete="off" id="search-bar"
-            class="bg-background w-full px-5 py-3 rounded-full outline-none border-2 border-light-hint border-opacity-0 focus:border-opacity-80 transition-colors duration-150 ease-out">
+            class="bg-background w-full px-5 py-3 rounded-full outline-none border-2 border-light-hint 
+            border-opacity-0 focus:border-opacity-80 transition-colors duration-150 ease-out">
         <script>
             let searchbar = document.getElementById('search-bar')
             searchbar.addEventListener('onkeydown', (e) => {

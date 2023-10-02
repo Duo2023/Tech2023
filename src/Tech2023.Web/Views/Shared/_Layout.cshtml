@@ -5,13 +5,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    @RenderSection("PreloadLogo", required:false)
+    @RenderSection("PreloadLogo", required: false)
     <link rel="stylesheet" href="~/css/fonts.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
     <style>
         :root {
-            --navbar-height: 5rem;
+            --navbar-height: 4.75rem;
         }
     </style>
 
@@ -22,7 +22,7 @@
 </head>
 
 <body class="bg-background text-white overscroll-none">
-    <div class="grid grid-rows-[min-content_auto] h-screen overscroll-none text-white bg-background">
+    <div class="h-screen overscroll-none text-white bg-background">
         <header style="height: var(--navbar-height, 0rem)">
             <partial name="_NavbarPartial"></partial>
         </header>
