@@ -15,7 +15,7 @@
         {
             <a class="w-full" asp-controller="App" asp-action="PaperViewer" asp-route-curriculum="@Curriculum.ToString(Model.Subject.Level, Model.Subject.Source)" asp-route-subject="@Model.Subject.Name"
                         asp-route-standard="@Cambridge.GetString(Model.Resource.Number, Model.Resource.Season, Model.Resource.Variant)" asp-route-year="@item.Year">        
-                <h3 class="bg-secondary hover:bg-hint/50 p-4 m-2 hover:underline rounded-xl transition-colors ease-out">
+                <h3 class="bg-secondary hover:bg-hint/50 p-4 m-1.5 hover:underline rounded-xl transition-colors ease-out">
                     @item.Year
                 </h3>
             </a>
