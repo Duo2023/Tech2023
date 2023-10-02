@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Tech2023.DAL.Identity;
+using Tech2023.DAL.Queries;
 using Tech2023.Web.Shared;
 using Tech2023.Web.Shared.Authentication;
 
@@ -277,5 +278,22 @@ public class AccountController : Controller
             // request and the identity for the user gets updated.
             return RedirectToPage("/");
         }
+    }
+
+    [HttpPost]
+    [ActionName(nameof(Routes.Account.Delete))]
+    [Route(Routes.Account.Delete)]
+    public async Task<IActionResult> DeleteAccountAsync()
+    {
+        var user = await _userManager.FindByPrincipalAsync(User);
+
+        if (user != null)
+        {
+            var result = await _userManager.DeleteAsync(user);
+
+            if (!result.Succeeded) return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+
+        return Redirect(Routes.Account.Login);
     }
 }

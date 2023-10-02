@@ -81,5 +81,7 @@ public sealed class Routes
 
         // [RouteVisiblity(Visiblity.Authenticated)] ??
         public const string Logout = "/account/logout";
+
+        public const string Delete = "/account/delete";
     }
 }
