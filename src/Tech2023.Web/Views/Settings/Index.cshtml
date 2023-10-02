@@ -7,12 +7,12 @@
 
     <div id="delete-account-button">
         <button onclick="interactions.dialog.showDialog('delete-account-modal', true)"
-                class="w-full inline-flex hover:bg-red-500/90 p-2 rounded-lg">
+                class="inline-flex hover:bg-red-500/90 p-2 rounded-lg">
             <span class="icon-sm mr-3">delete</span>
             Delete Account
         </button>
 
-        <dialog id="delete-account-modal" class="font-semibold">
+        <dialog id="delete-account-modal" class="font-semibold w-9/12 lg:w-1/2">
             <h3>Delete the account <strong class="underline">@User!.Identity!.Name</strong>?</h3>
             <br/>
             <h4>By clicking yes, you understand that your account and your data will be deleted and not able to be restored</h4>
