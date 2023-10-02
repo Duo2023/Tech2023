@@ -36,18 +36,11 @@
         <input type="text" name="query" placeholder="🔎 Search" autocomplete="off" id="search-bar"
             class="bg-background w-full px-5 py-3 rounded-full outline-none border-2 border-light-hint 
             border-opacity-0 focus:border-opacity-80 transition-colors duration-150 ease-out">
-        <script>
-            let searchbar = document.getElementById('search-bar')
-            searchbar.addEventListener('onkeydown', (e) => {
-                if(document.activeElement != searchbar) {
-                    return;
-                }
-
-                if(e.keyCode == 13) {
-                    document.getElementById('search').submit();
-                }
-            })
-        </script>
+        @section Scripts {
+            <script>
+                interactions.forms.registerAutoFormSubmitOnEnterKeyPress("search", "search-bar");
+            </script>
+        }
     </form>
 
     @if (isBrowsing)

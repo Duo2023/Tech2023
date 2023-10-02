@@ -17,6 +17,20 @@ export module forms {
         }
     }
 
+    export function registerAutoFormSubmitOnEnterKeyPress(targetFormId: string, targetElementId: string) {
+        let targetElement = document.getElementById(targetElementId) as HTMLInputElement;
+        let targetForm = document.getElementById(targetFormId) as HTMLFormElement;
+        targetElement.onkeydown = (e: KeyboardEvent) => {
+            if (document.activeElement != targetElement) {
+                return;
+            }
+
+            if (e.code == "Enter") {
+                targetForm.submit();
+            }
+        };
+    }
+
     export module addSubjects {
         export function updateOptionsBasedOnCurriculum(selectSubjectsId: string, selectCurriculumId: string) {
             let selectSubjects = document.getElementById(selectSubjectsId) as HTMLSelectElement;
