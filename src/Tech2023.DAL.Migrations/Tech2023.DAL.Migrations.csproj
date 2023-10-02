@@ -1,6 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  
   <PropertyGroup>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <!-- Emit no warnings for non-file scoped namespaces not in EF Core yet -->
+    <NoWarn>$(NoWarn);IDE0161</NoWarn>
   </PropertyGroup>
   
   <ItemGroup>
