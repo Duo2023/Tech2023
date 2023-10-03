@@ -205,7 +205,7 @@ public class AppController : Controller
 
             var nceaResource = await Resources.FindNceaResourceByAchievementStandardAsync(context, achievementStandard);
 
-            if (nceaResource == null || !selected.NceaResource.Any(r => r.Id == nceaResource.Id) && !nceaResource.Items.Any(i => i.Year == yearValue))
+            if (nceaResource == null || !selected.NceaResource.Any(r => r.Id == nceaResource.Id) || !nceaResource.Items.Any(i => i.Year == yearValue))
             {
                 return NotFound();
             }
@@ -226,7 +226,7 @@ public class AppController : Controller
 
             var cambridgeResource = await Resources.FindCambridgeResourceByIdentifersAsync(context, number, season, variant);
 
-            if (cambridgeResource == null || !selected.CambridgeResource.Any(r => r.Number == number && r.Season == season && r.Variant == variant) && !cambridgeResource.Items.Any(i => i.Year == yearValue))
+            if (cambridgeResource == null || !selected.CambridgeResource.Any(r => r.Number == number && r.Season == season && r.Variant == variant) || !cambridgeResource.Items.Any(i => i.Year == yearValue))
             {
                 return NotFound();
             }
