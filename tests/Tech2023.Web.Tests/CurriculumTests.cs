@@ -14,18 +14,17 @@ public class CurriculumTests
     [InlineData("LEVEL1", CurriculumLevel.L1, CurriculumSource.Ncea)]
     public void Assert_TryParseWorks(string input, CurriculumLevel expectedLevel, CurriculumSource curriculumSource)
     {
+        expectedLevel.Should().BeDefined("Enum type should have a declaration for this value");
+
+        curriculumSource.Should().BeDefined("Enum type should have a declaration for this value");
+
         bool result = Curriculum.TryParse(input, out var actualLevel, out var actualSource);
 
-        Assert.True(result); // on fail the parse has failed and both should be default
-        Assert.Equal(expectedLevel, actualLevel);
-        Assert.Equal(curriculumSource, actualSource);
+        result.Should().BeTrue("Parse should return true for success");
 
-        // sanity check that both the enum declarations exist
-        Assert.True(Enum.IsDefined(expectedLevel));
-        Assert.True(Enum.IsDefined(curriculumSource));
+        actualLevel.Should().HaveSameValueAs(expectedLevel, "Expected level should match actual level");
 
-        Assert.True(Enum.IsDefined(actualLevel));
-        Assert.True(Enum.IsDefined(actualSource));
+        actualSource.Should().HaveSameValueAs(curriculumSource, "Source should be the same");
     }
 
 
@@ -35,8 +34,10 @@ public class CurriculumTests
     {
         var parseResult = Curriculum.TryParse("asdfjahsdfsadfjsadoifjasdfojasdf", out var level, out var source);
 
-        Assert.False(parseResult);
-        Assert.Equal(default, level);
-        Assert.Equal(default, source);
+        parseResult.Should().BeFalse("Bad input is provided");
+
+        level.Should().Be(default, "The function should have it's out parameters set to default");
+
+        source.Should().Be(default, "The function should have it's out parameters set to default");
     }
 }

@@ -10,7 +10,7 @@ public class CambridgeTests
     {
         var result = Cambridge.GetString(paperNumber, season, variant);
 
-        Assert.Equal(expected, result);
+        result.Should().Be(expected);
     }
 
     [Theory]
@@ -21,10 +21,12 @@ public class CambridgeTests
     {
         var result = Cambridge.TryParseResource(input, out var actualNumber, out var actualSeason, out var actualVariant);
 
-        Assert.True(result, "Parse should return successful");
+        result.Should().BeTrue("Parse should return successful");
 
-        Assert.Equal(number, actualNumber);
-        Assert.Equal(season, actualSeason);
-        Assert.Equal(variant, actualVariant);
+        number.Should().Be(actualNumber);
+
+        season.Should().Be(actualSeason);
+
+        variant.Should().Be(actualVariant);
     }
 }

@@ -14,23 +14,21 @@ public class EncoderTests
     {
         string expected = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(input));
 
-        if (WebEncoderHelpers.TryEncodeToUtf8Base64Url(input, out var result))
-        {
-            Assert.Equal(expected, result);
-        }
-        else
-        {
-            Assert.Fail("Encode method returned false");
-        }
+        bool success = WebEncoderHelpers.TryEncodeToUtf8Base64Url(input, out var result);
+
+        success.Should().BeTrue();
+
+        result.Should().Be(expected);
     }
 
     [Theory]
     [InlineData(null)]
     public void Encode_ShouldReturnFalse(string input)
     {
-        bool result = WebEncoderHelpers.TryEncodeToUtf8Base64Url(input, out _);
+        bool result = WebEncoderHelpers.TryEncodeToUtf8Base64Url(input, out var value);
 
-        Assert.False(result);
+        result.Should().BeFalse();
+        value.Should().BeNull();
     }
 
     [Theory]
@@ -39,13 +37,9 @@ public class EncoderTests
     {
         string expected = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(input));
 
-        if (WebEncoderHelpers.TryDecodeFromBase64UrlEncoded(input, out var result))
-        {
-            Assert.Equal(expected, result);
-        }
-        else
-        {
-            Assert.Fail("Decode method returned false");
-        }
+        bool success = WebEncoderHelpers.TryDecodeFromBase64UrlEncoded(input, out var result);
+
+        success.Should().BeTrue();
+        result.Should().Be(expected);
     }
 }
