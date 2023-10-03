@@ -1,6 +1,6 @@
 ﻿@model CambridgeItemViewModel
 @{
-    var paperTitle = $"Paper {Model.Resource.Number} {Model.Resource.Season} Variant {(byte) Model.Resource.Variant} ({Model.Item.Year})";
+    var paperTitle = $"Paper {Model.Resource.Number} - Variant {(byte) Model.Resource.Variant} {Model.Resource.Season} ({Model.Item.Year})";
     var subjectName = $"{Model.Subject.Name.ToTitleCase()} ({Curriculum.ToString(Model.Subject.Level, Model.Subject.Source)})";
     ViewData["Title"] = $"{paperTitle} - {subjectName}";
 }

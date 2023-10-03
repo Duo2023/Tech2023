@@ -1,6 +1,6 @@
 ﻿@model CambridgeAssessmentViewModel
 @{
-    var paperSetName = $"Paper {Model.Resource.Number} - Variant {(byte)Model.Resource.Variant} papers";
+    var paperSetName = $"Paper {Model.Resource.Number} - Variant {(byte)Model.Resource.Variant} {Model.Resource.Season} papers";
     var subjectName = $"{Model.Subject.Name.ToTitleCase()} ({Curriculum.ToString(Model.Subject.Level, Model.Subject.Source)})";
     ViewData["Title"] = $"{subjectName} - {paperSetName}";
 }
