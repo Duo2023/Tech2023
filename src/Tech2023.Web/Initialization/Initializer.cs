@@ -149,13 +149,7 @@ internal class Initializer : IDataInitializer
     {
         var resources = await context.NceaResources.ToListAsync();
 
-        foreach (var resource in resources)
-        {
-            foreach (var _ in Enumerable.Range(0, Random.Shared.Next(1, 10)))
-            {
-                resource.Items.Add(GenerateResource());
-            }
-        }
+        AddItemsToResources(resources);
 
         context.NceaResources.UpdateRange(resources);
 
@@ -166,17 +160,30 @@ internal class Initializer : IDataInitializer
     {
         var resources = await context.CambridgeResource.ToListAsync();
 
-        foreach (var resource in resources)
-        {
-            foreach (var _ in Enumerable.Range(0, Random.Shared.Next(1, 10)))
-            {
-                resource.Items.Add(GenerateResource());
-            }
-        }
+        AddItemsToResources(resources);
 
         context.CambridgeResource.UpdateRange(resources);
 
         await context.SaveChangesAsync();
+    }
+
+    internal static void AddItemsToResources<TCustomResource>(List<TCustomResource> resources)
+        where TCustomResource : CustomResource
+    {
+        foreach (var resource in resources)
+        {
+            foreach (var _ in Enumerable.Range(0, Random.Shared.Next(1, 10)))
+            {
+                var item = GenerateItem();
+
+                if (resource.Items.Any(i => i.Year == item.Year))
+                {
+                    continue;
+                }
+
+                resource.Items.Add(item);
+            }
+        }
     }
 
     internal static NceaResource GenerateNceaStandard()
@@ -209,7 +216,7 @@ internal class Initializer : IDataInitializer
         return resource;
     }
 
-    internal static Item GenerateResource()
+    internal static Item GenerateItem()
     {
         var item = new Item()
         {
@@ -222,8 +229,7 @@ internal class Initializer : IDataInitializer
 
         return item;
     }
-  
-
+ 
     internal static async Task AddUsersToSubjectsAsync(ApplicationDbContext context)
     {
         var subjects = await context.Subjects.ToListAsync();
