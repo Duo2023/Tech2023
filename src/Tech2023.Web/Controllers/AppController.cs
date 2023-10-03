@@ -193,7 +193,7 @@ public class AppController : Controller
 
             var cambridgeResource = await Resources.FindCambridgeResourceByIdentifersAsync(context, number, season, variant);
 
-            if (cambridgeResource == null || !selected.CambridgeResource.Any(r => r.Id == cambridgeResource.Id))
+            if (cambridgeResource == null || !selected.CambridgeResource.Any(r => r.Number == number && r.Season == season && r.Variant == variant))
             {
                 return NotFound();
             }
