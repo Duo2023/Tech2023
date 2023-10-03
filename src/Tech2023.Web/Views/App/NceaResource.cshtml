@@ -3,6 +3,19 @@
     var standardName = Model.Resource.DisplayStandard();
     var subjectName = $"{Model.Subject.Name.ToTitleCase()} ({Curriculum.ToString(Model.Subject.Level, Model.Subject.Source)})";
     ViewData["Title"] = $"{subjectName} - {standardName}";
+
+    var query = Model.Resource.Items as IEnumerable<Item>;
+
+    bool ascending = ViewData["Ascending"] is true;
+
+    if (ascending)
+    {
+        query = query.OrderBy(i => i.Year);
+    }
+    else
+    {
+        query = query.OrderByDescending(i => i.Year);
+    }
 }
 
 <vc:sidebar></vc:sidebar>
@@ -11,7 +24,16 @@
     <h1 class="m-2 mx-3">@subjectName</h1>
     <div class="w-full overflow-x-hidden pr-1">
         <h3 class="w-full bg-hint p-4 font-bold rounded-md">@standardName - @Model.Resource.Description</h3>
-        @foreach (var item in Model.Resource.Items.OrderByDescending(i => i.Year))
+        <a class="inline-block" asp-controller="App" asp-action="Assessment"
+            asp-route-curriculum="@Curriculum.ToString(Model.Subject.Level, Model.Subject.Source)" 
+            asp-route-subject="@Model.Subject.Name" asp-route-standard="@Model.Resource.AchievementStandard" asp-route-ascending="@(!ascending)">
+            <span class="icon">
+                filter_list
+            </span>
+            @(ascending ? "Ascending" : "Descending")
+        </a>
+
+        @foreach (var item in query)
         {
             <a class="w-full" asp-controller="App" asp-action="PaperViewer" asp-route-curriculum="@Curriculum.ToString(Model.Subject.Level, Model.Subject.Source)" asp-route-subject="@Model.Subject.Name"
                         asp-route-standard="@Model.Resource.AchievementStandard" asp-route-year="@item.Year">        

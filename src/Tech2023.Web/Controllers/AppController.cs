@@ -86,7 +86,7 @@ public class AppController : Controller
     #region Assessment
     [Route(Routes.Application.Assessment)]
     [ActionName(nameof(Routes.Application.Assessment))]
-    public async Task<IActionResult> BrowseAssessmentAsync(string? curriculum, string subject, string standard)
+    public async Task<IActionResult> BrowseAssessmentAsync(string? curriculum, string subject, string standard, [FromQuery] bool ascending)
     {
         curriculum = curriculum?.ToUpper(); // keep in sync with AppController browse action
 
@@ -95,6 +95,8 @@ public class AppController : Controller
         {
             return NotFound();
         }
+
+        ViewData["Ascending"] = ascending;
 
         using var context = await _context.CreateDbContextAsync();
 
@@ -132,7 +134,7 @@ public class AppController : Controller
         return View(viewName, new TViewModel()
         {
              Subject = (SubjectViewModel)subject,
-             Resource = resource
+             Resource = resource,
         });
     }
 
