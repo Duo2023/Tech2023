@@ -8,7 +8,8 @@ public class HtmlHexStringTests
     {
         string output = HtmlHexString.GetHtmlHexString(value);
 
-        Assert.NotNull(output);
-        Assert.Equal(expected, output);
+        output.Should().NotBeNull();
+
+        output.Should().Be(expected);
     }
 }

@@ -11,9 +11,11 @@ public class ValueStringBuilderTests
     {
         var builder = new ValueStringBuilder(capacity);
 
-        Assert.True(builder.Capacity >= capacity, "Capacity should be equal or greater to supplied");
-        Assert.NotNull(builder._arrayToReturnToPool);
-        Assert.Equal(0, builder.Length);
+        builder.Capacity.Should().BeGreaterThanOrEqualTo(capacity, "Capacity should be equal or greater to supplied");
+
+        builder._arrayToReturnToPool.Should().NotBeNull();
+
+        builder.Length.Should().Be(0);
 
         builder.Dispose();
     }
@@ -24,9 +26,11 @@ public class ValueStringBuilderTests
     {
         var builder = new ValueStringBuilder(stackalloc char[stackallocAmount]);
 
-        Assert.True(stackallocAmount <= 256, "Range should not be greater than 256 chars for tests");
-        Assert.True(builder.Capacity >= stackallocAmount, "Capacity should be equal or greater to supplied");
-        Assert.Null(builder._arrayToReturnToPool);
+        stackallocAmount.Should().BeLessThanOrEqualTo(256);
+
+        builder.Capacity.Should().BeGreaterThanOrEqualTo(stackallocAmount);
+
+        builder._arrayToReturnToPool.Should().BeNull();
     }
 
     [Fact(DisplayName = "Append should resize buffer on grow")]
@@ -38,16 +42,17 @@ public class ValueStringBuilderTests
 
         builder.Append(new string('*', Capacity));
 
-        Assert.Equal(Capacity, builder.Capacity);
+        builder.Capacity.Should().Be(Capacity);
 
         builder.Append('*');
 
-        Assert.True(builder.Capacity > Capacity, "The capacity of the builder should be greater than the original capacity");
+        builder.Capacity.Should().BeGreaterThan(Capacity, "The capacity should have expanded");
 
         var result = builder.ToString();
 
-        Assert.True(result.All(c => c == '*'));
-        Assert.Equal(Capacity + 1, result.Length);
+        result.All(c => c == '*').Should().BeTrue("All the characters should be the same");
+
+        result.Length.Should().Be(Capacity + 1);
     }
 
     [Fact(DisplayName = "uint append should be valid")]
@@ -57,11 +62,11 @@ public class ValueStringBuilderTests
 
         builder.Append(1024);
 
-        Assert.Null(builder._arrayToReturnToPool);
+        builder._arrayToReturnToPool.Should().BeNull();
 
         var result = builder.ToString();
 
-        Assert.Equal("1024", result);
+        result.Should().Be("1024");
     }
 
     [Fact(DisplayName = "uint append should be valid on grow")]
@@ -73,9 +78,9 @@ public class ValueStringBuilderTests
 
         builder.Append(value);
 
-        Assert.NotNull(builder._arrayToReturnToPool);
+        builder._arrayToReturnToPool.Should().NotBeNull();
 
-        Assert.Equal("10245", builder.ToString());
+        builder.ToString().Should().Be("10245");
     }
 }
 

@@ -8,7 +8,7 @@ public class StringHelperTests
     {
         var result = StringHelpers.ToTitleCase(input);
 
-        Assert.Equal(expected, result);
+        result.Should().Be(expected);
     }
 
     [Fact(DisplayName = "Null argument should return string.Empty")]
@@ -16,7 +16,7 @@ public class StringHelperTests
     {
         var result = StringHelpers.ToTitleCase(null!); // override annotations
 
-        Assert.Equal(string.Empty, result);
+        result.Should().BeEmpty();
     }
 
     [Fact(DisplayName = "StringHelpers.ToTitleCase should not stack overflow")]
