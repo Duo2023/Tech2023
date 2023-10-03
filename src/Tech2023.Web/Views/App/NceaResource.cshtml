@@ -24,23 +24,28 @@
     <h1 class="m-2 mx-3">@subjectName</h1>
     <div class="w-full overflow-x-hidden pr-1">
         <h3 class="w-full bg-hint p-4 font-bold rounded-md">@standardName - @Model.Resource.Description</h3>
-        <a class="inline-block" asp-controller="App" asp-action="Assessment"
-            asp-route-curriculum="@Curriculum.ToString(Model.Subject.Level, Model.Subject.Source)" 
-            asp-route-subject="@Model.Subject.Name" asp-route-standard="@Model.Resource.AchievementStandard" asp-route-ascending="@(!ascending)">
-            <span class="icon">
-                filter_list
-            </span>
-            @(ascending ? "Ascending" : "Descending")
-        </a>
-
-        @foreach (var item in query)
-        {
-            <a class="w-full" asp-controller="App" asp-action="PaperViewer" asp-route-curriculum="@Curriculum.ToString(Model.Subject.Level, Model.Subject.Source)" asp-route-subject="@Model.Subject.Name"
-                        asp-route-standard="@Model.Resource.AchievementStandard" asp-route-year="@item.Year">        
-                <h3 class="bg-secondary hover:bg-hint/50 p-4 m-1.5 hover:underline rounded-xl transition-colors ease-out">
-                    @item.Year
-                </h3>
+        <div class="flex flex-row items-center pl-2 m-1 bg-hint/50 rounded-md">
+            <h5>Sort:</h5>
+            <a class="inline-flex items-center bg-gradient-to-br from-hint to-hint/80 p-1 m-2 rounded-md" asp-controller="App" asp-action="Assessment"
+                asp-route-curriculum="@Curriculum.ToString(Model.Subject.Level, Model.Subject.Source)" 
+                asp-route-subject="@Model.Subject.Name" asp-route-standard="@Model.Resource.AchievementStandard" asp-route-ascending="@(!ascending)">
+                <span class="icon mr-1" style='transform: rotateX(@(ascending ? "180deg" : "0deg"));'>
+                    sort
+                </span>
+                <p class="pr-1">@(ascending ? "Ascending" : "Descending")</p>
             </a>
-        }
+        </div>
+
+        <div class="flex flex-col space-y-1.5 px-1.5">
+            @foreach (var item in query)
+            {
+                <a class="w-full" asp-controller="App" asp-action="PaperViewer" asp-route-curriculum="@Curriculum.ToString(Model.Subject.Level, Model.Subject.Source)" asp-route-subject="@Model.Subject.Name"
+                            asp-route-standard="@Model.Resource.AchievementStandard" asp-route-year="@item.Year">        
+                    <h3 class="bg-secondary hover:bg-hint/50 p-4 hover:underline rounded-xl transition-colors ease-out">
+                    @item.Year
+                    </h3>
+                </a>
+            }
+        </div>
     </div>
 </div>
