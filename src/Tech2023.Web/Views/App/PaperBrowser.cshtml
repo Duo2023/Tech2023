@@ -12,7 +12,7 @@
 @await Component.InvokeAsync(SidebarViewComponent.Name, Model)
 @* TODO: Make sidebar have relevant items *@
 
-<div id="paper-browser" class="max-h-full overflow-y-scroll">
+<div id="paper-browser" class="max-h-full pb-[var(--sidebar-search-height,_0rem)] md:pb-0 overflow-y-scroll">
     <h1 class="m-2 mx-3">Papers for @subjectName (@subjectSource)</h1>
 
     <div id="papers" class="w-full overflow-x-hidden pr-1">
