@@ -1,9 +1,33 @@
 ﻿@model NceaItemViewModel
 @{
+    var standardName = Model.Resource.DisplayStandard();
+    var standardYear = Model.Item.Year;
+    var subjectName = $"{Model.Subject.Name.ToTitleCase()} ({Curriculum.ToString(Model.Subject.Level, Model.Subject.Source)})";
     ViewData["Title"] = "Paper Viewer";
 }
 <vc:sidebar></vc:sidebar>
 
-<div class="h-full w-full">
-    <partial name="_PDFViewer" model="@Model.Item.Source">
+<style>
+    #ncea-assessment-viewer {
+        --assessment-title-navbar-height: 3rem;
+        --pdf-viewer-height: calc(100% - var(--assessment-title-navbar-height));
+    }
+</style>
+
+<div id="ncea-assessment-viewer" class="h-full w-full">
+    <div id="assesment-title-navbar" class="w-full h-[var(--assessment-title-navbar-height)] bg-secondary">
+        <a asp-controller="App" asp-action="Assessment"
+            asp-route-curriculum="@Curriculum.ToString(Model.Subject.Level, Model.Subject.Source)" 
+            asp-route-subject="@Model.Subject.Name" asp-route-standard="@Model.Resource.AchievementStandard"
+            class="flex flex-row items-center space-x-2 px-2 font-semibold">
+            <span class="icon-sm">west</span>
+            <div class="leading-none">
+                <p class="text-light-hint">Currently Viewing:</p>
+                <h5>@standardName (@standardYear) - @subjectName</h5>
+            </div>
+        </a>
+    </div>
+    <div class="h-[var(--pdf-viewer-height)]">
+        <partial name="_PDFViewer" model="@Model.Item.Source"></partial>
+    </div>
 </div>
