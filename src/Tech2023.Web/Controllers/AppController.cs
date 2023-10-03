@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using Tech2023.DAL;
-using Tech2023.DAL.Models;
 using Tech2023.DAL.Identity;
+using Tech2023.DAL.Models;
 using Tech2023.DAL.Queries;
-using Tech2023.Web.ViewModels;
+using Tech2023.Web.ViewModels;                                              
 
 namespace Tech2023.Web;
 
@@ -56,20 +56,25 @@ public class AppController : Controller
     {
         curriculum = curriculum?.ToUpper(); // TODO: Better parsing of curriculum level parsing so we don't allocate and call a nullref
 
+        // parse what curriculum source and level if any. check if subject is null
         if (!Curriculum.TryParse(curriculum, out var level, out var source) || string.IsNullOrWhiteSpace(subject))
         {
             return NotFound();
         }
 
+        // create context
         using var context = await _context.CreateDbContextAsync();
 
+        // find the subject
         var selected = await Subjects.FindSubjectAsync(context, source, level, subject);
 
+        // return not found if subject doesn't exist
         if (selected is null)
         {
             return NotFound();
         }
 
+        // load data into the view model
         var browseData = new BrowsePapersViewModel
         {
             SelectedSubject = selected
@@ -78,12 +83,14 @@ public class AppController : Controller
         return View(browseData);
     }
 
+    #region Assessment
     [Route(Routes.Application.Assessment)]
     [ActionName(nameof(Routes.Application.Assessment))]
     public async Task<IActionResult> BrowseAssessmentAsync(string? curriculum, string subject, string standard)
     {
         curriculum = curriculum?.ToUpper(); // keep in sync with AppController browse action
 
+        // perform same checks as above
         if (!Curriculum.TryParse(curriculum, out var level, out var source) || string.IsNullOrWhiteSpace(subject))
         {
             return NotFound();
@@ -100,48 +107,74 @@ public class AppController : Controller
 
         if (source == CurriculumSource.Ncea)
         {
-            if (!int.TryParse(standard.AsSpan(), out int achievementStandard))
-            {
-                return NotFound();
-            }
-
-            var nceaResource = await Resources.FindNceaResourceByAchievementStandardAsync(context, achievementStandard);
-
-            if (nceaResource == null || !selected.NceaResource.Any(r => r.Id == nceaResource.Id))
-            {
-                return NotFound();
-            }
-
-            return View("NceaResource", new NceaAssessmentViewModel()
-            {
-                Subject = (SubjectViewModel)selected,
-                Resource = nceaResource
-            });
+            return await GetAssessmentResultAsync<NceaResource, NceaAssessmentViewModel>(context, standard, selected, GetNceaResourceAsync, "NceaResource");
         }
         else if (source == CurriculumSource.Cambridge)
         {
-            if (!Cambridge.TryParseResource(standard, out var number, out var season, out var variant))
-            {
-                return NotFound();
-            }
-
-            // TODO: the variant, number, and season can be the same across subject so we need to change this 
-            var cambridgeResource = await Resources.FindCambridgeResourceByIdentifersAsync(context, number, season, variant);
-
-            if (cambridgeResource == null)
-            {
-                return NotFound();
-            }
-
-            return View("CambridgeResource", new CambridgeAssessmentViewModel()
-            {
-                Subject = (SubjectViewModel)selected,
-                Resource = cambridgeResource
-            });
+            return await GetAssessmentResultAsync<CambridgeResource, CambridgeAssessmentViewModel>(context, standard, selected, GetCambridgeResourceAsync, "CambridgeResource");
         }
 
         throw new UnreachableException();
     }
+
+    internal async ValueTask<IActionResult> GetAssessmentResultAsync<TResource, TViewModel>(ApplicationDbContext context, string standard, Subject subject, 
+        Func<ApplicationDbContext, string, Subject, ValueTask<TResource?>> find, string viewName)
+        where TResource : CustomResource
+        where TViewModel : AssessmentViewModel<TResource>, new()
+    {
+        var resource = await find(context, standard, subject);
+
+        if (resource is null)
+        {
+            return NotFound();
+        }
+
+        return View(viewName, new TViewModel()
+        {
+             Subject = (SubjectViewModel)subject,
+             Resource = resource
+        });
+    }
+
+    internal static async ValueTask<NceaResource?> GetNceaResourceAsync(ApplicationDbContext context, string standard, Subject subject)
+    {
+        Debug.Assert(subject != null);
+
+        if (!int.TryParse(standard, out int number))
+        {
+            return null;
+        }
+
+        var resource = await Resources.FindNceaResourceByAchievementStandardAsync(context, number);
+
+        if (resource is null)
+        {
+            return null;
+        }
+
+        return subject.NceaResource.Any(r => r.Id == resource.Id) ? resource : null;
+    }
+
+    internal static async ValueTask<CambridgeResource?> GetCambridgeResourceAsync(ApplicationDbContext context, string standard, Subject subject)
+    {
+        Debug.Assert(subject != null);
+
+        if (!Cambridge.TryParseResource(standard, out var number, out var season, out var variant))
+        {
+            return null;
+        }
+
+        var resource = await Resources.FindCambridgeResourceByIdentifersAsync(context, number, season, variant);
+
+        if (resource is null)
+        {
+            return null;
+        }
+
+        // TODO: Cambridge requires extra checks for now. Change additions to db to fix
+        return subject.CambridgeResource.Any(r => r.Number == number && r.Season == season && r.Variant == variant) ? resource : null;
+    }
+    #endregion
 
     [Route(Routes.Application.PaperViewer)]
     [ActionName(nameof(Routes.Application.PaperViewer))]
@@ -172,7 +205,7 @@ public class AppController : Controller
 
             var nceaResource = await Resources.FindNceaResourceByAchievementStandardAsync(context, achievementStandard);
 
-            if (nceaResource == null || !selected.NceaResource.Any(r => r.Id == nceaResource.Id) && nceaResource.Items.Any(i => i.Year == yearValue))
+            if (nceaResource == null || !selected.NceaResource.Any(r => r.Id == nceaResource.Id) && !nceaResource.Items.Any(i => i.Year == yearValue))
             {
                 return NotFound();
             }
@@ -193,7 +226,7 @@ public class AppController : Controller
 
             var cambridgeResource = await Resources.FindCambridgeResourceByIdentifersAsync(context, number, season, variant);
 
-            if (cambridgeResource == null || !selected.CambridgeResource.Any(r => r.Number == number && r.Season == season && r.Variant == variant))
+            if (cambridgeResource == null || !selected.CambridgeResource.Any(r => r.Number == number && r.Season == season && r.Variant == variant) && !cambridgeResource.Items.Any(i => i.Year == yearValue))
             {
                 return NotFound();
             }
