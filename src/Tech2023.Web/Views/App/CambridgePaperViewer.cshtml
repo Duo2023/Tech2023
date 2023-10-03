@@ -1,9 +1,30 @@
 ﻿@model CambridgeItemViewModel
 @{
-    ViewData["Title"] = "Paper Viewer";
+    var paperTitle = $"Paper {Model.Resource.Number} {Model.Resource.Season} Variant {(byte) Model.Resource.Variant} ({Model.Item.Year})";
+    var subjectName = $"{Model.Subject.Name.ToTitleCase()} ({Curriculum.ToString(Model.Subject.Level, Model.Subject.Source)})";
+    ViewData["Title"] = $"{paperTitle} - {subjectName}";
 }
 <vc:sidebar></vc:sidebar>
+<style>
+    #caie-paper-viewer {
+        --paper-title-navbar-height: 3rem;
+        --pdf-viewer-height: calc(100% - var(--paper-title-navbar-height));
+    }
+</style>
 
-<div class="h-full w-full">
+<div id="caie-paper-viewer" class="h-full w-full">
+    <div id="assesment-title-navbar" class="w-full h-[var(--paper-title-navbar-height)] bg-secondary">
+        <a asp-controller="App" asp-action="Assessment"
+            asp-route-curriculum="@Curriculum.ToString(Model.Subject.Level, Model.Subject.Source)" 
+            asp-route-subject="@Model.Subject.Name" asp-route-standard="@Cambridge.GetString(Model.Resource)"
+            class="flex flex-row items-center space-x-2 px-2 font-semibold">
+            <span class="icon-sm">west</span>
+            <div class="leading-none">
+                <p class="text-light-hint">Currently Viewing:</p>
+                <h5>@paperTitle - @subjectName</h5>
+            </div>
+        </a>
+    </div>
+    <div class="h-[var(--pdf-viewer-height)]">
     <partial name="_PDFViewer" model="@Model.Item.Source">
 </div>
