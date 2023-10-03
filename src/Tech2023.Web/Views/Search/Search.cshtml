@@ -4,17 +4,18 @@
     ViewData["Title"] = $"Results for {Model.Query}";
 }
 
-@*
-    Need to add sidebar here
-*@
+<vc:sidebar></vc:sidebar>
 
-@if (Model.Results.Count == 0) {
-    <h1>No Results Found for <b>@Model.Query</b></h1>
-}
-else
-{
-    @foreach (var item in Model.Results)
+<div id="search-results" class="py-2 px-3">
+    @if (Model.Results.Count == 0)
     {
-        <a href="@item.Url">@item.Name</a>
+        <h1>No Results Found for <b>@Model.Query</b></h1>
     }
-}
+    else
+    {
+        @foreach (var item in Model.Results)
+        {
+            <a href="@item.Url">@item.Name</a>
+        }
+    }
+</div>

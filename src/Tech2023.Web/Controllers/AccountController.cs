@@ -289,6 +289,8 @@ public class AccountController : Controller
 
         if (user != null)
         {
+            await _signInManager.SignOutAsync();
+            
             var result = await _userManager.DeleteAsync(user);
 
             if (!result.Succeeded) return StatusCode(StatusCodes.Status500InternalServerError);
