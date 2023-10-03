@@ -3,7 +3,7 @@
     var standardName = Model.Resource.DisplayStandard();
     var standardYear = Model.Item.Year;
     var subjectName = $"{Model.Subject.Name.ToTitleCase()} ({Curriculum.ToString(Model.Subject.Level, Model.Subject.Source)})";
-    ViewData["Title"] = "Paper Viewer";
+    ViewData["Title"] = $"{standardName} ({standardYear}) - {subjectName}";
 }
 <vc:sidebar></vc:sidebar>
 
