@@ -54,6 +54,8 @@ public sealed class Routes
         public const string Home = "/admin";
 
         public const string Upload = "/admin/upload";
+
+        public const string Subjects = "/admin/subjects";
     }
 
     public static class Account

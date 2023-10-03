@@ -1,0 +1,14 @@
+﻿@using Tech2023.Web.Shared;
+@model PaginatedList<SubjectViewModel>
+@{
+    ViewData["Title"] = "Admin - Edit Subjects";
+}
+
+<vc:sidebar></vc:sidebar>
+
+<div class="py-2 px-3">
+    @foreach (var subject in Model)
+    {
+        <p>@subject.Name.ToTitleCase() - @Curriculum.ToString(subject.Level, subject.Source)</p>
+    }
+</div>

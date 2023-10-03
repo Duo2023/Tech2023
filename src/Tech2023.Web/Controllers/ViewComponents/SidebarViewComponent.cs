@@ -43,26 +43,7 @@ public class SidebarViewComponent : ViewComponent
     {
         subjects ??= await Users.GetUserSavedSubjectsAsViewModelsAsync(_userManager, UserClaimsPrincipal);
 
-        List<SubjectViewModel> allSubjects; // the subjects they can select
-
-        using var context = await _factory.CreateDbContextAsync();
-
-        if (_cache.TryGetValue(CacheSlots.Subjects, out var data)) // fast path
-        {
-            if (data is not List<SubjectViewModel> list)
-            {
-                _logger.LogError("Cache error in subjects - model returned null");
-                list = new();
-            }
-
-            allSubjects = list;
-        }
-        else // slow path
-        {
-            _logger.LogInformation("Cache missed in subjects");
-            allSubjects = await Subjects.GetAllSubjectViewModelsAsync(context);
-            _cache.Set(CacheSlots.Subjects, allSubjects);
-        }
+        List<SubjectViewModel> allSubjects = await CachedQueries.GetSubjectViewModelsFromCacheOrFetchAsync(_factory, _cache);
 
         var sidebarData = new SidebarViewModel
         {

@@ -2,7 +2,15 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+
+using Tech2023.DAL;
 using Tech2023.DAL.Identity;
+using Tech2023.DAL.Queries;
+using Tech2023.Web.Caching;
+using Tech2023.Web.Shared;
+using Tech2023.Web.ViewModels;
 
 namespace Tech2023.Web.Controllers;
 
@@ -13,6 +21,8 @@ namespace Tech2023.Web.Controllers;
 public sealed class AdminController : Controller
 {
     internal readonly ILogger<AdminController> _logger;
+    internal readonly IDbContextFactory<ApplicationDbContext> _factory;
+    internal readonly IMemoryCache _cache;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AdminController"/> class
@@ -21,9 +31,11 @@ public sealed class AdminController : Controller
     /// <remarks>
     /// This constructor will be discovered by the DI container and it will inject the services to the parameters
     /// </remarks>
-    public AdminController(ILogger<AdminController> logger)
+    public AdminController(ILogger<AdminController> logger, IDbContextFactory<ApplicationDbContext> factory, IMemoryCache cache)
     {
         _logger = logger;
+        _factory = factory;
+        _cache = cache;
     }
 
     /// <summary>
@@ -51,6 +63,20 @@ public sealed class AdminController : Controller
         await Task.Yield();
 
         return View();
+    }
+
+    const int DefaultPageSize = 10;
+
+    [HttpGet]
+    [Route(Routes.Admin.Subjects)]
+    [ActionName(nameof(Routes.Admin.Subjects))]
+    public async Task<IActionResult> EditSubjectsAsync([FromQuery] int? pageNumber, [FromQuery] int? pageSize)
+    {
+        var subjects = await CachedQueries.GetSubjectViewModelsFromCacheOrFetchAsync(_factory, _cache);
+
+        var pagedSubjects = PaginatedList<SubjectViewModel>.Create(subjects, pageNumber ?? 1, pageSize ?? DefaultPageSize);
+
+        return View(pagedSubjects);
     }
 
     [HttpPost]
