@@ -6,16 +6,21 @@
 
 <vc:sidebar></vc:sidebar>
 
-<div id="search-results" class="py-2 px-3">
+<div id="search-results" class="py-2 px-3 overflow-y-auto" style="height: calc(100dvh - var(--navbar-height, 0rem))">
     @if (Model.Results.Count == 0)
     {
-        <h1>No Results Found for <b>@Model.Query</b></h1>
+        <h1>No Results Found for <strong>@Model.Query</strong></h1>
     }
     else
     {
-        @foreach (var item in Model.Results)
-        {
-            <a href="@item.Url">@item.Name</a>
-        }
+        <h1>Results for <strong>@Model.Query</strong></h1>
+        <div id="results" class="flex flex-col font-semibold space-y-2">
+            @foreach (var item in Model.Results)
+            {
+                <a class="underline hover:no-underline" href="@item.Url">
+                    <h3>@item.Name</h3>
+                </a>
+            }
+        </div>
     }
 </div>
