@@ -66,6 +66,25 @@ public sealed class AdminController : Controller
         return View(pagedSubjects);
     }
 
+    [HttpPost]
+    [Route(Routes.Admin.DeleteSubject)]
+    [ActionName(nameof(Routes.Admin.DeleteSubject))]
+    public async Task<IActionResult> DeleteSubjectAsync([FromQuery] Guid id)
+    {
+        using var context = await _factory.CreateDbContextAsync();
+
+        var subject = await context.Subjects.FindAsync(id);
+
+        if (subject != null)
+        {
+            context.Subjects.Remove(subject);
+
+            await context.SaveChangesAsync();
+        }
+
+        return Redirect(Request.Headers["Referer"].ToString() ?? Routes.Application.Home);
+    }
+
     [HttpGet]
     [Route(Routes.Admin.Users)]
     [ActionName(nameof(Routes.Admin.Users))]

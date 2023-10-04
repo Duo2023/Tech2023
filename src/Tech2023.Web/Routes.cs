@@ -58,6 +58,8 @@ public sealed class Routes
 
         [RouteVisibility(Visiblity.Adminstrator)]
         public const string Users = "/admin/users";
+
+        public const string DeleteSubject = "/admin/subjects/delete";
     }
 
     public static class Account
