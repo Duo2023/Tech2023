@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Text.Json;
+﻿using System.Text.Json;
 using Tech2023.DAL.Models;
 using Tech2023.DAL;
 using Tech2023.Web.Initialization.Json.Models;
@@ -7,6 +6,7 @@ using Tech2023.Web.Initialization.Json;
 using Microsoft.EntityFrameworkCore;
 using Tech2023.DAL.Queries;
 using Tech2023.Web.Initialization.Generators;
+using Tech2023.Web.Extensions;
 
 namespace Tech2023.Web.Initialization;
 
@@ -74,10 +74,7 @@ internal partial class Initializer
 
     internal static void AddResourceForCollection<TCustomResource>(List<TCustomResource> resources, IGenerator<TCustomResource> generator) where TCustomResource : CustomResource
     {
-        foreach (var _ in Enumerable.Range(0, Random.Shared.Next(1, 10)))
-        {
-            resources.Add(generator.Generate());
-        }
+        Random.Shared.ForEachRandom(10, () => resources.Add(generator.Generate()));
     }
 
     internal async Task AddResourcesToSubjectsAsync(ApplicationDbContext context)
@@ -116,17 +113,15 @@ internal partial class Initializer
     {
         foreach (var resource in resources)
         {
-            foreach (var _ in Enumerable.Range(0, Random.Shared.Next(1, 10)))
+            Random.Shared.ForEachRandom(10, () =>
             {
                 var item = _itemGenerator.Generate();
 
-                if (resource.Items.Any(i => i.Year == item.Year))
+                if (!resource.Items.Any(i => i.Year == item.Year))
                 {
-                    continue;
+                    resource.Items.Add(item);
                 }
-
-                resource.Items.Add(item);
-            }
+            });
         }
     }
 
