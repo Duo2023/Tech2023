@@ -49,8 +49,24 @@
                         <td class="inline-flex items-center space-x-1 px-6 py-4">
                             <a href="#" class="text-blue-600 underline hover:no-underline">Edit</a>
                             <div class="h-5 w-0.5 bg-hint mt-1 rounded-full"></div>
-                            <a href="#" class="text-red-600 underline hover:no-underline">Delete</a>
+                            <button onclick="interactions.dialog.showDialog('delete-@(item.Id)-modal', true)"
+                             class="text-red-600 underline hover:no-underline">Delete</button>
                         </td>
+                        <div class="absolute h-full">
+                            <dialog
+                                id="delete-@(item.Id)-modal"
+                                class="font-semibold">
+                                <h3>Delete @item.Name.ToTitleCase() - @Curriculum.ToString(item.Level,
+                                item.Source)?</h3>
+                                <form method="post" asp-controller="Admin" asp-action="DeleteSubject" asp-route-id="@item.Id"
+                                    class="w-full flex flex-row justify-end mt-4 space-x-4">
+                                    <button formmethod="dialog" type="submit" class="p-2 hover:underline">Go back!</button>
+                                    <button class="inline-flex bg-red-500/90 p-2 rounded-lg" type="submit">
+                                        Yes, Delete
+                                    </button>
+                                </form>
+                            </dialog>
+                        </div>
                     </tr>
                 }
             </tbody>
