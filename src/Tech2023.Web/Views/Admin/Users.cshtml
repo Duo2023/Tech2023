@@ -1,0 +1,12 @@
+﻿@using Tech2023.Web.Shared;
+@model PaginatedList<ApplicationUser>
+@{
+    ViewData["Title"] = "Admin - Manage Users";
+}
+
+<div class="py-2 px-3">
+    @foreach (var user in Model)
+    {
+        <p>@user.Email</p>
+    }
+</div>

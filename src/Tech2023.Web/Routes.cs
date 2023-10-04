@@ -53,9 +53,11 @@ public sealed class Routes
         [RouteVisibility(Visiblity.Adminstrator)]
         public const string Home = "/admin";
 
-        public const string Upload = "/admin/upload";
-
+        [RouteVisibility(Visiblity.Adminstrator)]
         public const string Subjects = "/admin/subjects";
+
+        [RouteVisibility(Visiblity.Adminstrator)]
+        public const string Users = "/admin/users";
     }
 
     public static class Account
