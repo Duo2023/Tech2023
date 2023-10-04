@@ -4,9 +4,68 @@
     ViewData["Title"] = "Admin - Manage Users";
 }
 
-<div class="py-2 px-3">
-    @foreach (var user in Model)
-    {
-        <p>@user.Email</p>
-    }
+<vc:sidebar></vc:sidebar>
+
+<div class="py-2 px-3 max-h-full overflow-y-auto pb-[var(--sidebar-search-height)] md:pb-0">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <div class="flex items-center justify-between pb-4">
+            <label for="table-search" class="sr-only">Search</label>
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <span class="icon-sm text-light-hint">search</span>
+                </div>
+                <input type="text" id="table-search"
+                    class="block p-3 pl-10 text-sm text-gray-900 rounded-full w-80 bg-secondary outline-none border-2 border-light-hint border-opacity-0 focus:border-opacity-80 transition-colors duration-75 ease-out"
+                    placeholder="Search for users">
+            </div>
+        </div>
+        <table class="w-full text-sm text-left text-light-hint rounded-md">
+            <thead class="text-sm font-semibold bg-hint/90 rounded-md">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        User E-mail
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr class="border-b bg-hint/50 even:bg-hint/30 border-light-hint/60 hover:bg-hint/80 font-semibold">
+                        <th scope="row" class="px-6 py-4 w-2/3 text-lg whitespace-nowrap text-white">
+                            @user.Email
+                        </th>
+                        <td class="inline-flex items-center space-x-1 px-6 py-4">
+                            <a href="#" class="text-blue-600 underline hover:no-underline">Edit</a>
+                            <div class="h-5 w-0.5 bg-hint mt-1 rounded-full"></div>
+                            <a href="#" class="text-red-600 underline hover:no-underline">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="flex space-x-4 my-2">
+        <form asp-controller="Admin" asp-action="Subjects" method="get">
+            <input type="hidden" name="pageNumber" value="@(Model.PageIndex - 1)" />
+            <button type="submit" disabled="@(!Model.HasPreviousPage)"
+                class="inline-flex items-center bg-hint hover:bg-hint/80 text-white font-bold p-3 pr-4 rounded-xl disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-50">
+                <span class="icon-sm pr-1">chevron_left</span>
+                Previous
+            </button>
+        </form>
+
+        <form asp-controller="Admin" asp-action="Subjects" method="get">
+            <input type="hidden" name="pageNumber" value="@(Model.PageIndex + 1)" />
+            <button type="submit" disabled="@(!Model.HasNextPage)"
+                class="inline-flex items-center bg-hint hover:bg-hint/80 text-white font-bold pl-4 p-3 rounded-xl disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-50">
+                Next
+                <span class="icon-sm pl-2">chevron_right</span>
+            </button>
+        </form>
+    </div>
+
 </div>
