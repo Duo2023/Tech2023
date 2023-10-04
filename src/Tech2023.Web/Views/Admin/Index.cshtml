@@ -4,10 +4,25 @@
 
 <vc:sidebar></vc:sidebar>
 
-<div class="py-2 px-3">
+<div class="py-2 px-3 max-h-full overflow-y-auto">
     <h1>Admin Page</h1>
 
-    <a href="@Routes.Admin.Upload">
-        Upload
-    </a>
+    <h2>Admin Actions:</h2>
+    <div id="admin-actions" class="flex flex-col md:flex-row md:space-x-4 space-y-6 md:space-y-0 px-2 my-2">
+        <a href="@Routes.Admin.Subjects"
+            class="flex flex-row items-start w-96 h-56 bg-gradient-to-br from-orange-500 to-red-500 p-6 rounded-3xl">
+            <div class="inline-flex items-center space-x-3 drop-shadow-xl">
+                <span class="icon bg-orange-900/60 rounded-full p-3">edit</span>
+                <h3 class="md:text-4xl font-semibold">Edit Subjects</h3>
+            </div>
+        </a>
+        @* ! Update link when added edit user page *@
+        <a href=""
+            class="flex flex-row items-start w-96 h-56 bg-gradient-to-br from-gray-400 to-gray-600 p-6 rounded-3xl">
+            <div class="inline-flex items-center space-x-3 drop-shadow-xl">
+                <span class="icon bg-gray-900/60 rounded-full p-3">manage_accounts</span>
+                <h3 class="md:text-4xl font-semibold">Edit Users</h3>
+            </div>
+        </a>
+    </div>
 </div>
