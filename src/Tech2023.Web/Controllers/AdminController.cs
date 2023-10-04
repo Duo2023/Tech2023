@@ -80,6 +80,8 @@ public sealed class AdminController : Controller
             context.Subjects.Remove(subject);
 
             await context.SaveChangesAsync();
+
+            _cache.Remove(CacheSlots.Subjects);
         }
 
         return Redirect(Request.Headers["Referer"].ToString() ?? Routes.Application.Home);
