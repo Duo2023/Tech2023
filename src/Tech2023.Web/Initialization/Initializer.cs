@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics;
+using System.Text.Json;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using Tech2023.DAL;
 using Tech2023.DAL.Identity;
 using Tech2023.DAL.Models;
 using Tech2023.DAL.Queries;
+using Tech2023.Web.ViewModels;
 
 namespace Tech2023.Web.Initialization;
 
@@ -20,6 +22,7 @@ internal class Initializer : IDataInitializer
     internal readonly ILogger<IDataInitializer> _logger;
     internal readonly IDbContextFactory<ApplicationDbContext> _factory;
     internal readonly IConfiguration _configuration;
+    internal readonly IWebHostEnvironment _environent;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Initializer"/> class
@@ -34,6 +37,7 @@ internal class Initializer : IDataInitializer
         _logger = provider.GetRequiredService<ILogger<IDataInitializer>>();
         _factory = provider.GetRequiredService<IDbContextFactory<ApplicationDbContext>>();
         _configuration = provider.GetRequiredService<IConfiguration>();
+        _environent = provider.GetRequiredService<IWebHostEnvironment>();
     }
 
     /// <inheritdoc/>
@@ -116,6 +120,52 @@ internal class Initializer : IDataInitializer
         var values = subjects.Select(s => (Subject)s);
 
         await Subjects.CreateSubjectsAsync(context, values);
+
+        // await AddSubjectsAsync(context, subjects);
+    }
+
+
+    internal static async Task AddSubjectsAsync(ApplicationDbContext context, SubjectJsonModel[] models)
+    {
+        foreach (var item in models)
+        {
+            var subject = (Subject)item;
+
+            if (subject.Source == CurriculumSource.Ncea)
+            {
+                subject.NceaResource.AddRange(GetNceaResourcesForJsonModel(item));
+            }
+            else if (subject.Source == CurriculumSource.Cambridge)
+            {
+                //subject.CambridgeResource.AddRange(default!);
+            }
+        }
+
+        await context.SaveChangesAsync();
+    }
+
+    internal static List<NceaResource> GetNceaResourcesForJsonModel(SubjectJsonModel model)
+    {
+        Debug.Assert(model.Curriculum.Source == CurriculumSource.Ncea);
+
+        List<NceaResource> results = new(model.Resources.Length);
+        
+        foreach (var item in model.Resources)
+        {
+            Debug.Assert(item != null);
+            Debug.Assert(item.Standard != null);
+
+            var nceaResource = new NceaResource
+            {
+                AchievementStandard = item.Standard.AchievementStandard,
+                Description = item.Standard.Description,
+                AssessmentType = item.Standard.Type
+            };
+
+            results.Add(nceaResource);
+        }
+
+        return results;
     }
 
     internal static async Task AddResourcesToSubjectsAsync(ApplicationDbContext context)
