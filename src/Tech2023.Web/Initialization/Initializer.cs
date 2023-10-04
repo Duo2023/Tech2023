@@ -8,7 +8,8 @@ using Tech2023.DAL;
 using Tech2023.DAL.Identity;
 using Tech2023.DAL.Models;
 using Tech2023.DAL.Queries;
-using Tech2023.Web.ViewModels;
+using Tech2023.Web.Initialization.Json;
+using Tech2023.Web.Initialization.Json.Models;
 
 namespace Tech2023.Web.Initialization;
 
