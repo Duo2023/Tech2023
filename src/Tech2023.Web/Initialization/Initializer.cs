@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+using Tech2023.Core;
 using Tech2023.DAL;
 using Tech2023.DAL.Identity;
 using Tech2023.DAL.Models;
@@ -41,30 +45,56 @@ internal partial class Initializer : IDataInitializer
     /// <inheritdoc/>
     public async Task InitializeAsync()
     {
+        // use the role initialzer to create all the roles
         await _roleInitializer.InitializeAsync(_roleManager);
 
         using var context = await _factory.CreateDbContextAsync();
 
+        // create the privacy policy
         await CreatePrivacyPolicyAsync(context);
+
+        // if in debug generate all the data
 
 #if DEBUG
         await CreateDebuggingDataAsync(context);
 #endif
     }
 
+    internal string GetFileAndValidate(string key, string extension)
+    {
+        // load the provided path by key
+        string? file = _configuration[key];
+
+        if (file is null)  // if null throw
+        {
+            Throw();
+        }
+
+        string targetExtension = Path.GetExtension(file); // get the extension of the file
+
+        if (!targetExtension.SequenceEqual(extension))  // check the extension is the desired extension
+        {
+            Throw();
+        }
+
+        if (!File.Exists(file))  // check whether the file exists
+        {
+            Throw();
+        }
+
+        return file; // return the file
+
+        [DoesNotReturn]
+        void Throw() => throw new ConfigurationException($"The value at the configuration key '{key}' should have a valid file name ending with '{extension}' and exist at the location");
+    }
 
     internal async Task CreatePrivacyPolicyAsync(ApplicationDbContext context)
     {
         if (!context.PrivacyPolicies.Any())
         {
-            string? fileName = _configuration["Policy"] ?? throw new ConfigurationException("The privacy policy should have a file provided at the key 'Policy'");
+            string file = GetFileAndValidate("Policy", ".txt");
 
-            if (!File.Exists(fileName) && Path.GetExtension(fileName.AsSpan()) != ".txt")
-            {
-                throw new ConfigurationException("The file should exist and end with the extension .txt");
-            }
-
-            string content = File.ReadAllText(fileName);
+            string content = File.ReadAllText(file);
 
             var policy = new PrivacyPolicy()
             {
@@ -80,6 +110,7 @@ internal partial class Initializer : IDataInitializer
         }
     }
 
+    // this method supports the initializer for creating users using the parameters, it does not throw exceptions, but will log errors and return silently
     internal async Task CreateUserAsync(string username, string password, bool admin)
     {
         if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
@@ -107,7 +138,9 @@ internal partial class Initializer : IDataInitializer
 
         if (admin)
         {
-            await _userManager.AddToRoleAsync(user, Roles.Administrator);
+            var roleAddResult = await _userManager.AddToRoleAsync(user, Roles.Administrator);
+
+            roleAddResult.Errors.ForEach((error) => Debug.WriteLine("An error occured adding a seeded user to admin role: {0}", error));
         }
     }
 }

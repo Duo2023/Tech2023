@@ -72,50 +72,6 @@ internal partial class Initializer
         // await AddSubjectsAsync(context, subjects);
     }
 
-
-    internal static async Task AddSubjectsAsync(ApplicationDbContext context, SubjectJsonModel[] models)
-    {
-        foreach (var item in models)
-        {
-            var subject = (Subject)item;
-
-            if (subject.Source == CurriculumSource.Ncea)
-            {
-                subject.NceaResource.AddRange(GetNceaResourcesForJsonModel(item));
-            }
-            else if (subject.Source == CurriculumSource.Cambridge)
-            {
-                //subject.CambridgeResource.AddRange(default!);
-            }
-        }
-
-        await context.SaveChangesAsync();
-    }
-
-    internal static List<NceaResource> GetNceaResourcesForJsonModel(SubjectJsonModel model)
-    {
-        Debug.Assert(model.Curriculum.Source == CurriculumSource.Ncea);
-
-        List<NceaResource> results = new(model.Resources.Length);
-
-        foreach (var item in model.Resources)
-        {
-            Debug.Assert(item != null);
-            Debug.Assert(item.Standard != null);
-
-            var nceaResource = new NceaResource
-            {
-                AchievementStandard = item.Standard.AchievementStandard,
-                Description = item.Standard.Description,
-                AssessmentType = item.Standard.Type
-            };
-
-            results.Add(nceaResource);
-        }
-
-        return results;
-    }
-
     internal static void AddResourceForCollection<TCustomResource>(List<TCustomResource> resources, IGenerator<TCustomResource> generator) where TCustomResource : CustomResource
     {
         foreach (var _ in Enumerable.Range(0, Random.Shared.Next(1, 10)))
