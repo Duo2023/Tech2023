@@ -1,4 +1,5 @@
 ﻿@using Tech2023.Web.Shared;
+@using Humanizer;
 @model PaginatedList<ApplicationUser>
 @{
     ViewData["Title"] = "Admin - Manage Users";
@@ -25,6 +26,12 @@
                     <th scope="col" class="px-6 py-3">
                         User E-mail
                     </th>
+                    <th>
+                        Updated
+                    </th>
+                    <th>
+                        Created
+                    </th>
                     <th scope="col" class="px-6 py-3">
                         Action
                     </th>
@@ -37,6 +44,12 @@
                         <th scope="row" class="px-6 py-4 w-2/3 text-lg whitespace-nowrap text-white">
                             @user.Email
                         </th>
+                        <td title="@user.Updated">
+                            @user.Updated.Humanize()
+                        </td>
+                        <td title="@user.Updated">
+                            @user.Created.Humanize()
+                        </td>
                         <td class="inline-flex items-center space-x-1 px-6 py-4">
                             <a href="#" class="text-blue-600 underline hover:no-underline">Edit</a>
                             <div class="h-5 w-0.5 bg-hint mt-1 rounded-full"></div>
