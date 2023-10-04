@@ -7,5 +7,6 @@ namespace Tech2023.Web.Initialization.Json;
 // see https://devblogs.microsoft.com/dotnet/try-the-new-system-text-json-source-generator/#why-do-source-generation
 
 [JsonSerializable(typeof(SubjectJsonModel[]))]
+[JsonSerializable(typeof(UserModel[]))]
 [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
 internal partial class SeedSerializationContext : JsonSerializerContext { };

@@ -9,6 +9,6 @@ internal class NceaStandardJsonModel
 
     public NceaAssessmentType Type { get; set; }
 
-    [AllowNull]
+#nullable disable
     public string Description { get; set; }
 }

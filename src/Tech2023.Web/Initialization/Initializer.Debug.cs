@@ -1,26 +1,36 @@
 ﻿using System.Diagnostics;
 using System.Text.Json;
-using Tech2023.DAL.Identity;
 using Tech2023.DAL.Models;
 using Tech2023.DAL;
 using Tech2023.Web.Initialization.Json.Models;
 using Tech2023.Web.Initialization.Json;
 using Microsoft.EntityFrameworkCore;
 using Tech2023.DAL.Queries;
+using Tech2023.Web.Initialization.Generators;
 
 namespace Tech2023.Web.Initialization;
+
+// this file is only included when the application is built without optimizations in debug
 
 /// <inheritdoc/>
 internal partial class Initializer
 {
+    internal readonly IGenerator<CambridgeResource> _cambridgeResourceGenerator = new CambridgeResourceGenerator();
+    internal readonly IGenerator<NceaResource> _nceaResourceGenerator = new NceaResourceGenerator();
+    internal readonly IGenerator<Item> _itemGenerator = new ItemGenerator();
+
     internal async Task CreateDebuggingDataAsync(ApplicationDbContext context)
     {
+        await CreateUserAsync("sudo@sudo.com", "sudoUser555!", admin: true);
+
         await CreateSubjectsAsync(context);
-        await CreateDebugUserAsync();
-        await AddUsersToSubjectsAsync(context);
+        await RandomizeUserSubjects(context);
         await AddResourcesToSubjectsAsync(context);
-        await AddNceaItemsToResourcesAsync(context);
-        await AddCambridgeItemsToResourcesAsync(context);
+
+        await GenerateForResourcesSet(context.CambridgeResource);
+        await GenerateForResourcesSet(context.NceaResources);
+
+        await context.SaveChangesAsync();
     }
 
     internal async Task CreateSubjectsAsync(ApplicationDbContext context)
@@ -106,7 +116,15 @@ internal partial class Initializer
         return results;
     }
 
-    internal static async Task AddResourcesToSubjectsAsync(ApplicationDbContext context)
+    internal static void AddResourceForCollection<TCustomResource>(List<TCustomResource> resources, IGenerator<TCustomResource> generator) where TCustomResource : CustomResource
+    {
+        foreach (var _ in Enumerable.Range(0, Random.Shared.Next(1, 10)))
+        {
+            resources.Add(generator.Generate());
+        }
+    }
+
+    internal async Task AddResourcesToSubjectsAsync(ApplicationDbContext context)
     {
         var subjects = await context.Subjects.ToListAsync();
 
@@ -114,17 +132,11 @@ internal partial class Initializer
         {
             if (item.Source == CurriculumSource.Ncea)
             {
-                foreach (var _ in Enumerable.Range(0, Random.Shared.Next(1, 10)))
-                {
-                    item.NceaResource.Add(GenerateNceaStandard());
-                }
+                AddResourceForCollection(item.NceaResource, _nceaResourceGenerator);
             }
             else if (item.Source == CurriculumSource.Cambridge)
             {
-                foreach (var _ in Enumerable.Range(0, Random.Shared.Next(1, 10)))
-                {
-                    item.CambridgeResource.Add(GenerateCambridgeResource());
-                }
+                AddResourceForCollection(item.CambridgeResource, _cambridgeResourceGenerator);
             }
         }
 
@@ -133,36 +145,24 @@ internal partial class Initializer
         await context.SaveChangesAsync();
     }
 
-    internal static async Task AddNceaItemsToResourcesAsync(ApplicationDbContext context)
+    internal async Task GenerateForResourcesSet<TCustomResource>(DbSet<TCustomResource> set) where TCustomResource : CustomResource
     {
-        var resources = await context.NceaResources.ToListAsync();
+        var resources = await set.ToListAsync();
 
-        AddItemsToResources(resources);
+        RandomizeAndGenerateItemsForResources(resources);
 
-        context.NceaResources.UpdateRange(resources);
-
-        await context.SaveChangesAsync();
+        set.UpdateRange(resources);
     }
 
-    internal static async Task AddCambridgeItemsToResourcesAsync(ApplicationDbContext context)
-    {
-        var resources = await context.CambridgeResource.ToListAsync();
 
-        AddItemsToResources(resources);
-
-        context.CambridgeResource.UpdateRange(resources);
-
-        await context.SaveChangesAsync();
-    }
-
-    internal static void AddItemsToResources<TCustomResource>(List<TCustomResource> resources)
+    internal void RandomizeAndGenerateItemsForResources<TCustomResource>(List<TCustomResource> resources)
         where TCustomResource : CustomResource
     {
         foreach (var resource in resources)
         {
             foreach (var _ in Enumerable.Range(0, Random.Shared.Next(1, 10)))
             {
-                var item = GenerateItem();
+                var item = _itemGenerator.Generate();
 
                 if (resource.Items.Any(i => i.Year == item.Year))
                 {
@@ -174,51 +174,7 @@ internal partial class Initializer
         }
     }
 
-    internal static NceaResource GenerateNceaStandard()
-    {
-        var resource = new NceaResource()
-        {
-            AssessmentType = (NceaAssessmentType)Random.Shared.Next((int)NceaAssessmentType.Internal, (int)NceaAssessmentType.Unit),
-            AchievementStandard = Random.Shared.Next(1, ushort.MaxValue),
-            Description = "An achievement standard",
-            Created = DateTimeOffset.UtcNow,
-        };
-
-        resource.SyncUpdated();
-
-        return resource;
-    }
-
-    internal static CambridgeResource GenerateCambridgeResource()
-    {
-        var resource = new CambridgeResource()
-        {
-            Season = (Season)Random.Shared.Next((int)Season.Spring, (int)Season.Winter),
-            Variant = (Variant)Random.Shared.Next((int)Variant.One, (int)Variant.Three),
-            Number = Random.Shared.Next(1, 6),
-            Created = DateTimeOffset.UtcNow,
-        };
-
-        resource.SyncUpdated();
-
-        return resource;
-    }
-
-    internal static Item GenerateItem()
-    {
-        var item = new Item()
-        {
-            Source = "/assets/dev/dev_test_pdf.pdf",
-            Year = Random.Shared.Next(2012, DateTime.Now.Year),
-            Created = DateTimeOffset.UtcNow
-        };
-
-        item.SyncUpdated();
-
-        return item;
-    }
-
-    internal static async Task AddUsersToSubjectsAsync(ApplicationDbContext context)
+    internal static async Task RandomizeUserSubjects(ApplicationDbContext context)
     {
         var subjects = await context.Subjects.ToListAsync();
 
@@ -232,31 +188,5 @@ internal partial class Initializer
         }
 
         await context.SaveChangesAsync();
-    }
-
-    internal async Task CreateDebugUserAsync()
-    {
-        const string Username = "sudo@sudo.com";
-
-        ApplicationUser user = new()
-        {
-            Id = Guid.NewGuid(),
-            Email = Username,
-            UserName = Username,
-            EmailConfirmed = true,
-            Created = DateTimeOffset.UtcNow
-        };
-
-        user.SyncUpdated();
-
-        var result = await _userManager.CreateAsync(user, "sudoUser555!");
-
-        if (!result.Succeeded)
-        {
-            _logger.LogError("Sudo user failed to create: does it already exist?");
-            return;
-        }
-
-        await _userManager.AddToRoleAsync(user, Roles.Administrator);
     }
 }

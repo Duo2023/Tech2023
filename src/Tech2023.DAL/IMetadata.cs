@@ -27,10 +27,11 @@ public static class MetadataExtensions
     /// Syncs the updated timestamp to the creation timestamp
     /// </summary>
     /// <param name="metadata">The metadata to pass in</param>
-    public static void SyncUpdated(this IMetadata metadata)
+    public static void SetToCurrent(this IMetadata metadata)
     {
         Debug.Assert(metadata != null); // only check whether the record is null in debug builds
 
+        metadata.Created = DateTimeOffset.UtcNow;
         metadata.Updated = metadata.Created;
     }
 

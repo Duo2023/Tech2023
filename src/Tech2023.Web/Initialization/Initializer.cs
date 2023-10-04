@@ -1,18 +1,9 @@
-﻿using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
-
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
-using MimeKit.Cryptography;
 
 using Tech2023.DAL;
 using Tech2023.DAL.Identity;
 using Tech2023.DAL.Models;
-using Tech2023.DAL.Queries;
-using Tech2023.Web.Initialization.Json;
-using Tech2023.Web.Initialization.Json.Models;
 using Tech2023.Web.Shared;
 
 namespace Tech2023.Web.Initialization;
@@ -28,7 +19,7 @@ internal partial class Initializer : IDataInitializer
     internal readonly IDbContextFactory<ApplicationDbContext> _factory;
     internal readonly IConfiguration _configuration;
     internal readonly IWebHostEnvironment _environment;
-    internal readonly IRoleInitializer _roleInitialzer;
+    internal readonly IRoleInitializer _roleInitializer;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Initializer"/> class
@@ -44,13 +35,13 @@ internal partial class Initializer : IDataInitializer
         _factory = provider.GetRequiredService<IDbContextFactory<ApplicationDbContext>>();
         _configuration = provider.GetRequiredService<IConfiguration>();
         _environment = provider.GetRequiredService<IWebHostEnvironment>();
-        _roleInitialzer = provider.GetRequiredService<IRoleInitializer>();
+        _roleInitializer = provider.GetRequiredService<IRoleInitializer>();
     }
 
     /// <inheritdoc/>
     public async Task InitializeAsync()
     {
-        await _roleInitialzer.InitializeAsync(_roleManager);
+        await _roleInitializer.InitializeAsync(_roleManager);
 
         using var context = await _factory.CreateDbContextAsync();
 
@@ -79,14 +70,44 @@ internal partial class Initializer : IDataInitializer
             {
                 Version = 1,
                 Content = content,
-                Created = DateTimeOffset.Now
             };
 
-            policy.SyncUpdated();
+            policy.SetToCurrent();
 
             context.PrivacyPolicies.Add(policy);
 
             await context.SaveChangesAsync();
+        }
+    }
+
+    internal async Task CreateUserAsync(string username, string password, bool admin)
+    {
+        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+        {
+            throw new ConfigurationException("Username or password of a user cannot be empty or null");
+        }
+
+        var user = new ApplicationUser()
+        {
+            Id = Guid.NewGuid(),
+            Email = username,
+            UserName = username,
+            EmailConfirmed = true
+        };
+
+        user.SetToCurrent();
+
+        var result = await _userManager.CreateAsync(user, password);
+
+        if (!result.Succeeded)
+        {
+            _logger.LogError("Failed to create user with {username}, does it already exist?", username);
+            return;
+        }
+
+        if (admin)
+        {
+            await _userManager.AddToRoleAsync(user, Roles.Administrator);
         }
     }
 }
