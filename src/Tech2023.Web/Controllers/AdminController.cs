@@ -52,19 +52,6 @@ public sealed class AdminController : Controller
         return View();
     }
 
-    /// <summary>
-    /// Returns the upload page to upload resources
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet]
-    [Route(Routes.Admin.Upload)]
-    public async Task<IActionResult> Upload()
-    {
-        await Task.Yield();
-
-        return View();
-    }
-
     const int DefaultPageSize = 10;
 
     [HttpGet]
@@ -79,10 +66,32 @@ public sealed class AdminController : Controller
         return View(pagedSubjects);
     }
 
-    [HttpPost]
-    [Route(Routes.Admin.Upload)]
-    public Task<IActionResult> UploadPaperAsync()
+    [HttpGet]
+    [Route(Routes.Admin.Users)]
+    [ActionName(nameof(Routes.Admin.Users))]
+    public async Task<IActionResult> EditUsersAsync(
+        [FromQuery] int? pageNumber,
+        [FromQuery] int? pageSize, 
+        [FromQuery] string? searchString,
+        [FromQuery] string? sortOrder
+        )
     {
-        throw new NotImplementedException();
+        using var context = await _factory.CreateDbContextAsync();
+
+        searchString = searchString?.ToUpper();
+
+        if (searchString != null)
+        {
+            pageNumber = 1;
+        }
+
+        var query = !string.IsNullOrWhiteSpace(searchString) ?
+            context.Users.Where(u => u.Email != null && u.Email.Contains(searchString)) : context.Users;
+
+        pageSize ??= DefaultPageSize; // if the page size is null use default
+
+        var paged = await PaginatedList<ApplicationUser>.CreateAsync(query, pageNumber ?? 1, pageSize.Value);
+
+        return View(paged);
     }
 }
