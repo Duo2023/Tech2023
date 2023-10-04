@@ -96,6 +96,8 @@ public sealed class Startup
 
         services.AddTransient<IFileSaver, FileSaver>();
 
+        services.AddTransient<IRoleInitializer, RoleInitializer>();
+
         services.AddTransient<IDataInitializer, Initializer>();
     }
 

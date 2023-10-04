@@ -9,9 +9,12 @@
     <DockerfileContext>..\..</DockerfileContext>
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <Content Include="icon.ico" />
+    <Content Include="policy.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
