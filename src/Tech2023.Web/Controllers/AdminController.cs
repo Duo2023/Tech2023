@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -20,9 +21,11 @@ namespace Tech2023.Web.Controllers;
 [Authorize(Roles = Roles.Administrator)]
 public sealed class AdminController : Controller
 {
+    internal readonly UserManager<ApplicationUser> _userManager;
     internal readonly ILogger<AdminController> _logger;
     internal readonly IDbContextFactory<ApplicationDbContext> _factory;
     internal readonly IMemoryCache _cache;
+    
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AdminController"/> class
@@ -31,8 +34,9 @@ public sealed class AdminController : Controller
     /// <remarks>
     /// This constructor will be discovered by the DI container and it will inject the services to the parameters
     /// </remarks>
-    public AdminController(ILogger<AdminController> logger, IDbContextFactory<ApplicationDbContext> factory, IMemoryCache cache)
+    public AdminController(UserManager<ApplicationUser> userManager, ILogger<AdminController> logger, IDbContextFactory<ApplicationDbContext> factory, IMemoryCache cache)
     {
+        _userManager = userManager;
         _logger = logger;
         _factory = factory;
         _cache = cache;
@@ -114,5 +118,24 @@ public sealed class AdminController : Controller
         var paged = await PaginatedList<ApplicationUser>.CreateAsync(query, pageNumber ?? 1, pageSize.Value);
 
         return View(paged);
+    }
+
+    [HttpPost]
+    [Route(Routes.Admin.DeleteUser)]
+    public async Task<IActionResult> DeleteUserAsync([FromQuery] Guid id)
+    {
+        var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+        if (user != null)
+        {
+            if (await _userManager.IsInRoleAsync(user, Roles.Administrator) is false)
+            {
+                await _userManager.DeleteAsync(user);
+            }
+
+            _logger.LogWarning("Cannot delete an adminstrator");
+        }
+
+        return Redirect(Request.Headers["Referer"].ToString() ?? Routes.Application.Home);
     }
 }
