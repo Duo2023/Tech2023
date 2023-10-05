@@ -13,6 +13,8 @@ public class Item : IMetadata
     /// <summary>
     /// The identifier of the resource, this is just used as a unique key for the database
     /// </summary>
+    [Key]
+    [Required]
     public Guid Id { get; set; }
 
     /// <summary>
