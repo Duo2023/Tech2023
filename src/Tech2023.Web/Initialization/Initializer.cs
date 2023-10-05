@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using Tech2023.Core;
 using Tech2023.DAL;
 using Tech2023.DAL.Identity;
 using Tech2023.DAL.Models;
+using Tech2023.Web.Initialization.Json;
 using Tech2023.Web.Shared;
 
 namespace Tech2023.Web.Initialization;
@@ -24,6 +26,7 @@ internal partial class Initializer : IDataInitializer
     internal readonly IConfiguration _configuration;
     internal readonly IWebHostEnvironment _environment;
     internal readonly IRoleInitializer _roleInitializer;
+    internal readonly string _dataPath;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Initializer"/> class
@@ -40,6 +43,7 @@ internal partial class Initializer : IDataInitializer
         _configuration = provider.GetRequiredService<IConfiguration>();
         _environment = provider.GetRequiredService<IWebHostEnvironment>();
         _roleInitializer = provider.GetRequiredService<IRoleInitializer>();
+        _dataPath = _configuration["SeedPath"] ?? throw new ConfigurationException("'SeedPath' should hvae a value");
     }
 
     /// <inheritdoc/>
@@ -53,11 +57,33 @@ internal partial class Initializer : IDataInitializer
         // create the privacy policy
         await CreatePrivacyPolicyAsync(context);
 
+        await CreateUsersAsync();
+
         // if in debug generate all the data
 
 #if DEBUG
         await CreateDebuggingDataAsync(context);
 #endif
+    }
+
+    internal async Task CreateUsersAsync()
+    {
+        string file = Path.Combine(_dataPath, "users.json");
+
+        if (!File.Exists(file))
+        {
+            _logger.LogWarning("File users.json doesn't exist, assuming no users want to be created");
+            return;
+        }
+
+        using var stream = File.OpenRead(file);
+
+        var users = JsonSerializer.Deserialize(stream, SeedSerializationContext.Default.UserModelArray) ?? throw new ConfigurationException("The file users.json has an error");
+
+        foreach (var user in users)
+        {
+            await CreateUserAsync(user.Username, user.Password, user.IsAdmin);
+        }
     }
 
     internal string GetFileAndValidate(string key, string extension)

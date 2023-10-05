@@ -35,15 +35,7 @@ internal partial class Initializer
 
     internal async Task CreateSubjectsAsync(ApplicationDbContext context)
     {
-        var basePath = _configuration["SeedPath"];
-
-        if (basePath is null)
-        {
-            _logger.LogError("Base Path Not Defined");
-            return;
-        }
-
-        string path = Path.Combine(basePath, "subjects.json");
+        string path = Path.Combine(_dataPath, "subjects.json");
 
         if (!File.Exists(path))
         {
