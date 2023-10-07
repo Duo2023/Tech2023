@@ -20,7 +20,6 @@ export module element {
         if (element.classList.contains("hidden")) {
             element.classList.remove("hidden");
             if (autoHide) {
-                console.log("roget");
                 setupAutoHide(element);
             }
         } else {
