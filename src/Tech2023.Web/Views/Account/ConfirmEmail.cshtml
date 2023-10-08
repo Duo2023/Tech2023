@@ -3,4 +3,15 @@
     ViewData["Title"] = "Confirm Email";
 }
 
-<p>@Model</p>
+<header class="h-full flex justify-center pt-16">
+    <div id="message-container" class="flex flex-col w-2/6 h-fit p-5 rounded-2xl bg-secondary border-4 border-hint">
+        <div class="flex flex-row items-center p-3 mb-2 bg-green-800/20 text-green-500 rounded-xl">
+            <span class="icon text-6xl px-3">check_circle</span>
+            <h3 class="font-bold">@Model</h3>
+        </div>
+        <div class="font-semibold m-2">
+            <h4>You can try Logging in now: </h4>
+        </div>
+        <a class="w-full p-4 px-5 my-2 text-center bg-primary rounded-xl" href="@Routes.Account.Login">Go to Login</a>
+    </div>
+</header>

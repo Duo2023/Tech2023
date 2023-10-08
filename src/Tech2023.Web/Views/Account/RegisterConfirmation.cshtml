@@ -4,13 +4,13 @@
 }
 <header class="h-full flex justify-center pt-16">
     <div id="message-container" class="w-96 h-fit p-5 rounded-2xl bg-secondary border-4 border-hint">
-        <div class="flex flex-row items-center p-1 mb-2 bg-green-800/20 text-green-500 rounded-xl">
-            <span class="icon px-3">check_circle</span>
-            <h1 class="font-bold">@ViewData["Title"]</h1>
+        <div class="flex flex-row items-center p-3 mb-2 bg-green-800/20 text-green-500 rounded-xl">
+            <span class="icon text-5xl px-3">check_circle</span>
+            <h3 class="font-bold">@ViewData["Title"]</h3>
         </div>
         <div class="font-semibold m-2">
-            <p>Check your inbox at @HtmlEncoder.Encode(Model)</p>
-            <p>It could be in your junk mail</p>
+            <h4>Check your inbox at @HtmlEncoder.Encode(Model)</h4>
+            <p>(It could be in your junk mail)</p>
         </div>
     </div>
 </header>
